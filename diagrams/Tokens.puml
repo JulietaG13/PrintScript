@@ -1,0 +1,95 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+
+interface Token {
++ type: TokenType
++ content: String
++ start: LexicalRange
++ end: LexicalRange
+}
+Token *--- TokenType
+
+class LexicalRange {
+offset: Int
+line: Int
+column: Int
+}
+Token *--- LexicalRange
+
+class TokenTypeVariable implements Token {
++ type: TokenTypeVariables
+}
+TokenTypeVariable *-- TokenTypeVariables
+
+class TokenTypeIdentifier implements Token {
+}
+
+class TokenTypeLetKeyword implements Token {
+}
+
+class TokenTypeAssignation implements Token {
+}
+
+class TokenTypeSyntax implements Token {
++ type: TokenTypeSyntaxes
+}
+TokenTypeSyntax *-- TokenTypeSyntaxes
+
+interface TokenTypeLiteral implements Token {
++ type: TokenTypeVariables
+}
+
+class TokenTypeLiteralString implements TokenTypeLiteral {
++ value: String
+}
+
+class TokenTypeLiteralInt implements TokenTypeLiteral {
++ value: Int
+}
+
+class TokenTypeOperation implements Token {
++ type: TokenTypeOperations
+}
+TokenTypeOperation *-- TokenTypeOperations
+
+class TokenTypeFunction implements Token {
++ name: String
+}
+
+' let a : number = 5;
+' println("hola");
+enum TokenType {
+VARIABLE_TYPE
+IDENTIFIER
+LET_KEYWORD
+ASSIGNATION
+SYNTAX
+LITERAL
+OPERATION
+FUNCTION
+...
+}
+
+enum TokenTypeVariables {
+STRING_TYPE
+NUMBER_TYPE
+}
+
+enum TokenTypeSyntaxes {
+SEMICOLON
+COLON
+OPENING_BRACKET
+CLOSING_BRACKET
+APOSTROPHE
+QUOTATION_MARKS
+}
+
+enum TokenTypeOperations {
+SUM
+SUBTRACTION
+MULTIPLICATION
+DIVISION
+}
+
+@enduml
