@@ -1,0 +1,13 @@
+public class Token {
+  private final TokenType type;
+  private final String content;
+  private final LexicalRange start;
+  private final LexicalRange end;
+
+  public Token(TokenType type, String content, LexicalRange start, LexicalRange end) {
+    this.type = type;
+    this.content = content;
+    this.start = start;
+    this.end = end;
+  }
+}
