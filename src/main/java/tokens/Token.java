@@ -1,3 +1,7 @@
+package tokens;
+
+import utils.LexicalRange;
+
 public class Token {
   private final TokenType type;
   private final String content;
