@@ -1,0 +1,121 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+
+class Token {
++ type: TokenType
++ content: String
++ start: LexicalRange
++ end: LexicalRange
+}
+Token *-- TokenType
+
+class LexicalRange {
++ offset: Int
++ line: Int
++ column: Int
+}
+Token *-- LexicalRange
+
+
+' let a : number = 5;
+' println("hola");
+enum TokenType {
+KEYWORD
+IDENTIFIER
+LITERAL
+OPERATOR
+SYNTAX
+}
+
+interface Node {
++ type: NodeType
++ start: LexicalRange
++ end: LexicalRange
++ accept(visitor: ASTVisitor)
+}
+
+enum NodeType {
+'TODO
+}
+
+class ProgramNode implements Node {
++ body: List<StatementNode>
+}
+
+interface StatementNode implements Node {
+}
+
+class AssignmentNode implements StatementNode {
++ operator: String
++ id: IdentifierNode
++ value: ExpressionNode
+}
+
+class VariableDeclaration implements StatementNode {
++ id: IdentifierNode
++ kind: Kind
++ initial: ExpressionNode
+}
+VariableDeclaration *- Kind
+
+enum Kind {
+LET
+}
+
+class ExpressionStatement implements StatementNode {
++ expression: ExpressionNode
+}
+
+interface ExpressionNode implements Node {
+}
+
+interface LiteralNode implements ExpressionNode {
++ getType()
+}
+
+class LiteralNumberNode implements LiteralNode {
++ value: Number
+}
+
+class LiteralStringNode implements LiteralNode {
++ value: String
+}
+
+class IdentifierNode implements ExpressionNode {
++ name: String
+}
+
+class BinaryExpressionNode implements ExpressionNode {
++ operator: String
++ left: ExpressionNode
++ right: ExpressionNode
+}
+
+class CallExpressionNode implements ExpressionNode {
++ id: IdentifierNode
++ args: List<ExpressionNode>
+}
+
+'class DeclaratorNode implements Node
+
+interface ASTVisitor {
+}
+
+@enduml
+
+
+let a = 10
+println(a)
+
+
+ProgramNode
+ - VariableDeclaration
+   - id: IdentifierNode(a)
+   - kind: LET
+   - initial: LiteralNumber(Number, 10)
+ - ExpressionStatement
+   - expression: CallExpressionNode
+     - id: "println"
+     - args:
+        - IdentifierNode(a)
