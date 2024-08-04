@@ -1,3 +1,5 @@
+package utils;
+
 public class LexicalRange {
   private final int offset;
   private final int line;
