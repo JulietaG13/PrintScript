@@ -14,4 +14,20 @@ public class Token {
     this.start = start;
     this.end = end;
   }
+
+  public TokenType getType() {
+    return type;
+  }
+
+  public String getContent() {
+    return content;
+  }
+
+  public LexicalRange getStart() {
+    return start;
+  }
+
+  public LexicalRange getEnd() {
+    return end;
+  }
 }
