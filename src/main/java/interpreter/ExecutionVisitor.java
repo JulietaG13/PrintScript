@@ -68,7 +68,7 @@ public class ExecutionVisitor implements ASTVisitor {
 
   @Override
   public void visit(BinaryExpressionNode node) {
-
+    evaluateExpression(node);
   }
 
   @Override
@@ -83,13 +83,6 @@ public class ExecutionVisitor implements ASTVisitor {
     }
   }
 
-
-  private Object evaluateExpression(ExpressionNode init) {
-    return null;
-  }
-
-
-
   @Override
   public void visit(IdentifierNode node) {
 
@@ -103,5 +96,9 @@ public class ExecutionVisitor implements ASTVisitor {
   @Override
   public void visit(LiteralStringNode node) {
 
+  }
+
+  private Object evaluateExpression(ExpressionNode init) {
+    return expressionEvaluator.evaluate(init);
   }
 }
