@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
 
 public class Lexer {
   private final String code;
-  private LexicalRange currentPosition;
+  LexicalRange currentPosition;
   Map<Pattern, TokenType> patterns;
   private List<Token> tokens;
 
@@ -28,7 +28,7 @@ public class Lexer {
     patterns.put(pattern, type);
   }
 
-  private void advancePosition(int length) {
+  public void advancePosition(int length) {
     for (int i = 0; i < length; i++) {
       char c = code.charAt(currentPosition.getOffset());
       currentPosition = new LexicalRange(
@@ -58,7 +58,7 @@ public class Lexer {
   public void tokenize() {
     while (currentPosition.getOffset() < code.length()) {
       Optional<Character> currentChar = getCharAt(currentPosition);
-      if (!currentChar.isPresent()) {
+      if (currentChar.isEmpty()) {
         break;
       }
 
@@ -99,7 +99,7 @@ public class Lexer {
     }
   }
 
-  private boolean isWholeWordMatch(String tokenValue) {
+  public boolean isWholeWordMatch(String tokenValue) {
     int endOffset = currentPosition.getOffset() + tokenValue.length();
     if (endOffset < code.length()) {
       char nextChar = code.charAt(endOffset);
