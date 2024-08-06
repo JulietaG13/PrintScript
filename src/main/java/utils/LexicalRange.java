@@ -10,4 +10,16 @@ public class LexicalRange {
     this.line = line;
     this.column = column;
   }
+
+  public int getOffset() {
+    return offset;
+  }
+
+  public int getLine() {
+    return line;
+  }
+
+  public int getColumn() {
+    return column;
+  }
 }

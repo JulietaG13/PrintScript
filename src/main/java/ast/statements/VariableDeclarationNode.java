@@ -9,6 +9,7 @@ public record VariableDeclarationNode(
     LexicalRange start,
     LexicalRange end,
     IdentifierNode id,
+    Type type,
     Kind kind,
     ExpressionNode init) implements StatementNode {
 }

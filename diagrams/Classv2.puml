@@ -55,12 +55,19 @@ class AssignmentNode implements StatementNode {
 class VariableDeclaration implements StatementNode {
 + id: IdentifierNode
 + kind: Kind
++ type: Type
 + initial: ExpressionNode
 }
 VariableDeclaration *- Kind
+VariableDeclaration *- Type
 
 enum Kind {
 LET
+}
+
+enum Type {
+NUMBER
+STRING
 }
 
 class ExpressionStatement implements StatementNode {
