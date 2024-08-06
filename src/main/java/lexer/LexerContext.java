@@ -63,7 +63,7 @@ public class LexerContext {
       }
       LexicalRange startPosition = new LexicalRange(currentPosition.getOffset(), currentPosition.getLine(), currentPosition.getColumn());
       StringBuilder result = new StringBuilder();
-      while (currentChar.get() != ' ') {
+        while (currentChar.isPresent() && !Character.isWhitespace(currentChar.get())) {
         result.append(currentChar.get());
         currentPosition = new LexicalRange(currentPosition.getOffset() + 1, currentPosition.getLine(), currentPosition.getColumn() + 1);
         currentChar = getCharAt(currentPosition);
