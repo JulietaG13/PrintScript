@@ -6,13 +6,13 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class LexerContext {
+public class Lexer {
   private final String code;
   private LexicalRange currentPosition;
   Map<Pattern, TokenType> patterns;
   private List<Token> tokens;
 
-  public LexerContext(String code) {
+  public Lexer(String code) {
     this.code = code;
     this.currentPosition = new LexicalRange(0, 0, 0);
     this.tokens = new ArrayList<>();
