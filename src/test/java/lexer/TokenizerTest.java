@@ -2,6 +2,8 @@ package lexer;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TokenizerTest {
@@ -27,8 +29,20 @@ public class TokenizerTest {
     Lexer context = new Lexer(code);
     context.tokenize();
     assertEquals(3, context.getTokens().size());
-    for (Token token : context.getTokens()) {
-      System.out.println(token.getType());
-    }
+    List<Token> tokens = context.getTokens();
+    assertEquals(tokens.get(0).getType(), TokenType.LITERAL);
+    assertEquals(tokens.get(1).getType(), TokenType.OPERATOR);
+    assertEquals(tokens.get(2).getType(), TokenType.LITERAL);
+  }
+
+  @Test
+  public void testIsWholeWorldMatch() {
+    String code = "letx";
+    Lexer context = new Lexer(code);
+    context.tokenize();
+    assertEquals(1, context.getTokens().size());
+    List<Token> tokens = context.getTokens();
+    assertEquals(tokens.get(0).getType(), TokenType.IDENTIFIER);
+
   }
 }

@@ -1,4 +1,4 @@
-package tokens;
+package lexer;
 
 import utils.LexicalRange;
 
