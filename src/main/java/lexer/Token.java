@@ -14,4 +14,8 @@ public class Token {
     this.start = start;
     this.end = end;
   }
+
+  public TokenType getType() {
+    return type;
+  }
 }
