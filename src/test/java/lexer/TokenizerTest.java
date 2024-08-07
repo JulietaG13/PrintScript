@@ -36,6 +36,19 @@ public class TokenizerTest {
   }
 
   @Test
+  public void testWholeWordMatch() {
+    String code = "let letdown";
+    Lexer context = new Lexer(code);
+    context.tokenize();
+    assertEquals(2, context.getTokens().size());
+    List<Token> tokens = context.getTokens();
+    assertEquals(tokens.get(0).getType(), TokenType.KEYWORD);
+    assertEquals(tokens.get(1).getType(), TokenType.IDENTIFIER);
+    assertTrue(context.isWholeWordMatch("let"));
+
+  }
+
+  @Test
   public void testComplexCode() {
     String code = "Number let age = 20;\nNumber let year= 2003; println(age + year);";
     Lexer context = new Lexer(code);
@@ -63,17 +76,5 @@ public class TokenizerTest {
     assertEquals(tokens.get(18).getType(), TokenType.SYNTAX);
   }
 
-  @Test
-  public void testWholeWordMatch() {
-    String code = "let letdown";
-    Lexer context = new Lexer(code);
-    context.tokenize();
-    assertEquals(2, context.getTokens().size());
-    List<Token> tokens = context.getTokens();
-    assertEquals(tokens.get(0).getType(), TokenType.KEYWORD);
-    assertEquals(tokens.get(1).getType(), TokenType.IDENTIFIER);
-    assertTrue(context.isWholeWordMatch("let"));
-
-  }
 
 }

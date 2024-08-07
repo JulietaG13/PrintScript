@@ -9,14 +9,14 @@ import java.util.regex.Pattern;
 public class Lexer {
   private final String code;
   LexicalRange currentPosition;
-  Map<Pattern, TokenType> patterns;
+  LinkedHashMap<Pattern, TokenType> patterns;
   private List<Token> tokens;
 
   public Lexer(String code) {
     this.code = code;
     this.currentPosition = new LexicalRange(0, 0, 0);
     this.tokens = new ArrayList<>();
-    this.patterns = new HashMap<>();
+    this.patterns = new LinkedHashMap<>();
     createPatterns();
   }
 
