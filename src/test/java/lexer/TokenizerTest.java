@@ -13,6 +13,22 @@ public class TokenizerTest {
     Lexer context = new Lexer(code);
     context.tokenize();
     assertEquals(5, context.getTokens().size());
+    List<Token> tokens = context.getTokens();
+    assertEquals(tokens.get(0).getType(), TokenType.KEYWORD);
+    assertEquals(tokens.get(0).getEnd().getOffset(), 2);
+    assertEquals(tokens.get(0).getStart().getOffset(), 0);
+    assertEquals(tokens.get(1).getType(), TokenType.IDENTIFIER);
+    assertEquals(tokens.get(1).getStart().getOffset(), 4);
+    assertEquals(tokens.get(1).getEnd().getOffset(), 4);
+    assertEquals(tokens.get(2).getType(), TokenType.OPERATOR);
+    assertEquals(tokens.get(2).getStart().getOffset(), 6);
+    assertEquals(tokens.get(2).getEnd().getOffset(), 6);
+    assertEquals(tokens.get(3).getType(), TokenType.LITERAL);
+    assertEquals(tokens.get(3).getStart().getOffset(), 8);
+    assertEquals(tokens.get(3).getEnd().getOffset(), 9);
+    assertEquals(tokens.get(4).getType(), TokenType.SYNTAX);
+    assertEquals(tokens.get(4).getEnd().getOffset(), 10);
+    assertEquals(tokens.get(4).getStart().getOffset(), 10);
   }
 
   @Test
@@ -76,5 +92,66 @@ public class TokenizerTest {
     assertEquals(tokens.get(18).getType(), TokenType.SYNTAX);
   }
 
+  @Test
+  public void testFunctionCall() {
+    String code = "add(4+1);";
+    Lexer context = new Lexer(code);
+    context.tokenize();
+    List<Token> tokens = context.getTokens();
+    assertEquals(7, tokens.size());
+    assertEquals(tokens.get(0).getType(), TokenType.IDENTIFIER);
+    assertEquals(tokens.get(1).getType(), TokenType.SYNTAX);
+    assertEquals(tokens.get(2).getType(), TokenType.LITERAL);
+    assertEquals(tokens.get(3).getType(), TokenType.OPERATOR);
+    assertEquals(tokens.get(4).getType(), TokenType.LITERAL);
+    assertEquals(tokens.get(5).getType(), TokenType.SYNTAX);
+    assertEquals(tokens.get(6).getType(), TokenType.SYNTAX);
+  }
+
+  @Test
+  public void variableDeclarationWithFunctionCall() {
+    String code = "let age: Number=add(19,1);";
+    Lexer context = new Lexer(code);
+    context.tokenize();
+    List<Token> tokens = context.getTokens();
+    assertEquals(12, tokens.size());
+    assertEquals(tokens.get(0).getType(), TokenType.KEYWORD);
+    assertEquals(tokens.get(1).getType(), TokenType.IDENTIFIER);
+    assertEquals(tokens.get(2).getType(), TokenType.SYNTAX);
+    assertEquals(tokens.get(3).getType(), TokenType.KEYWORD);
+    assertEquals(tokens.get(4).getType(), TokenType.OPERATOR);
+    assertEquals(tokens.get(5).getType(), TokenType.IDENTIFIER);
+    assertEquals(tokens.get(6).getType(), TokenType.SYNTAX);
+    assertEquals(tokens.get(7).getType(), TokenType.LITERAL);
+    assertEquals(tokens.get(8).getType(), TokenType.SYNTAX);
+    assertEquals(tokens.get(9).getType(), TokenType.LITERAL);
+    assertEquals(tokens.get(10).getType(), TokenType.SYNTAX);
+    assertEquals(tokens.get(11).getType(), TokenType.SYNTAX);
+  }
+
+  @Test
+  public void variableDeclarationWithFunctionCallAnd() {
+    String code = "let age: Number=sub(19,1); age+=1;";
+    Lexer context = new Lexer(code);
+    context.tokenize();
+    List<Token> tokens = context.getTokens();
+    assertEquals(16, tokens.size());
+    assertEquals(tokens.get(0).getType(), TokenType.KEYWORD);
+    assertEquals(tokens.get(1).getType(), TokenType.IDENTIFIER);
+    assertEquals(tokens.get(2).getType(), TokenType.SYNTAX);
+    assertEquals(tokens.get(3).getType(), TokenType.KEYWORD);
+    assertEquals(tokens.get(4).getType(), TokenType.OPERATOR);
+    assertEquals(tokens.get(5).getType(), TokenType.IDENTIFIER);
+    assertEquals(tokens.get(6).getType(), TokenType.SYNTAX);
+    assertEquals(tokens.get(7).getType(), TokenType.LITERAL);
+    assertEquals(tokens.get(8).getType(), TokenType.SYNTAX);
+    assertEquals(tokens.get(9).getType(), TokenType.LITERAL);
+    assertEquals(tokens.get(10).getType(), TokenType.SYNTAX);
+    assertEquals(tokens.get(11).getType(), TokenType.SYNTAX);
+    assertEquals(tokens.get(12).getType(), TokenType.IDENTIFIER);
+    assertEquals(tokens.get(13).getType(), TokenType.OPERATOR);
+    assertEquals(tokens.get(14).getType(), TokenType.LITERAL);
+    assertEquals(tokens.get(15).getType(), TokenType.SYNTAX);
+  }
 
 }

@@ -44,8 +44,8 @@ public class Lexer {
     addPattern(Pattern.compile("[a-zA-Z_][a-zA-Z0-9_]*|println"), TokenType.IDENTIFIER); // Identifier
     addPattern(Pattern.compile("[0-9]+"), TokenType.LITERAL); // Integer literal
     addPattern(Pattern.compile("\"[^\"]*\""), TokenType.LITERAL); // String literal
-    addPattern(Pattern.compile("[+\\-*/=%]"), TokenType.OPERATOR); // Operators
-    addPattern(Pattern.compile("[;:(){}]"), TokenType.SYNTAX); // Syntax including parentheses, braces, and semicolon
+    addPattern(Pattern.compile("\\+=|-=|/=|\\*=|==|[+\\-*/=%]"), TokenType.OPERATOR); // Operators
+    addPattern(Pattern.compile("[;:(){},]"), TokenType.SYNTAX); // Syntax including parentheses, braces, and semicolon
   }
 
   public Optional<Character> getCharAt(LexicalRange position) {
@@ -84,7 +84,7 @@ public class Lexer {
           LexicalRange startRange = new LexicalRange(
             currentPosition.getOffset(), currentPosition.getLine(), currentPosition.getColumn());
           LexicalRange endRange = new LexicalRange(
-            currentPosition.getOffset() + tokenValue.length(), currentPosition.getLine(), currentPosition.getColumn() + tokenValue.length());
+            currentPosition.getOffset() + tokenValue.length() - 1, currentPosition.getLine(), currentPosition.getColumn() + tokenValue.length() - 1);
 
           tokens.add(new Token(type, tokenValue, startRange, endRange));
           advancePosition(tokenValue.length());
