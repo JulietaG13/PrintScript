@@ -13,13 +13,14 @@ public class ExecutionVisitor implements ASTVisitor {
   private final Map<String, Number> numberVariables = new HashMap<>();
   private final Map<String, String> stringVariables = new HashMap<>();
 
-  public ExecutionVisitor() {}
+  public ExecutionVisitor() {
+  }
 
   @Override
   public void visit(ProgramNode node) {
-//    for(StatementNode statement : node.getStatements()) {
-//      statement.accept(this);
-//    }
+    for(StatementNode statement : node.getBody()) {
+      statement.accept(this);
+    }
   }
 
   @Override
@@ -101,17 +102,17 @@ public class ExecutionVisitor implements ASTVisitor {
 
   @Override
   public void visit(IdentifierNode node) {
-
+    throw new UnsupportedOperationException("Los identificadores deben ser evaluados.");
   }
 
   @Override
   public void visit(LiteralNumberNode node) {
-
+    throw new UnsupportedOperationException("Los literales deben ser evaluados.");
   }
 
   @Override
   public void visit(LiteralStringNode node) {
-
+    throw new UnsupportedOperationException("Los literales deben ser evaluados.");
   }
 
   private Object evaluate(ExpressionNode node) {
@@ -146,5 +147,12 @@ public class ExecutionVisitor implements ASTVisitor {
       //verificar si deberia return null
     }
     throw new UnsupportedOperationException("Unsupported expression type: " + node.getClass().getName());
+  }
+
+  public Map getStringVariables() {
+    return stringVariables;
+  }
+  public Map getNumberVariables() {
+    return numberVariables;
   }
 }

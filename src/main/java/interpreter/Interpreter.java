@@ -10,7 +10,7 @@ public class Interpreter {
   }
 
   public void interpret(ProgramNode program) {
-    //program.accept(visitor);
+    program.accept(visitor);
   }
 
   public ExecutionVisitor getVisitor() {

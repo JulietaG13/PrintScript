@@ -1,6 +1,7 @@
 package ast.expressions;
 
 import ast.interfaces.ExpressionNode;
+import interpreter.interfaces.*;
 import utils.LexicalRange;
 
 public record BinaryExpressionNode(
@@ -9,4 +10,8 @@ public record BinaryExpressionNode(
     String operator,
     ExpressionNode left,
     ExpressionNode right) implements ExpressionNode {
+  @Override
+  public void accept(ASTVisitor visitor) {
+    visitor.visit(this);
+  }
 }
