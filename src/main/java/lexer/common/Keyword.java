@@ -1,4 +1,4 @@
-package common;
+package lexer.common;
 
 public enum Keyword {
   LET,

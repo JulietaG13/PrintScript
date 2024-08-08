@@ -1,12 +1,9 @@
 package parser.utils;
 
-import ast.expressions.IdentifierNode;
 import lexer.Token;
 import lexer.TokenType;
 
 import java.util.List;
-
-import static lexer.TokenType.IDENTIFIER;
 
 public class ParserUtil {
 

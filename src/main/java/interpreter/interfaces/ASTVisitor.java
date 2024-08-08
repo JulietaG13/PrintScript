@@ -1,14 +1,14 @@
 package interpreter.interfaces;
 
-import ast.ProgramNode;
-import ast.expressions.BinaryExpressionNode;
-import ast.expressions.CallExpressionNode;
-import ast.expressions.IdentifierNode;
-import ast.expressions.LiteralNumberNode;
-import ast.expressions.LiteralStringNode;
-import ast.statements.AssignmentNode;
-import ast.statements.ExpressionStatementNode;
-import ast.statements.VariableDeclarationNode;
+import parser.ast.ProgramNode;
+import parser.ast.expressions.BinaryExpressionNode;
+import parser.ast.expressions.CallExpressionNode;
+import parser.ast.expressions.IdentifierNode;
+import parser.ast.expressions.LiteralNumberNode;
+import parser.ast.expressions.LiteralStringNode;
+import parser.ast.statements.AssignmentNode;
+import parser.ast.statements.ExpressionStatementNode;
+import parser.ast.statements.VariableDeclarationNode;
 
 public interface ASTVisitor {
   void visit(ProgramNode node);

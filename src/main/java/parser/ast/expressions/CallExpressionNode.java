@@ -1,8 +1,8 @@
-package ast.expressions;
+package parser.ast.expressions;
 
-import ast.interfaces.ExpressionNode;
+import parser.ast.interfaces.ExpressionNode;
 import interpreter.interfaces.*;
-import utils.LexicalRange;
+import lexer.utils.LexicalRange;
 
 import java.util.List;
 

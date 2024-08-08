@@ -1,6 +1,6 @@
 package parser.utils;
 
-import ast.statements.Type;
+import parser.ast.statements.Type;
 
 import java.util.HashMap;
 import java.util.Map;

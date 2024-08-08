@@ -3,7 +3,7 @@ package classesRequirements;
 import lexer.Lexer;
 import parser.Parser;
 import interpreter.Interpreter;
-import ast.ProgramNode;
+import parser.ast.ProgramNode;
 import lexer.Token;
 import org.junit.jupiter.api.Test;
 import java.util.List;

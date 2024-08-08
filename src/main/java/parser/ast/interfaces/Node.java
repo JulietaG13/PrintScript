@@ -1,7 +1,7 @@
-package ast.interfaces;
+package parser.ast.interfaces;
 
 import interpreter.interfaces.*;
-import utils.LexicalRange;
+import lexer.utils.LexicalRange;
 
 public interface Node {
   LexicalRange start();

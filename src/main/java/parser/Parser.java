@@ -1,7 +1,7 @@
 package parser;
 
-import ast.ProgramNode;
-import ast.interfaces.StatementNode;
+import parser.ast.ProgramNode;
+import parser.ast.interfaces.StatementNode;
 import lexer.Token;
 import parser.parsers.ParseStatement;
 

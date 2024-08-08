@@ -1,20 +1,16 @@
-package common;
-
-import ast.statements.Kind;
+package lexer.common;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import static common.Keyword.*;
 
 public class KeywordProvider {
   private final static Map<String, Keyword> keywords = new HashMap<>();
   private final static Map<Keyword, String> strings = new HashMap<>();
 
   static {
-    add("let", LET);
-    add("String", STRING);
-    add("Number", NUMBER);
+    add("let", Keyword.LET);
+    add("String", Keyword.STRING);
+    add("Number", Keyword.NUMBER);
   }
 
   public static Keyword getKeyword(String name) {

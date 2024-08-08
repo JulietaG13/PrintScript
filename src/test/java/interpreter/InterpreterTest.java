@@ -1,11 +1,15 @@
 package interpreter;
 
-import ast.*;
-import ast.expressions.*;
-import ast.interfaces.*;
-import ast.statements.*;
-import interpreter.*;
-import utils.*;
+import lexer.utils.LexicalRange;
+import parser.ast.ProgramNode;
+import parser.ast.expressions.CallExpressionNode;
+import parser.ast.expressions.IdentifierNode;
+import parser.ast.expressions.LiteralStringNode;
+import parser.ast.interfaces.ExpressionNode;
+import parser.ast.statements.ExpressionStatementNode;
+import parser.ast.statements.Kind;
+import parser.ast.statements.Type;
+import parser.ast.statements.VariableDeclarationNode;
 
 import java.util.ArrayList;
 import java.util.List;

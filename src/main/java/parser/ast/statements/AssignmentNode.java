@@ -1,10 +1,10 @@
-package ast.statements;
+package parser.ast.statements;
 
-import ast.interfaces.ExpressionNode;
-import ast.expressions.IdentifierNode;
-import ast.interfaces.StatementNode;
+import parser.ast.interfaces.ExpressionNode;
+import parser.ast.expressions.IdentifierNode;
+import parser.ast.interfaces.StatementNode;
 import interpreter.interfaces.*;
-import utils.LexicalRange;
+import lexer.utils.LexicalRange;
 
 public record AssignmentNode(
     LexicalRange start,

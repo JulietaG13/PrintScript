@@ -1,6 +1,6 @@
 package parser.parsers;
 
-import ast.interfaces.ExpressionNode;
+import parser.ast.interfaces.ExpressionNode;
 import lexer.Token;
 import parser.parsers.expressions.ParseBinaryExpression;
 import parser.parsers.expressions.ParseCallExpression;

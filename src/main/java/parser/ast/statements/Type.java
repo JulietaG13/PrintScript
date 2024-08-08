@@ -1,4 +1,4 @@
-package ast.statements;
+package parser.ast.statements;
 
 public enum Type {
   NUMBER,

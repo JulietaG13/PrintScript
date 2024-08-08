@@ -1,6 +1,6 @@
 package lexer;
 
-import utils.LexicalRange;
+import lexer.utils.LexicalRange;
 
 import java.util.*;
 import java.util.regex.Matcher;

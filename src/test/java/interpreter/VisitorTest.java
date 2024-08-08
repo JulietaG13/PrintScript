@@ -1,11 +1,6 @@
 package interpreter;
 
-import ast.*;
-import ast.expressions.*;
-import ast.interfaces.StatementNode;
-import ast.statements.AssignmentNode;
-import ast.statements.VariableDeclarationNode;
-import interpreter.ExecutionVisitor;
+import parser.ast.ProgramNode;
 import lexer.*;
 import org.junit.jupiter.api.Test;
 import parser.Parser;

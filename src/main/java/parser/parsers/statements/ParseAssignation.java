@@ -1,14 +1,14 @@
 package parser.parsers.statements;
 
-import ast.expressions.IdentifierNode;
-import ast.interfaces.ExpressionNode;
-import ast.interfaces.StatementNode;
-import ast.statements.AssignmentNode;
+import parser.ast.expressions.IdentifierNode;
+import parser.ast.interfaces.ExpressionNode;
+import parser.ast.interfaces.StatementNode;
+import parser.ast.statements.AssignmentNode;
 import lexer.Token;
 import parser.parsers.ParseExpression;
 import parser.parsers.StatementParser;
 import parser.parsers.expressions.ParseIdentifier;
-import utils.LexicalRange;
+import lexer.utils.LexicalRange;
 
 import java.util.List;
 

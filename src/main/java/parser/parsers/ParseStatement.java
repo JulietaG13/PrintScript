@@ -1,6 +1,6 @@
 package parser.parsers;
 
-import ast.interfaces.StatementNode;
+import parser.ast.interfaces.StatementNode;
 import lexer.Token;
 import parser.parsers.statements.ParseAssignation;
 import parser.parsers.statements.ParseLet;

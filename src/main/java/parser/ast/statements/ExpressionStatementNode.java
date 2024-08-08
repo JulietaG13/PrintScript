@@ -1,9 +1,9 @@
-package ast.statements;
+package parser.ast.statements;
 
-import ast.interfaces.ExpressionNode;
-import ast.interfaces.StatementNode;
+import parser.ast.interfaces.ExpressionNode;
+import parser.ast.interfaces.StatementNode;
 import interpreter.interfaces.*;
-import utils.LexicalRange;
+import lexer.utils.LexicalRange;
 
 public record ExpressionStatementNode(
     LexicalRange start,

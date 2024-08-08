@@ -1,11 +1,14 @@
 package interpreter;
 
-import ast.*;
-import ast.expressions.*;
-import ast.interfaces.*;
-import ast.statements.*;
 import interpreter.interfaces.*;
-import utils.*;
+import parser.ast.ProgramNode;
+import parser.ast.expressions.*;
+import parser.ast.interfaces.ExpressionNode;
+import parser.ast.interfaces.StatementNode;
+import parser.ast.statements.AssignmentNode;
+import parser.ast.statements.ExpressionStatementNode;
+import parser.ast.statements.Kind;
+import parser.ast.statements.VariableDeclarationNode;
 
 import java.util.*;
 

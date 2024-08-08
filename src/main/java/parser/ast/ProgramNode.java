@@ -1,9 +1,9 @@
-package ast;
+package parser.ast;
 
-import ast.interfaces.Node;
-import ast.interfaces.StatementNode;
+import parser.ast.interfaces.Node;
+import parser.ast.interfaces.StatementNode;
 import interpreter.interfaces.*;
-import utils.LexicalRange;
+import lexer.utils.LexicalRange;
 import java.util.ArrayList;
 import java.util.List;
 

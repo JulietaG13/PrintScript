@@ -1,8 +1,8 @@
-package ast.expressions;
+package parser.ast.expressions;
 
-import ast.interfaces.LiteralNode;
+import parser.ast.interfaces.LiteralNode;
 import interpreter.interfaces.*;
-import utils.LexicalRange;
+import lexer.utils.LexicalRange;
 
 public record LiteralStringNode(LexicalRange start, LexicalRange end, String value) implements LiteralNode {
   

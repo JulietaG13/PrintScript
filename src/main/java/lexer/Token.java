@@ -1,6 +1,6 @@
 package lexer;
 
-import utils.LexicalRange;
+import lexer.utils.LexicalRange;
 
 public class Token {
   private final TokenType type;

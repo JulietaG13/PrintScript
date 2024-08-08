@@ -1,7 +1,7 @@
 package parser.parsers.expressions;
 
-import ast.expressions.IdentifierNode;
-import ast.interfaces.ExpressionNode;
+import parser.ast.expressions.IdentifierNode;
+import parser.ast.interfaces.ExpressionNode;
 import lexer.Token;
 import parser.parsers.ExpressionParser;
 import java.util.List;

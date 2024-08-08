@@ -1,6 +1,6 @@
 package interpreter;
 
-import ast.*;
+import parser.ast.ProgramNode;
 
 public class Interpreter {
   private final ExecutionVisitor visitor;

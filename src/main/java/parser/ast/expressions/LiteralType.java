@@ -1,4 +1,4 @@
-package ast.expressions;
+package parser.ast.expressions;
 
 public enum LiteralType {
   NUMBER,

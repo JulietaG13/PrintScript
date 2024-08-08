@@ -1,6 +1,6 @@
 package parser;
 
-import ast.ProgramNode;
+import parser.ast.ProgramNode;
 import lexer.Token;
 import org.junit.jupiter.api.Test;
 import java.util.List;

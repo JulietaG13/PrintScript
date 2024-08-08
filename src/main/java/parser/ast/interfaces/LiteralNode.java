@@ -1,6 +1,6 @@
-package ast.interfaces;
+package parser.ast.interfaces;
 
-import ast.expressions.LiteralType;
+import parser.ast.expressions.LiteralType;
 
 public interface LiteralNode extends ExpressionNode {
   LiteralType getType();

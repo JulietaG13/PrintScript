@@ -1,19 +1,18 @@
 package parser.parsers.statements;
 
-import ast.expressions.IdentifierNode;
-import ast.interfaces.ExpressionNode;
-import ast.interfaces.StatementNode;
-import ast.statements.Kind;
-import ast.statements.Type;
-import ast.statements.VariableDeclarationNode;
-import common.Keyword;
+import parser.ast.expressions.IdentifierNode;
+import parser.ast.interfaces.ExpressionNode;
+import parser.ast.interfaces.StatementNode;
+import parser.ast.statements.Kind;
+import parser.ast.statements.Type;
+import parser.ast.statements.VariableDeclarationNode;
 import parser.parsers.ParseExpression;
 import parser.parsers.StatementParser;
 import parser.parsers.expressions.ParseIdentifier;
 import parser.utils.KindProvider;
 import parser.utils.TypeProvider;
 import lexer.Token;
-import utils.LexicalRange;
+import lexer.utils.LexicalRange;
 import java.util.List;
 
 import static parser.utils.ParserUtil.isKeyword;

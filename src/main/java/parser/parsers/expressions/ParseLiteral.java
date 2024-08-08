@@ -1,13 +1,13 @@
 package parser.parsers.expressions;
 
-import ast.expressions.LiteralNumberNode;
-import ast.expressions.LiteralStringNode;
-import ast.interfaces.ExpressionNode;
-import ast.statements.Type;
+import parser.ast.expressions.LiteralNumberNode;
+import parser.ast.expressions.LiteralStringNode;
+import parser.ast.interfaces.ExpressionNode;
+import parser.ast.statements.Type;
 import lexer.Token;
 import parser.parsers.ExpressionParser;
 import parser.utils.TypeProvider;
-import utils.LexicalRange;
+import lexer.utils.LexicalRange;
 
 import java.util.List;
 

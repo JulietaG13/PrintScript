@@ -1,12 +1,12 @@
 package parser.parsers.expressions;
 
-import ast.expressions.CallExpressionNode;
-import ast.expressions.IdentifierNode;
-import ast.interfaces.ExpressionNode;
+import parser.ast.expressions.CallExpressionNode;
+import parser.ast.expressions.IdentifierNode;
+import parser.ast.interfaces.ExpressionNode;
 import lexer.Token;
 import parser.parsers.ExpressionParser;
 import parser.parsers.ParseExpression;
-import utils.LexicalRange;
+import lexer.utils.LexicalRange;
 
 import java.util.ArrayList;
 import java.util.List;
