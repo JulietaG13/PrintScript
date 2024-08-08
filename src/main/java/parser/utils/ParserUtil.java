@@ -10,17 +10,6 @@ import static lexer.TokenType.IDENTIFIER;
 
 public class ParserUtil {
 
-  public static IdentifierNode getIdentifier(Token token) {
-    if (token.getType() != IDENTIFIER) {
-      throw new RuntimeException(); // TODO()
-    }
-    return new IdentifierNode(
-        token.getStart(),
-        token.getEnd(),
-        token.getContent()
-    );
-  }
-
   public static boolean isTokenOrderValid(List<Token> tokens, List<TokenType> expected) {
     if (expected.size() < tokens.size()) {
       return false;

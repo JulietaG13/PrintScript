@@ -4,6 +4,7 @@ import ast.expressions.CallExpressionNode;
 import ast.expressions.IdentifierNode;
 import ast.interfaces.ExpressionNode;
 import lexer.Token;
+import parser.parsers.ExpressionParser;
 import parser.parsers.ParseExpression;
 import utils.LexicalRange;
 
@@ -12,12 +13,13 @@ import java.util.List;
 
 import static parser.utils.ParserUtil.*;
 
-public class ParseCallExpression {
+public class ParseCallExpression implements ExpressionParser {
   /*
    * Does not expect a ';' at the end
    */
 
-  public static CallExpressionNode parse(List<Token> tokens) {
+  @Override
+  public ExpressionNode parse(List<Token> tokens) {
     String name = tokens.getFirst().getContent();
     LexicalRange start = tokens.getFirst().getStart();
     LexicalRange end = tokens.getLast().getEnd();
@@ -29,7 +31,7 @@ public class ParseCallExpression {
         name
     );
 
-    List<List<Token>> expressions = separateArgs(tokens.subList(2, tokens.size() - 1));
+    List<List<Token>> expressions = splitArgs(tokens.subList(2, tokens.size() - 1));
     List<ExpressionNode> args = new ArrayList<>();
 
     for (List<Token> expression : expressions) {
@@ -44,7 +46,49 @@ public class ParseCallExpression {
     );
   }
 
-  private static List<List<Token>> separateArgs(List<Token> tokens) {
+  @Override
+  public boolean isXExpression(List<Token> tokens) {
+    boolean minimum = isIdentifier(tokens, 0)
+        && tokens.size() >= 3
+        && isOpenParen(tokens, 1)
+        && isCloseParen(tokens, tokens.size() - 1);
+
+    if (minimum && tokens.size() == 3) {
+      return true;
+    }
+
+    if (!minimum) {
+      return false;
+    }
+
+    int balance = 0;
+    for (int i = 1; i < tokens.size() - 1; i++) {
+      if (isOpenParen(tokens, i)) {
+        balance++;
+      } else if (isCloseParen(tokens, i)) {
+        balance--;
+      }
+
+      if (balance == 0) {
+        return false;
+      }
+      if (balance < 0) {
+        return false; // TODO()
+      }
+    }
+
+    if (isCloseParen(tokens, tokens.size() - 1)) {
+      balance--;
+    }
+
+    if (balance > 0) {
+      return false;
+    }
+
+    return true;
+  }
+
+  private static List<List<Token>> splitArgs(List<Token> tokens) {
     List<List<Token>> args = new ArrayList<>();
     List<Token> current = new ArrayList<>();
 

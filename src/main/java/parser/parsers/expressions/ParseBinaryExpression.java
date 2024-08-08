@@ -1,15 +1,20 @@
 package parser.parsers.expressions;
 
-import ast.expressions.BinaryExpressionNode;
+import ast.interfaces.ExpressionNode;
 import lexer.Token;
-
+import parser.parsers.ExpressionParser;
 import java.util.List;
 
-public class ParseBinaryExpression {
+public class ParseBinaryExpression implements ExpressionParser {
 
-  public static BinaryExpressionNode parse(List<Token> tokens) {
-    // TODO
+  @Override
+  public ExpressionNode parse(List<Token> tokens) {   // TODO
     return null;
+  }
+
+  @Override
+  public boolean isXExpression(List<Token> tokens) {  // TODO
+    return false;
   }
 
 }
