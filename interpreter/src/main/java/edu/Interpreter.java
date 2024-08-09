@@ -1,12 +1,13 @@
 package edu;
 
-import edu.ast.ProgramNode;
+
+import edu.ast.*;
 
 public class Interpreter {
   private final ExecutionVisitor visitor;
 
   public Interpreter() {
-    this.visitor = new ExecutionVisitor();
+    this.visitor = new ExecutionVisitor(new Reader(new VariableContext()));
   }
 
   public void interpret(ProgramNode program) {

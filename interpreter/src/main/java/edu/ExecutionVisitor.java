@@ -1,24 +1,21 @@
 package edu;
 
-import edu.ast.ASTVisitor;
-import edu.ast.ProgramNode;
+import edu.ast.*;
 import edu.ast.expressions.*;
-import edu.ast.interfaces.ExpressionNode;
-import edu.ast.interfaces.StatementNode;
+import edu.ast.interfaces.*;
+import edu.Parser.*;
 import edu.ast.statements.*;
 
-import java.util.*;
-
 public class ExecutionVisitor implements ASTVisitor {
-  private final Map<String, Number> numberVariables = new HashMap<>();
-  private final Map<String, String> stringVariables = new HashMap<>();
+  private final Reader reader;
 
-  public ExecutionVisitor() {
+  public ExecutionVisitor(Reader reader) {
+    this.reader = reader;
   }
 
   @Override
   public void visit(ProgramNode node) {
-    for(StatementNode statement : node.getBody()) {
+    for (StatementNode statement : node.getBody()) {
       statement.accept(this);
     }
   }
@@ -26,52 +23,51 @@ public class ExecutionVisitor implements ASTVisitor {
   @Override
   public void visit(VariableDeclarationNode node) {
     String varName = node.id().name();
-    Object value = node.init() != null ? evaluate(node.init()) : null;
+    node.init().accept(this);
+    Object value = getValue(node.init().toString());
     if (node.kind() == Kind.LET) {
       if (value instanceof Number) {
-        numberVariables.put(varName, (Number) value);
+        reader.setNumberVariable(varName, (Number) value);
       } else if (value instanceof String) {
-        stringVariables.put(varName, (String) value);
+        reader.setStringVariable(varName, (String) value);
       }
     } else {
-        throw new RuntimeException("Tipo de variable no soportado: " + node.kind());
+      throw new RuntimeException("Tipo de variable no soportado: " + node.kind());
     }
   }
 
   @Override
   public void visit(AssignmentNode node) {
     String varName = node.id().name();
-    Object value = evaluate(node.value());
+    node.value().accept(this);
 
-    if (value instanceof Number) {
-      if (numberVariables.containsKey(varName)) {
-        numberVariables.put(varName, ((Number) value));
-      } else {
-        throw new RuntimeException("Variable no definida: " + varName);
-      }
-    } else if (value instanceof String) {
-      if (stringVariables.containsKey(varName)) {
-        stringVariables.put(varName, (String) value);
-      } else {
-        throw new RuntimeException("Variable no definida: " + varName);
-      }
+    if (reader.hasNumberVariable(varName)) {
+      reader.setNumberVariable(varName, reader.getNumberVariable(varName));
+    } else if (reader.hasStringVariable(varName)) {
+      reader.setStringVariable(varName, reader.getStringVariable(varName));
     } else {
-      throw new RuntimeException("Tipo de valor no soportado: " + value);
+      throw new RuntimeException("Variable no definida: " + varName);
     }
   }
 
-
   @Override
   public void visit(ExpressionStatementNode node) {
-    evaluate(node.expression());
+    node.expression().accept(this);
   }
 
   @Override
   public void visit(CallExpressionNode node) {
-    if ("println".equals(node.callee().name())) {
+    if (isPrint(node)) {
       for (ExpressionNode arg : node.args()) {
-        Object value = evaluate(arg);
-        System.out.println(value);
+        if (arg instanceof IdentifierNode identifier) {
+          String varName = identifier.name();
+          Object value = getValue(varName);
+          System.out.println(value);
+        } else {
+          arg.accept(this);
+          Object value = getValue(arg.toString());
+          System.out.println(value);
+        }
       }
     } else {
       throw new RuntimeException("Función no soportada: " + node.callee().name());
@@ -80,79 +76,30 @@ public class ExecutionVisitor implements ASTVisitor {
 
   @Override
   public void visit(BinaryExpressionNode node) {
-    //como guardar en el mapa de number variables la operacion
-//    Object leftValue = evaluate(node.left());
-//    Object rightValue = evaluate(node.right());
-//
-//    if (leftValue instanceof Double && rightValue instanceof Double) {
-//      double left = (Double) leftValue;
-//      double right = (Double) rightValue;
-//      switch (node.operator()) {
-//        case "+" -> numberVariables.put(node.operator(), left + right);
-//        case "-" -> numberVariables.put(node.operator(), left - right);
-//        case "*" -> numberVariables.put(node.operator(), left * right);
-//        case "/" -> numberVariables.put(node.operator(), left / right);
-//        default -> throw new UnsupportedOperationException("Unsupported operator: " + node.operator());
-//      }
-//    } else {
-//      throw new UnsupportedOperationException("Binary operations are only supported for numbers.");
-//    }
+    //TODO
   }
-
 
   @Override
   public void visit(IdentifierNode node) {
-    throw new UnsupportedOperationException("Los identificadores deben ser evaluados.");
+    //TODO
   }
 
   @Override
   public void visit(LiteralNumberNode node) {
-    throw new UnsupportedOperationException("Los literales deben ser evaluados.");
+    reader.setNumberVariable(node.toString(), node.value());
   }
 
   @Override
   public void visit(LiteralStringNode node) {
-    throw new UnsupportedOperationException("Los literales deben ser evaluados.");
+    reader.setStringVariable(node.toString(), node.value());
   }
 
-  private Object evaluate(ExpressionNode node) {
-    if (node instanceof IdentifierNode) {
-      String varName = ((IdentifierNode) node).name();
-      if (numberVariables.containsKey(varName)) {
-        return numberVariables.get(varName);
-      } else if (stringVariables.containsKey(varName)) {
-        return stringVariables.get(varName);
-      } else {
-        throw new RuntimeException("Variable not found: " + varName);
-      }
-    }
-    if (node instanceof LiteralNumberNode) {
-      return ((LiteralNumberNode) node).value();
-    }
-    if (node instanceof LiteralStringNode) {
-      return ((LiteralStringNode) node).value();
-    }
-    if (node instanceof BinaryExpressionNode) {
-      //TODO
-      //manejar como identificar la operacion en el mapa de operaciones y ejecutarla
-      //se me ocurre :
-      //visit((BinaryExpressionNode) node);
-      //return numberVariables.get(((BinaryExpressionNode) node).operator());
-      return null;
-    }
-    if (node instanceof CallExpressionNode) {
-      visit((CallExpressionNode) node);
-      return null;
-      //TODO
-      //verificar si deberia return null
-    }
-    throw new UnsupportedOperationException("Unsupported expression type: " + node.getClass().getName());
+  private boolean isPrint(ExpressionNode node) {
+    return node instanceof CallExpressionNode call && "println".equals(call.callee().name());
   }
 
-  public Map getStringVariables() {
-    return stringVariables;
+  private Object getValue(String varName) {
+    return reader.hasNumberVariable(varName) ? reader.getNumberVariable(varName) : reader.getStringVariable(varName);
   }
-  public Map getNumberVariables() {
-    return numberVariables;
-  }
+
 }
