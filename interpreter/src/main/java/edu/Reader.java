@@ -1,41 +1,57 @@
 package edu;
 
+import java.util.Stack;
+
 public class Reader {
-  private final VariableContext context;
+  VariableContext variables = new VariableContext();
+  Stack<String> identifiers = new Stack<>();
+  Stack<Object> literals = new Stack<>();
 
-  public Reader(VariableContext context) {
-    this.context = context;
+  public void addIdentifier(String identifier) {
+    identifiers.add(identifier);
   }
 
-  public Number getNumberVariable(String name) {
-    Number value = context.getNumberVariable(name);
-    if (value == null) {
-      throw new RuntimeException("Variable numérica no encontrada: " + name);
+  public void addLiteral(Object literal) {
+    literals.add(literal);
+  }
+
+  public String getIdentifier() {
+    return identifiers.pop();
+  }
+
+  public Object getLiteral() {
+    return literals.pop();
+  }
+
+  public boolean hasLiteral() {
+    return !literals.isEmpty();
+  }
+
+  public boolean hasIdentifier() {
+    return !identifiers.isEmpty();
+  }
+
+  public Object read() {
+    if (hasLiteral()) {
+      return getLiteral();
+    } else {
+      String id = getIdentifier();
+      if (isStringVariable(id)) {
+        return variables.getStringVariable(id);
+      } else if (isNumberVariable(id)) {
+        return variables.getNumberVariable(id);
+      } else {
+        throw new RuntimeException("Variable no definida: " + id);
+      }
     }
-    return value;
   }
 
-  public String getStringVariable(String name) {
-    String value = context.getStringVariable(name);
-    if (value == null) {
-      throw new RuntimeException("Variable de cadena no encontrada: " + name);
-    }
-    return value;
+  private boolean isStringVariable(String varName) {
+    return variables.hasStringVariable(varName);
   }
 
-  public void setNumberVariable(String name, Number value) {
-    context.setNumberVariable(name, value);
+  private boolean isNumberVariable(String varName) {
+    return variables.hasNumberVariable(varName);
   }
 
-  public void setStringVariable(String name, String value) {
-    context.setStringVariable(name, value);
-  }
-
-  public boolean hasNumberVariable(String name) {
-    return context.hasNumberVariable(name);
-  }
-
-  public boolean hasStringVariable(String name) {
-    return context.hasStringVariable(name);
-  }
 }

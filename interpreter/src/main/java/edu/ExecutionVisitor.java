@@ -3,16 +3,15 @@ package edu;
 import edu.ast.*;
 import edu.ast.expressions.*;
 import edu.ast.interfaces.*;
-import edu.Parser.*;
 import edu.ast.statements.*;
 
 public class ExecutionVisitor implements ASTVisitor {
   private final Reader reader;
-  private final VariablesQueue queues;
+  private final VariableContext variables;
 
-  public ExecutionVisitor(Reader reader) {
+  public ExecutionVisitor(Reader reader, VariableContext variableContext) {
     this.reader = reader;
-    this.queues = new VariablesQueue();
+    this.variables = variableContext;
   }
 
   @Override
@@ -27,14 +26,14 @@ public class ExecutionVisitor implements ASTVisitor {
     node.id().accept(this);
     node.init().accept(this);
 
-    String varName = queues.getIdentifier();
-    Object value = queues.getLiteral();
+    String varName = reader.getIdentifier();
+    Object value = reader.getLiteral();
 
     if (node.kind() == Kind.LET) {
       if (value instanceof Number) {
-        reader.setNumberVariable(varName, (Number) value);
+        variables.setNumberVariable(varName, (Number) value);
       } else if (isString(value)) {
-        reader.setStringVariable(varName, (String) value);
+        variables.setStringVariable(varName, (String) value);
       }
     } else {
       throw new RuntimeException("Tipo de variable no soportado: " + node.kind());
@@ -46,24 +45,24 @@ public class ExecutionVisitor implements ASTVisitor {
     node.id().accept(this);
     node.value().accept(this);
     
-    String varName = queues.getIdentifier();
-    Object value = queues.getLiteral();
+    String varName = reader.getIdentifier();
+    Object value = reader.getLiteral();
     
     if (isNumberVariable(varName) && isNumber(value)) {
-      reader.setNumberVariable(varName, (Number) value);
+      variables.setNumberVariable(varName, (Number) value);
     } else if (isStringVariable(varName) && isString(value)) {
-      reader.setStringVariable(varName, (String) value);
+      variables.setStringVariable(varName, (String) value);
     } else {
       throw new RuntimeException("Variable no definida: " + varName);
     }
   }
 
   private boolean isStringVariable(String varName) {
-    return reader.hasStringVariable(varName);
+    return variables.hasStringVariable(varName);
   }
 
   private boolean isNumberVariable(String varName) {
-    return reader.hasNumberVariable(varName);
+    return variables.hasNumberVariable(varName);
   }
 
   private static boolean isString(Object value) {
@@ -87,7 +86,8 @@ public class ExecutionVisitor implements ASTVisitor {
         arg.accept(this);
     }
     if (isPrint(node)) {
-      Object value = getValueForPrint();
+      Object value = getValueFromStacks();
+      reader.getIdentifier();
       System.out.println(value);
     } else {
       throw new RuntimeException("Función no soportada: " + node.callee().name());
@@ -97,10 +97,9 @@ public class ExecutionVisitor implements ASTVisitor {
   @Override
   public void visit(BinaryExpressionNode node) {
     node.left().accept(this);
+    Object left = getValueFromStacks();
     node.right().accept(this);
-
-    Object left = queues.getLiteral();
-    Object right = queues.getLiteral();
+    Object right = getValueFromStacks();
     String operator = node.operator();
 
     if (isNumber(left) && isNumber(right)) {
@@ -108,62 +107,61 @@ public class ExecutionVisitor implements ASTVisitor {
       Number rightNumber = (Number) right;
       switch (operator) {
         case "+":
-          queues.addLiteral(leftNumber.doubleValue() + rightNumber.doubleValue());
+          reader.addLiteral(leftNumber.doubleValue() + rightNumber.doubleValue());
           break;
         case "-":
-          queues.addLiteral(leftNumber.doubleValue() - rightNumber.doubleValue());
+          reader.addLiteral(leftNumber.doubleValue() - rightNumber.doubleValue());
           break;
         case "*":
-          queues.addLiteral(leftNumber.doubleValue() * rightNumber.doubleValue());
+          reader.addLiteral(leftNumber.doubleValue() * rightNumber.doubleValue());
           break;
         case "/":
-          queues.addLiteral(leftNumber.doubleValue() / rightNumber.doubleValue());
+          reader.addLiteral(leftNumber.doubleValue() / rightNumber.doubleValue());
           break;
         default:
           throw new RuntimeException("Operador no soportado: " + operator);
       }
+    } else if ((isString(left) || isString(right)) && "+".equals(operator)) {
+      String leftString = left.toString();
+      String rightString = right.toString();
+      reader.addLiteral(leftString + rightString);
     } else {
       throw new RuntimeException("Operación no soportada: " + left + " " + operator + " " + right);
     }
-
   }
 
-  @Override
-  public void visit(IdentifierNode node) {
-    queues.addIdentifier(node.name());
-  }
-
-  @Override
-  public void visit(LiteralNumberNode node) {
-    queues.addLiteral(node.value());
-  }
-
-  @Override
-  public void visit(LiteralStringNode node) {
-    queues.addLiteral(node.value());
-  }
-
-
-
-  private boolean isPrint(ExpressionNode node) {
-    return node instanceof CallExpressionNode call && "println".equals(call.callee().name());
-  }
-
-  private Object getValueForPrint() {
-    if(queues.hasLiteral()) {
-      queues.getIdentifier();
-      return queues.getLiteral();
+  private Object getValueFromStacks() {
+    if (reader.hasLiteral()) {
+      return reader.getLiteral();
     } else {
-      queues.getIdentifier();
-      String id =  queues.getIdentifier();
+      String id = reader.getIdentifier();
       if (isStringVariable(id)) {
-        return reader.getStringVariable(id);
+        return variables.getStringVariable(id);
       } else if (isNumberVariable(id)) {
-        return reader.getNumberVariable(id);
+        return variables.getNumberVariable(id);
       } else {
         throw new RuntimeException("Variable no definida: " + id);
       }
     }
   }
 
+
+  @Override
+  public void visit(IdentifierNode node) {
+    reader.addIdentifier(node.name());
+  }
+
+  @Override
+  public void visit(LiteralNumberNode node) {
+    reader.addLiteral(node.value());
+  }
+
+  @Override
+  public void visit(LiteralStringNode node) {
+    reader.addLiteral(node.value());
+  }
+
+  private boolean isPrint(ExpressionNode node) {
+    return node instanceof CallExpressionNode call && "println".equals(call.callee().name());
+  }
 }
