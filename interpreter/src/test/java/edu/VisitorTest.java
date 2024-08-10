@@ -57,13 +57,13 @@ public class VisitorTest {
     Parser parser = new Parser();
     ProgramNode program = parser.parse(tokens);
 
-    VariableContext variableContext = new VariableContext();
-    Reader reader = new Reader(variableContext);
+    VariableContext variableContext = new VariableContext(new java.util.HashMap<>(), new java.util.HashMap<>());
+    Reader reader = new Reader(variableContext, new java.util.Stack<>(), new java.util.Stack<>());
     ExecutionVisitor visitor = new ExecutionVisitor(reader);
 
     visitor.visit(program);
 
-    return variableContext;
+    return visitor.getReader().getVariables();
   }
 
 
@@ -75,8 +75,8 @@ public class VisitorTest {
     Parser parser = new Parser();
     ProgramNode program = parser.parse(tokens);
 
-    VariableContext variableContext = new VariableContext();
-    Reader reader = new Reader(variableContext);
+    VariableContext variableContext = new VariableContext(new java.util.HashMap<>(), new java.util.HashMap<>());
+    Reader reader = new Reader(variableContext, new java.util.Stack<>(), new java.util.Stack<>());
     ExecutionVisitor visitor = new ExecutionVisitor(reader);
 
     String actualOutput = getOutputFromInterpreter(() -> visitor.visit(program));

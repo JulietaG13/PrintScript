@@ -18,11 +18,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TestBinaryOperations {
   public VariableContext interpret(ProgramNode node) {
-    VariableContext variableContext = new VariableContext();
-    Reader reader = new Reader(variableContext);
+    VariableContext variableContext = new VariableContext( new java.util.HashMap<>(), new java.util.HashMap<>());
+    Reader reader = new Reader(variableContext, new java.util.Stack<>(), new java.util.Stack<>());
     ExecutionVisitor visitor = new ExecutionVisitor(reader);
     visitor.visit(node);
-    return variableContext;
+    return visitor.getReader().getVariables();
   }
 
   public String getPrintedInfo(ProgramNode node) {

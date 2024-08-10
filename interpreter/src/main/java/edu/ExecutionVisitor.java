@@ -6,7 +6,7 @@ import edu.ast.interfaces.*;
 import edu.ast.statements.*;
 
 public class ExecutionVisitor implements ASTVisitor {
-  private final Reader reader;
+  private Reader reader;
 
   public ExecutionVisitor(Reader reader) {
     this.reader = reader;
@@ -24,11 +24,18 @@ public class ExecutionVisitor implements ASTVisitor {
     node.id().accept(this);
     node.init().accept(this);
 
-    String varName = reader.getIdentifier();
-    Object value = reader.getLiteral();
+    ReaderResult resultId = reader.getIdentifier();
+    Reader newReader = resultId.getReader();
+    reader = newReader;
+    String varName = resultId.getValue().toString();
+    ReaderResult resultValue = reader.getLiteral();
+    Reader newReader1 = resultValue.getReader();
+    reader = newReader1;
+    Object value = resultValue.getValue();
 
     if (node.kind() == Kind.LET) {
-      reader.write(varName, value);
+      Reader newReader3 = reader.write(varName, value);
+      reader = newReader3;
     } else {
       throw new RuntimeException("Tipo de variable no soportado: " + node.kind());
     }
@@ -39,13 +46,15 @@ public class ExecutionVisitor implements ASTVisitor {
     node.id().accept(this);
     node.value().accept(this);
     
-    String varName = reader.getIdentifier();
-    Object value = reader.getLiteral();
+    String varName = reader.getIdentifier().getValue().toString();
+    Object value = reader.getLiteral().getValue();
     
     if (isNumberVariable(varName) && isNumber(value)) {
-      reader.write(varName, value);
+      Reader newReader = reader.write(varName, value);
+      reader = newReader;
     } else if (isStringVariable(varName) && isString(value)) {
-      reader.write(varName, value);
+      Reader newReader = reader.write(varName, value);
+      reader = newReader;
     } else {
       throw new RuntimeException("Variable no definida: " + varName);
     }
@@ -80,8 +89,11 @@ public class ExecutionVisitor implements ASTVisitor {
         arg.accept(this);
     }
     if (isPrint(node)) {
-      Object value = reader.read();
-      reader.getIdentifier();
+      ReaderResult result = reader.read();
+      Object value = result.getValue();
+      reader = result.getReader();
+      ReaderResult result1 = reader.getIdentifier();
+      reader = result1.getReader();
       System.out.println(value);
     } else {
       throw new RuntimeException("Función no soportada: " + node.callee().name());
@@ -91,9 +103,15 @@ public class ExecutionVisitor implements ASTVisitor {
   @Override
   public void visit(BinaryExpressionNode node) {
     node.left().accept(this);
-    Object left = reader.read();
+    ReaderResult resultLeft = reader.read();
+    Object left = resultLeft.getValue();
+    reader = resultLeft.getReader();
+
     node.right().accept(this);
-    Object right = reader.read();
+    ReaderResult resultRight = reader.read();
+    Object right = resultRight.getValue();
+    reader = resultRight.getReader();
+
     String operator = node.operator();
 
     if (isNumber(left) && isNumber(right)) {
@@ -101,46 +119,54 @@ public class ExecutionVisitor implements ASTVisitor {
       Number rightNumber = (Number) right;
       switch (operator) {
         case "+":
-          reader.addLiteral(leftNumber.doubleValue() + rightNumber.doubleValue());
+          reader = reader.addLiteral(leftNumber.doubleValue() + rightNumber.doubleValue());
           break;
         case "-":
-          reader.addLiteral(leftNumber.doubleValue() - rightNumber.doubleValue());
+          reader = reader.addLiteral(leftNumber.doubleValue() - rightNumber.doubleValue());
           break;
         case "*":
-          reader.addLiteral(leftNumber.doubleValue() * rightNumber.doubleValue());
+          reader = reader.addLiteral(leftNumber.doubleValue() * rightNumber.doubleValue());
           break;
         case "/":
-          reader.addLiteral(leftNumber.doubleValue() / rightNumber.doubleValue());
+          reader = reader.addLiteral(leftNumber.doubleValue() / rightNumber.doubleValue());
           break;
         default:
           throw new RuntimeException("Operador no soportado: " + operator);
       }
     } else if ((isString(left) || isString(right)) && "+".equals(operator)) {
-      String leftString = left.toString();
-      String rightString = right.toString();
-      reader.addLiteral(leftString + rightString);
+      // Asegurarse de concatenar en el orden correcto
+      String concatenatedResult = left.toString() + right.toString();
+      reader = reader.addLiteral(concatenatedResult);
     } else {
       throw new RuntimeException("Operación no soportada: " + left + " " + operator + " " + right);
     }
   }
 
-
   @Override
   public void visit(IdentifierNode node) {
-    reader.addIdentifier(node.name());
+    Reader newReader = reader.addIdentifier(node.name());
+    reader = newReader;
   }
 
   @Override
   public void visit(LiteralNumberNode node) {
-    reader.addLiteral(node.value());
+    Reader newReader = reader.addLiteral(node.value());
+    reader = newReader;
   }
 
   @Override
   public void visit(LiteralStringNode node) {
-    reader.addLiteral(node.value());
+    Reader newReader = reader.addLiteral(node.value());
+    reader = newReader;
+
   }
 
   private boolean isPrint(ExpressionNode node) {
     return node instanceof CallExpressionNode call && "println".equals(call.callee().name());
   }
+
+  public Reader getReader() {
+    return reader;
+  }
+
 }

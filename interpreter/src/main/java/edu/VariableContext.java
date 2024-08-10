@@ -1,18 +1,28 @@
 package edu;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class VariableContext {
-  private final Map<String, Number> numberVariables = new HashMap<>();
-  private final Map<String, String> stringVariables = new HashMap<>();
+  private final Map<String, Number> numberVariables;
+  private final Map<String, String> stringVariables;
 
-  public void setNumberVariable(String name, Number value) {
-    numberVariables.put(name, value);
+  public VariableContext(Map<String, Number> numberVariables, Map<String, String> stringVariables) {
+    this.numberVariables = Collections.unmodifiableMap(new HashMap<>(numberVariables));
+    this.stringVariables = Collections.unmodifiableMap(new HashMap<>(stringVariables));
   }
 
-  public void setStringVariable(String name, String value) {
-    stringVariables.put(name, value);
+  public VariableContext setNumberVariable(String name, Number value) {
+    Map<String, Number> newNumberVars = new HashMap<>(numberVariables);
+    Map<String, String> newStringVars = new HashMap<>(stringVariables);
+    newNumberVars.put(name, (Number) value);
+    return new VariableContext(newNumberVars, newStringVars);
+  }
+
+  public VariableContext setStringVariable(String name, String value) {
+    Map<String, Number> newNumberVars = new HashMap<>(numberVariables);
+    Map<String, String> newStringVars = new HashMap<>(stringVariables);
+    newStringVars.put(name, (String) value);
+    return new VariableContext(newNumberVars, newStringVars);
   }
 
   public Number getNumberVariable(String name) {
@@ -44,4 +54,6 @@ public class VariableContext {
   public Map<String, String> getStringVariables() {
     return stringVariables;
   }
+
+
 }
