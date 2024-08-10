@@ -57,9 +57,9 @@ public class VisitorTest {
     Parser parser = new Parser();
     ProgramNode program = parser.parse(tokens);
 
-    Reader reader = new Reader();
     VariableContext variableContext = new VariableContext();
-    ExecutionVisitor visitor = new ExecutionVisitor(reader, variableContext);
+    Reader reader = new Reader(variableContext);
+    ExecutionVisitor visitor = new ExecutionVisitor(reader);
 
     visitor.visit(program);
 
@@ -75,9 +75,9 @@ public class VisitorTest {
     Parser parser = new Parser();
     ProgramNode program = parser.parse(tokens);
 
-    Reader reader = new Reader();
     VariableContext variableContext = new VariableContext();
-    ExecutionVisitor visitor = new ExecutionVisitor(reader, variableContext);
+    Reader reader = new Reader(variableContext);
+    ExecutionVisitor visitor = new ExecutionVisitor(reader);
 
     String actualOutput = getOutputFromInterpreter(() -> visitor.visit(program));
     return actualOutput;

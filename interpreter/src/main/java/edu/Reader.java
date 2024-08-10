@@ -3,9 +3,13 @@ package edu;
 import java.util.Stack;
 
 public class Reader {
-  VariableContext variables = new VariableContext();
-  Stack<String> identifiers = new Stack<>();
-  Stack<Object> literals = new Stack<>();
+  private final VariableContext variables;
+  private final Stack<String> identifiers = new Stack<>();
+  private final Stack<Object> literals = new Stack<>();
+
+  public Reader(VariableContext variables) {
+    this.variables = variables;
+  }
 
   public void addIdentifier(String identifier) {
     identifiers.add(identifier);
@@ -46,12 +50,25 @@ public class Reader {
     }
   }
 
-  private boolean isStringVariable(String varName) {
+  public void write(String varName, Object value) {
+    if (value instanceof Number) {
+      variables.setNumberVariable(varName, (Number) value);
+    } else if (value instanceof String) {
+      variables.setStringVariable(varName, (String) value);
+    } else {
+      throw new RuntimeException("Tipo de variable no soportado: " + value.getClass());
+    }
+  }
+
+  public boolean isStringVariable(String varName) {
     return variables.hasStringVariable(varName);
   }
 
-  private boolean isNumberVariable(String varName) {
+  public boolean isNumberVariable(String varName) {
     return variables.hasNumberVariable(varName);
   }
+
+
+
 
 }
