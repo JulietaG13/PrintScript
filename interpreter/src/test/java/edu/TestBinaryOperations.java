@@ -18,9 +18,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TestBinaryOperations {
   public VariableContext interpret(ProgramNode node) {
-    Reader reader = new Reader();
     VariableContext variableContext = new VariableContext();
-    ExecutionVisitor visitor = new ExecutionVisitor(reader, variableContext);
+    Reader reader = new Reader(variableContext);
+    ExecutionVisitor visitor = new ExecutionVisitor(reader);
     visitor.visit(node);
     return variableContext;
   }

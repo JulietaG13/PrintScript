@@ -7,11 +7,9 @@ import edu.ast.statements.*;
 
 public class ExecutionVisitor implements ASTVisitor {
   private final Reader reader;
-  private final VariableContext variables;
 
-  public ExecutionVisitor(Reader reader, VariableContext variableContext) {
+  public ExecutionVisitor(Reader reader) {
     this.reader = reader;
-    this.variables = variableContext;
   }
 
   @Override
@@ -30,11 +28,7 @@ public class ExecutionVisitor implements ASTVisitor {
     Object value = reader.getLiteral();
 
     if (node.kind() == Kind.LET) {
-      if (value instanceof Number) {
-        variables.setNumberVariable(varName, (Number) value);
-      } else if (isString(value)) {
-        variables.setStringVariable(varName, (String) value);
-      }
+      reader.write(varName, value);
     } else {
       throw new RuntimeException("Tipo de variable no soportado: " + node.kind());
     }
@@ -49,20 +43,20 @@ public class ExecutionVisitor implements ASTVisitor {
     Object value = reader.getLiteral();
     
     if (isNumberVariable(varName) && isNumber(value)) {
-      variables.setNumberVariable(varName, (Number) value);
+      reader.write(varName, value);
     } else if (isStringVariable(varName) && isString(value)) {
-      variables.setStringVariable(varName, (String) value);
+      reader.write(varName, value);
     } else {
       throw new RuntimeException("Variable no definida: " + varName);
     }
   }
 
   private boolean isStringVariable(String varName) {
-    return variables.hasStringVariable(varName);
+    return reader.isStringVariable(varName);
   }
 
   private boolean isNumberVariable(String varName) {
-    return variables.hasNumberVariable(varName);
+    return reader.isNumberVariable(varName);
   }
 
   private static boolean isString(Object value) {
@@ -86,7 +80,7 @@ public class ExecutionVisitor implements ASTVisitor {
         arg.accept(this);
     }
     if (isPrint(node)) {
-      Object value = getValueFromStacks();
+      Object value = reader.read();
       reader.getIdentifier();
       System.out.println(value);
     } else {
@@ -97,9 +91,9 @@ public class ExecutionVisitor implements ASTVisitor {
   @Override
   public void visit(BinaryExpressionNode node) {
     node.left().accept(this);
-    Object left = getValueFromStacks();
+    Object left = reader.read();
     node.right().accept(this);
-    Object right = getValueFromStacks();
+    Object right = reader.read();
     String operator = node.operator();
 
     if (isNumber(left) && isNumber(right)) {
@@ -127,21 +121,6 @@ public class ExecutionVisitor implements ASTVisitor {
       reader.addLiteral(leftString + rightString);
     } else {
       throw new RuntimeException("Operación no soportada: " + left + " " + operator + " " + right);
-    }
-  }
-
-  private Object getValueFromStacks() {
-    if (reader.hasLiteral()) {
-      return reader.getLiteral();
-    } else {
-      String id = reader.getIdentifier();
-      if (isStringVariable(id)) {
-        return variables.getStringVariable(id);
-      } else if (isNumberVariable(id)) {
-        return variables.getNumberVariable(id);
-      } else {
-        throw new RuntimeException("Variable no definida: " + id);
-      }
     }
   }
 

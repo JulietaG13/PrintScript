@@ -7,7 +7,7 @@ public class Interpreter {
   private final ExecutionVisitor visitor;
 
   public Interpreter() {
-    this.visitor = new ExecutionVisitor(new Reader(), new VariableContext());
+    this.visitor = new ExecutionVisitor(new Reader(new VariableContext()));
   }
 
   public void interpret(ProgramNode program) {
