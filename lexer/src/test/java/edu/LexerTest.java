@@ -1,13 +1,8 @@
 package edu;
 
-import edu.utils.LexicalRange;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import java.util.List;
-import java.util.Optional;
-import java.util.regex.Pattern;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 public class LexerTest {
@@ -56,41 +51,6 @@ public class LexerTest {
     assertEquals(TokenType.SYNTAX, tokens.get(9).getType());
     assertEquals(";", tokens.get(9).getContent());
 
-  }
-
-  @Test
-  public void testAddPattern() {
-    Pattern customPattern = Pattern.compile("\\bcustom\\b");
-    lexer.addPattern(customPattern, TokenType.KEYWORD);
-    assertTrue(lexer.patterns.containsKey(customPattern));
-  }
-
-  @Test
-  public void testGetCharAt() {
-    Optional<Character> charAt0 = lexer.getCharAt(new LexicalRange(0, 0, 0));
-    assertTrue(charAt0.isPresent());
-    assertEquals('l', charAt0.get());
-
-    Optional<Character> charAtOutOfBounds = lexer.getCharAt(new LexicalRange(100, 0, 0));
-    assertFalse(charAtOutOfBounds.isPresent());
-  }
-
-  @Test
-  public void testAdvancePosition() {
-    lexer.advancePosition(4);
-    assertEquals(4, lexer.currentPosition.getOffset());
-    assertEquals(4, lexer.currentPosition.getColumn());
-  }
-
-  @Test
-  public void testIsWholeWordMatch() {
-    lexer = new Lexer("letx");
-    lexer.currentPosition = new LexicalRange(0, 0, 0);
-    assertFalse(lexer.isWholeWordMatch("let"));
-
-    lexer = new Lexer("let x");
-    lexer.currentPosition = new LexicalRange(0, 0, 0);
-    assertTrue(lexer.isWholeWordMatch("let"));
   }
 
   @Test

@@ -9,26 +9,21 @@ import java.util.regex.Pattern;
 public class Lexer {
   private final String code;
   LexicalRange currentPosition;
-  LinkedHashMap<Pattern, TokenType> patterns;
+  private final PatternManager patterns;
   private List<Token> tokens;
 
   public Lexer(String code) {
     this.code = code;
     this.currentPosition = new LexicalRange(0, 0, 0);
     this.tokens = new ArrayList<>();
-    this.patterns = new LinkedHashMap<>();
-    createPatterns();
+    this.patterns = new PatternManager();
   }
 
   public List<Token> getTokens() {
     return tokens;
   }
 
-  public void addPattern(Pattern pattern, TokenType type) {
-    patterns.put(pattern, type);
-  }
-
-  public void advancePosition(int length) {
+  private void advancePosition(int length) {
     for (int i = 0; i < length; i++) {
       char c = code.charAt(currentPosition.getOffset());
       currentPosition = new LexicalRange(
@@ -39,16 +34,7 @@ public class Lexer {
     }
   }
 
-  public void createPatterns() {
-    addPattern(Pattern.compile("\\blet\\b|\\bString\\b|\\bNumber\\b"), TokenType.KEYWORD);  // Keywords
-    addPattern(Pattern.compile("[a-zA-Z_][a-zA-Z0-9_]*|println"), TokenType.IDENTIFIER); // Identifier
-    addPattern(Pattern.compile("[0-9]+"), TokenType.LITERAL); // Integer literal
-    addPattern(Pattern.compile("\"[^\"]*\""), TokenType.LITERAL); // String literal
-    addPattern(Pattern.compile("\\+=|-=|/=|\\*=|==|[+\\-*/=%]"), TokenType.OPERATOR); // Operators
-    addPattern(Pattern.compile("[;:(){},]"), TokenType.SYNTAX); // Syntax including parentheses, braces, and semicolon
-  }
-
-  public Optional<Character> getCharAt(LexicalRange position) {
+  private Optional<Character> getCharAt(LexicalRange position) {
     if (position.getOffset() >= code.length()) {
       return Optional.empty();
     }
@@ -68,10 +54,12 @@ public class Lexer {
       }
 
       boolean matched = false;
-      for (Map.Entry<Pattern, TokenType> entry : patterns.entrySet()) {
+      for (Map.Entry<Pattern, TokenType> entry : patterns.getPatterns().entrySet()) {
         Pattern pattern = entry.getKey();
         TokenType type = entry.getValue();
+
         String sub = code.substring(currentPosition.getOffset());
+
         Matcher matcher = pattern.matcher(sub);
 
         if (matcher.lookingAt()) {
@@ -99,7 +87,7 @@ public class Lexer {
     }
   }
 
-  public boolean isWholeWordMatch(String tokenValue) {
+  private boolean isWholeWordMatch(String tokenValue) {
     int endOffset = currentPosition.getOffset() + tokenValue.length();
     if (endOffset < code.length()) {
       char nextChar = code.charAt(endOffset);

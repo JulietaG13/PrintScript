@@ -60,8 +60,6 @@ public class TokenizerTest {
     List<Token> tokens = context.getTokens();
     assertEquals(tokens.get(0).getType(), TokenType.KEYWORD);
     assertEquals(tokens.get(1).getType(), TokenType.IDENTIFIER);
-    assertTrue(context.isWholeWordMatch("let"));
-
   }
 
   @Test
