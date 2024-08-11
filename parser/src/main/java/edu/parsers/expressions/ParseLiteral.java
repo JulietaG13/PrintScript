@@ -42,7 +42,7 @@ public class ParseLiteral implements ExpressionParser {
         return new LiteralStringNode(
             start,
             end,
-            content
+            stripQuotes(content)
         );
       }
     }
@@ -53,5 +53,9 @@ public class ParseLiteral implements ExpressionParser {
   @Override
   public boolean isXExpression(List<Token> tokens) {
     return tokens.size() == 1 && isLiteral(tokens, 0);
+  }
+
+  private static String stripQuotes(String s) {
+    return s.substring(1, s.length() - 1);
   }
 }
