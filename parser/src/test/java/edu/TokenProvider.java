@@ -14,7 +14,15 @@ public class TokenProvider {
     return new Token(TokenType.KEYWORD, "String", null, null);
   }
 
+  public static Token getOperator(String operator) {
+    return new Token(TokenType.OPERATOR, operator, null, null);
+  }
+
   public static Token getLiteral(Double literal) {
+    return new Token(TokenType.LITERAL, literal.toString(), null, null);
+  }
+
+  public static Token getLiteral(Integer literal) {
     return new Token(TokenType.LITERAL, literal.toString(), null, null);
   }
 
