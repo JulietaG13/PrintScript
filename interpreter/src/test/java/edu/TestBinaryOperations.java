@@ -130,8 +130,26 @@ public class TestBinaryOperations {
     ProgramNode program = compile(code);
     String printedInfo = getPrintedInfo(program);
     assertEquals("Hola ine", printedInfo);
-
   }
+
+  @Test
+  public void testBinaryDifferentPriorities() {
+    /* Input: let age: Number = 5 + 2 * 5; */
+    String code = "let age: Number = 5 + 2 * 5;";
+    ProgramNode program = compile(code);
+    VariableContext info = interpret(program);
+    assertEquals(15.0, info.getNumberVariable("age"));
+  }
+
+  @Test
+  public void testBinaryDifferentPrioritiesAltered() {
+    /* Input: let age: Number = 5 * 2 + 5; */
+    String code = "let age: Number = 5 * 2 + 5;";
+    ProgramNode program = compile(code);
+    VariableContext info = interpret(program);
+    assertEquals(15.0, info.getNumberVariable("age"));
+  }
+
 
 
 }
