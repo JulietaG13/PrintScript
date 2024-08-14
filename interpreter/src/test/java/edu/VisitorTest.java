@@ -12,13 +12,13 @@ public class VisitorTest {
     String code = "let my_cool_variable: String = \"ciclon\";";
     VariableContext variableContext = process(code);
     assertTrue(variableContext.hasStringVariable("my_cool_variable"));
-    assertEquals("\"ciclon\"", variableContext.getStringVariable("my_cool_variable"));
+    assertEquals("ciclon", variableContext.getStringVariable("my_cool_variable"));
   }
 
   @Test
   public void testPrintln() {
     String code = "let my_cool_variable: String = \"ciclon\";\nprintln(my_cool_variable);";
-    String expectedOutput = "\"ciclon\"\n";
+    String expectedOutput = "ciclon\n";
     assertEquals(expectedOutput, getOutput(code));
   }
 
@@ -37,7 +37,7 @@ public class VisitorTest {
   @Test
   public void testPrintlnLiteralString() {
     String code = "println(\"Hello World\");";
-    String expectedOutput = "\"Hello World\"\n";
+    String expectedOutput = "Hello World\n";
     assertEquals(expectedOutput, getOutput(code));
   }
 
