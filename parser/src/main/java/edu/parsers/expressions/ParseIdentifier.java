@@ -1,12 +1,12 @@
 package edu.parsers.expressions;
 
+import static edu.utils.ParserUtil.isIdentifier;
+
 import edu.Token;
 import edu.ast.expressions.IdentifierNode;
 import edu.ast.interfaces.ExpressionNode;
 import edu.parsers.ExpressionParser;
 import java.util.List;
-
-import static edu.utils.ParserUtil.isIdentifier;
 
 public class ParseIdentifier implements ExpressionParser {
   @Override
@@ -16,11 +16,7 @@ public class ParseIdentifier implements ExpressionParser {
     }
 
     Token token = tokens.getFirst();
-    return new IdentifierNode(
-        token.getStart(),
-        token.getEnd(),
-        token.getContent()
-    );
+    return new IdentifierNode(token.getStart(), token.getEnd(), token.getContent());
   }
 
   public IdentifierNode parse(Token token) {

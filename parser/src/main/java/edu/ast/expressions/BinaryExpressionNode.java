@@ -9,7 +9,8 @@ public record BinaryExpressionNode(
     LexicalRange end,
     String operator,
     ExpressionNode left,
-    ExpressionNode right) implements ExpressionNode {
+    ExpressionNode right)
+    implements ExpressionNode {
   @Override
   public void accept(ASTVisitor visitor) {
     visitor.visit(this);

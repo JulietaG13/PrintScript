@@ -2,7 +2,6 @@ package edu.utils;
 
 import edu.Token;
 import edu.TokenType;
-
 import java.util.List;
 
 public class ParserUtil {
@@ -82,8 +81,11 @@ public class ParserUtil {
 
   public static boolean isAssign(Token token) {
     String content = token.getContent();
-    return isOperator(token) && (
-        content.equals("=") || content.equals("+=") || content.equals("-=") || content.equals("*=") || content.equals("/=")
-    );
+    return isOperator(token)
+        && (content.equals("=")
+            || content.equals("+=")
+            || content.equals("-=")
+            || content.equals("*=")
+            || content.equals("/="));
   }
 }

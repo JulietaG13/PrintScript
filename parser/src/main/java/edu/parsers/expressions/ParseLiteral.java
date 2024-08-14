@@ -1,17 +1,16 @@
 package edu.parsers.expressions;
 
+import static edu.utils.ParserUtil.isLiteral;
+
 import edu.Token;
 import edu.ast.expressions.LiteralNumberNode;
 import edu.ast.expressions.LiteralStringNode;
 import edu.ast.interfaces.ExpressionNode;
 import edu.ast.statements.Type;
-import edu.utils.LexicalRange;
 import edu.parsers.ExpressionParser;
+import edu.utils.LexicalRange;
 import edu.utils.TypeProvider;
-
 import java.util.List;
-
-import static edu.utils.ParserUtil.isLiteral;
 
 public class ParseLiteral implements ExpressionParser {
 
@@ -32,18 +31,10 @@ public class ParseLiteral implements ExpressionParser {
 
     switch (type) {
       case NUMBER -> {
-        return new LiteralNumberNode(
-            start,
-            end,
-            Double.parseDouble(content)
-        );
+        return new LiteralNumberNode(start, end, Double.parseDouble(content));
       }
       case STRING -> {
-        return new LiteralStringNode(
-            start,
-            end,
-            stripQuotes(content)
-        );
+        return new LiteralStringNode(start, end, stripQuotes(content));
       }
     }
 

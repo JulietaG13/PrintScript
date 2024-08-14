@@ -6,9 +6,7 @@ import edu.ast.interfaces.StatementNode;
 import edu.utils.LexicalRange;
 
 public record ExpressionStatementNode(
-    LexicalRange start,
-    LexicalRange end,
-    ExpressionNode expression) implements StatementNode {
+    LexicalRange start, LexicalRange end, ExpressionNode expression) implements StatementNode {
 
   @Override
   public void accept(ASTVisitor visitor) {

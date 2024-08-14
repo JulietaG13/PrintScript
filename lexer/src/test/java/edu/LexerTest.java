@@ -1,9 +1,10 @@
 package edu;
 
+import static org.junit.jupiter.api.Assertions.*;
+
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import java.util.List;
-import static org.junit.jupiter.api.Assertions.*;
 
 public class LexerTest {
 
@@ -50,7 +51,6 @@ public class LexerTest {
 
     assertEquals(TokenType.SYNTAX, tokens.get(9).getType());
     assertEquals(";", tokens.get(9).getContent());
-
   }
 
   @Test

@@ -1,10 +1,9 @@
 package edu;
 
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
 
 public class TokenizerTest {
   @Test
@@ -151,5 +150,4 @@ public class TokenizerTest {
     assertEquals(tokens.get(14).getType(), TokenType.LITERAL);
     assertEquals(tokens.get(15).getType(), TokenType.SYNTAX);
   }
-
 }

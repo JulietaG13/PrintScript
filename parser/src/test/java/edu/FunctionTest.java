@@ -1,5 +1,8 @@
 package edu;
 
+import static edu.TokenProvider.*;
+import static org.junit.jupiter.api.Assertions.*;
+
 import edu.ast.ProgramNode;
 import edu.ast.expressions.CallExpressionNode;
 import edu.ast.expressions.IdentifierNode;
@@ -7,12 +10,8 @@ import edu.ast.expressions.LiteralNumberNode;
 import edu.ast.expressions.LiteralStringNode;
 import edu.ast.interfaces.StatementNode;
 import edu.ast.statements.ExpressionStatementNode;
-import org.junit.jupiter.api.Test;
 import java.util.List;
-
-import static edu.TokenProvider.*;
-import static org.junit.jupiter.api.Assertions.*;
-
+import org.junit.jupiter.api.Test;
 
 public class FunctionTest {
 
@@ -20,12 +19,8 @@ public class FunctionTest {
   public void noArgs() {
     String func = "println";
 
-    List<Token> input = List.of(
-        getIdentifier(func),
-        getOpenParen(),
-        getCloseParen(),
-        getSemicolon()
-    );
+    List<Token> input =
+        List.of(getIdentifier(func), getOpenParen(), getCloseParen(), getSemicolon());
 
     ProgramNode root = new Parser().parse(input);
     List<StatementNode> body = root.getBody();
@@ -46,13 +41,9 @@ public class FunctionTest {
     String func = "println";
     String arg = "hola";
 
-    List<Token> input = List.of(
-        getIdentifier(func),
-        getOpenParen(),
-        getLiteral(arg),
-        getCloseParen(),
-        getSemicolon()
-    );
+    List<Token> input =
+        List.of(
+            getIdentifier(func), getOpenParen(), getLiteral(arg), getCloseParen(), getSemicolon());
 
     ProgramNode root = new Parser().parse(input);
     List<StatementNode> body = root.getBody();
@@ -78,15 +69,15 @@ public class FunctionTest {
     String arg1 = "hola";
     Double arg2 = 123.0;
 
-    List<Token> input = List.of(
-        getIdentifier(func),
-        getOpenParen(),
-        getLiteral(arg1),
-        getComma(),
-        getLiteral(arg2),
-        getCloseParen(),
-        getSemicolon()
-    );
+    List<Token> input =
+        List.of(
+            getIdentifier(func),
+            getOpenParen(),
+            getLiteral(arg1),
+            getComma(),
+            getLiteral(arg2),
+            getCloseParen(),
+            getSemicolon());
 
     ProgramNode root = new Parser().parse(input);
     List<StatementNode> body = root.getBody();
@@ -115,13 +106,13 @@ public class FunctionTest {
     String func = "println";
     String var = "var";
 
-    List<Token> input = List.of(
-        getIdentifier(func),
-        getOpenParen(),
-        getIdentifier(var),
-        getCloseParen(),
-        getSemicolon()
-    );
+    List<Token> input =
+        List.of(
+            getIdentifier(func),
+            getOpenParen(),
+            getIdentifier(var),
+            getCloseParen(),
+            getSemicolon());
 
     ProgramNode root = new Parser().parse(input);
     List<StatementNode> body = root.getBody();
@@ -146,15 +137,15 @@ public class FunctionTest {
     String func = "println";
     String nestedFunc = "foo";
 
-    List<Token> input = List.of(
-        getIdentifier(func),
-        getOpenParen(),
-        getIdentifier(nestedFunc),
-        getOpenParen(),
-        getCloseParen(),
-        getCloseParen(),
-        getSemicolon()
-    );
+    List<Token> input =
+        List.of(
+            getIdentifier(func),
+            getOpenParen(),
+            getIdentifier(nestedFunc),
+            getOpenParen(),
+            getCloseParen(),
+            getCloseParen(),
+            getSemicolon());
 
     ProgramNode root = new Parser().parse(input);
     List<StatementNode> body = root.getBody();
@@ -169,7 +160,7 @@ public class FunctionTest {
     assertEquals(1, call.args().size());
     assertEquals(func, call.callee().name());
 
-    assert call.args().getFirst() instanceof CallExpressionNode;  // TODO(check)
+    assert call.args().getFirst() instanceof CallExpressionNode; // TODO(check)
     CallExpressionNode call2 = (CallExpressionNode) call.args().getFirst();
     assertEquals(0, call2.args().size());
     assertEquals(nestedFunc, call2.callee().name());

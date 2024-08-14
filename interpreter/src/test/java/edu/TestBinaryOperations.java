@@ -1,17 +1,17 @@
 package edu;
 
-import edu.ast.ProgramNode;
-import org.junit.jupiter.api.Test;
-
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import edu.ast.ProgramNode;
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+import org.junit.jupiter.api.Test;
+
 public class TestBinaryOperations {
   public VariableContext interpret(ProgramNode node) {
-    VariableContext variableContext = new VariableContext( new java.util.HashMap<>(), new java.util.HashMap<>());
+    VariableContext variableContext =
+        new VariableContext(new java.util.HashMap<>(), new java.util.HashMap<>());
     Reader reader = new Reader(variableContext, new java.util.Stack<>(), new java.util.Stack<>());
     ExecutionVisitor visitor = new ExecutionVisitor(reader);
     visitor.visit(node);
@@ -59,7 +59,6 @@ public class TestBinaryOperations {
     assertEquals(15.0, variableContext.getNumberVariable("age"));
   }
 
-
   @Test
   public void testPrintBinaryPrint() {
     /* Input: println(10 + 5); */
@@ -77,7 +76,6 @@ public class TestBinaryOperations {
     String output = getPrintedInfo(program);
     assertEquals(15.0, Double.parseDouble(output));
   }
-
 
   @Test
   public void testPrintBinaryIdentifiers() {
@@ -117,7 +115,8 @@ public class TestBinaryOperations {
   @Test
   public void testBinaryDoubleIdentifierPrint() {
     /* Input: let age:Number = 20; let intro:String = "I am "; let measures: String =" years old"; println(intro + age + measures); */
-    String code = "let age: Number = 20; let intro: String = \"I am \"; let measures: String =\" years old\"; println(intro + age + measures);";
+    String code =
+        "let age: Number = 20; let intro: String = \"I am \"; let measures: String =\" years old\"; println(intro + age + measures);";
     ProgramNode program = compile(code);
     String printedInfo = getPrintedInfo(program);
     assertEquals("I am 20.0 years old", printedInfo);
@@ -149,7 +148,4 @@ public class TestBinaryOperations {
     VariableContext info = interpret(program);
     assertEquals(15.0, info.getNumberVariable("age"));
   }
-
-
-
 }

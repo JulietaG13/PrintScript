@@ -1,11 +1,10 @@
 package edu;
 
-import edu.ast.ProgramNode;
-import org.junit.jupiter.api.Test;
-
-import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.*;
+
+import edu.ast.ProgramNode;
+import java.util.List;
+import org.junit.jupiter.api.Test;
 
 public class VisitorTest {
   @Test
@@ -57,7 +56,8 @@ public class VisitorTest {
     Parser parser = new Parser();
     ProgramNode program = parser.parse(tokens);
 
-    VariableContext variableContext = new VariableContext(new java.util.HashMap<>(), new java.util.HashMap<>());
+    VariableContext variableContext =
+        new VariableContext(new java.util.HashMap<>(), new java.util.HashMap<>());
     Reader reader = new Reader(variableContext, new java.util.Stack<>(), new java.util.Stack<>());
     ExecutionVisitor visitor = new ExecutionVisitor(reader);
 
@@ -65,7 +65,6 @@ public class VisitorTest {
 
     return visitor.getReader().getVariables();
   }
-
 
   public String getOutput(String code) {
     Lexer lexer = new Lexer(code);
@@ -75,13 +74,12 @@ public class VisitorTest {
     Parser parser = new Parser();
     ProgramNode program = parser.parse(tokens);
 
-    VariableContext variableContext = new VariableContext(new java.util.HashMap<>(), new java.util.HashMap<>());
+    VariableContext variableContext =
+        new VariableContext(new java.util.HashMap<>(), new java.util.HashMap<>());
     Reader reader = new Reader(variableContext, new java.util.Stack<>(), new java.util.Stack<>());
     ExecutionVisitor visitor = new ExecutionVisitor(reader);
 
     String actualOutput = getOutputFromInterpreter(() -> visitor.visit(program));
     return actualOutput;
   }
-
-
 }

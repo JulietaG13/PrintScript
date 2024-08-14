@@ -1,12 +1,11 @@
 package edu.utils;
 
 import edu.ast.statements.Type;
-
 import java.util.HashMap;
 import java.util.Map;
 
 public class TypeProvider {
-  private final static Map<String, Type> types = new HashMap<>();
+  private static final Map<String, Type> types = new HashMap<>();
 
   static {
     types.put("Number", Type.NUMBER);

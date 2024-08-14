@@ -54,6 +54,4 @@ public class VariableContext {
   public Map<String, String> getStringVariables() {
     return stringVariables;
   }
-
-
 }

@@ -1,12 +1,11 @@
 package edu.utils;
 
 import edu.ast.statements.Kind;
-
 import java.util.HashMap;
 import java.util.Map;
 
 public class KindProvider {
-  private final static Map<String, Kind> kinds = new HashMap<>();
+  private static final Map<String, Kind> kinds = new HashMap<>();
 
   static {
     kinds.put("let", Kind.LET);

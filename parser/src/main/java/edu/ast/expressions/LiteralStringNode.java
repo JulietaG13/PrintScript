@@ -4,9 +4,9 @@ import edu.ast.ASTVisitor;
 import edu.ast.interfaces.LiteralNode;
 import edu.utils.LexicalRange;
 
+public record LiteralStringNode(LexicalRange start, LexicalRange end, String value)
+    implements LiteralNode {
 
-public record LiteralStringNode(LexicalRange start, LexicalRange end, String value) implements LiteralNode {
-  
   @Override
   public LiteralType getType() {
     return LiteralType.STRING;

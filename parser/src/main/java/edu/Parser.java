@@ -4,11 +4,8 @@ import edu.ast.ProgramNode;
 import edu.ast.interfaces.StatementNode;
 import edu.parsers.ParseStatement;
 import edu.utils.ParserUtil;
-
 import java.util.ArrayList;
 import java.util.List;
-
-import static edu.utils.ParserUtil.isEndLine;
 
 public class Parser {
 

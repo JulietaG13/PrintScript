@@ -1,12 +1,11 @@
 package edu;
 
-import edu.ast.ProgramNode;
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import edu.ast.ProgramNode;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.Test;
 
 public class GlobalTest {
 
@@ -46,7 +45,6 @@ public class GlobalTest {
     assertEquals("15.0", printedInfo);
   }
 
-
   public ProgramNode getAST(String code) {
     Lexer lexer = new Lexer(code);
     lexer.tokenize();
@@ -55,7 +53,8 @@ public class GlobalTest {
   }
 
   public VariableContext interpret(ProgramNode node) {
-    VariableContext variableContext = new VariableContext( new java.util.HashMap<>(), new java.util.HashMap<>());
+    VariableContext variableContext =
+        new VariableContext(new java.util.HashMap<>(), new java.util.HashMap<>());
     Reader reader = new Reader(variableContext, new java.util.Stack<>(), new java.util.Stack<>());
     ExecutionVisitor visitor = new ExecutionVisitor(reader);
     visitor.visit(node);
@@ -74,5 +73,4 @@ public class GlobalTest {
     String actualOutput = outContent.toString().trim();
     return actualOutput;
   }
-
 }

@@ -1,17 +1,16 @@
 package edu.parsers.expressions;
 
+import static edu.utils.ParserUtil.*;
+
 import edu.Token;
 import edu.ast.expressions.CallExpressionNode;
 import edu.ast.expressions.IdentifierNode;
 import edu.ast.interfaces.ExpressionNode;
+import edu.parsers.ExpressionParser;
 import edu.parsers.ParseExpression;
 import edu.utils.LexicalRange;
-import edu.parsers.ExpressionParser;
-
 import java.util.ArrayList;
 import java.util.List;
-
-import static edu.utils.ParserUtil.*;
 
 public class ParseCallExpression implements ExpressionParser {
   /*
@@ -25,11 +24,7 @@ public class ParseCallExpression implements ExpressionParser {
     LexicalRange end = tokens.getLast().getEnd();
     // Identifier + Syntax + ... + Syntax
 
-    IdentifierNode identifier = new IdentifierNode(
-        start,
-        end,
-        name
-    );
+    IdentifierNode identifier = new IdentifierNode(start, end, name);
 
     List<List<Token>> expressions = splitArgs(tokens.subList(2, tokens.size() - 1));
     List<ExpressionNode> args = new ArrayList<>();
@@ -38,20 +33,16 @@ public class ParseCallExpression implements ExpressionParser {
       args.add(ParseExpression.parse(expression));
     }
 
-    return new CallExpressionNode(
-        start,
-        end,
-        identifier,
-        args
-    );
+    return new CallExpressionNode(start, end, identifier, args);
   }
 
   @Override
   public boolean isXExpression(List<Token> tokens) {
-    boolean minimum = isIdentifier(tokens, 0)
-        && tokens.size() >= 3
-        && isOpenParen(tokens, 1)
-        && isCloseParen(tokens, tokens.size() - 1);
+    boolean minimum =
+        isIdentifier(tokens, 0)
+            && tokens.size() >= 3
+            && isOpenParen(tokens, 1)
+            && isCloseParen(tokens, tokens.size() - 1);
 
     if (minimum && tokens.size() == 3) {
       return true;

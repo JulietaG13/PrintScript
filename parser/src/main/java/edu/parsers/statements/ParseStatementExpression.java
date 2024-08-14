@@ -3,11 +3,10 @@ package edu.parsers.statements;
 import edu.Token;
 import edu.ast.interfaces.StatementNode;
 import edu.ast.statements.ExpressionStatementNode;
-import edu.utils.LexicalRange;
 import edu.parsers.ExpressionParser;
 import edu.parsers.StatementParser;
 import edu.parsers.expressions.ParseCallExpression;
-
+import edu.utils.LexicalRange;
 import java.util.List;
 
 public class ParseStatementExpression implements StatementParser {
@@ -19,26 +18,18 @@ public class ParseStatementExpression implements StatementParser {
   }
 
   public ParseStatementExpression() {
-    this(
-        List.of(
-            new ParseCallExpression()
-        )
-    );
+    this(List.of(new ParseCallExpression()));
   }
 
   @Override
   public StatementNode parse(List<Token> tokens) {
     LexicalRange start = tokens.getFirst().getStart();
     LexicalRange end = tokens.getFirst().getEnd();
-    List<Token> expressionPart = tokens.subList(0, tokens.size() - 1);  // [ id(...) ] ;
+    List<Token> expressionPart = tokens.subList(0, tokens.size() - 1); // [ id(...) ] ;
 
     for (ExpressionParser parser : parsers) {
       if (parser.isXExpression(expressionPart)) {
-        return new ExpressionStatementNode(
-            start,
-            end,
-            parser.parse(expressionPart)
-        );
+        return new ExpressionStatementNode(start, end, parser.parse(expressionPart));
       }
     }
 
@@ -47,7 +38,7 @@ public class ParseStatementExpression implements StatementParser {
 
   @Override
   public boolean isXStatement(List<Token> tokens) {
-    List<Token> expressionPart = tokens.subList(0, tokens.size() - 1);  // [ id(...) ] ;
+    List<Token> expressionPart = tokens.subList(0, tokens.size() - 1); // [ id(...) ] ;
 
     for (ExpressionParser parser : parsers) {
       if (parser.isXExpression(expressionPart)) {

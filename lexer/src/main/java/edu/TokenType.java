@@ -1,5 +1,9 @@
 package edu;
 
 public enum TokenType {
-  KEYWORD, IDENTIFIER, OPERATOR, LITERAL, SYNTAX
+  KEYWORD,
+  IDENTIFIER,
+  OPERATOR,
+  LITERAL,
+  SYNTAX
 }

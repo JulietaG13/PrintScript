@@ -45,10 +45,10 @@ public class ExecutionVisitor implements ASTVisitor {
   public void visit(AssignmentNode node) {
     node.id().accept(this);
     node.value().accept(this);
-    
+
     String varName = reader.getIdentifier().getValue().toString();
     Object value = reader.getLiteral().getValue();
-    
+
     if (isNumberVariable(varName) && isNumber(value)) {
       Reader newReader = reader.write(varName, value);
       reader = newReader;
@@ -86,7 +86,7 @@ public class ExecutionVisitor implements ASTVisitor {
     node.callee().accept(this);
     int argumentsCount = node.args().size();
     for (ExpressionNode arg : node.args()) {
-        arg.accept(this);
+      arg.accept(this);
     }
     if (isPrint(node)) {
       ReaderResult result = reader.read();
@@ -158,7 +158,6 @@ public class ExecutionVisitor implements ASTVisitor {
   public void visit(LiteralStringNode node) {
     Reader newReader = reader.addLiteral(node.value());
     reader = newReader;
-
   }
 
   private boolean isPrint(ExpressionNode node) {
@@ -168,5 +167,4 @@ public class ExecutionVisitor implements ASTVisitor {
   public Reader getReader() {
     return reader;
   }
-
 }

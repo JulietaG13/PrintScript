@@ -1,13 +1,13 @@
 package edu.common;
 
+import static edu.common.Keyword.*;
+
 import java.util.HashMap;
 import java.util.Map;
 
-import static edu.common.Keyword.*;
-
 public class KeywordProvider {
-  private final static Map<String, Keyword> keywords = new HashMap<>();
-  private final static Map<Keyword, String> strings = new HashMap<>();
+  private static final Map<String, Keyword> keywords = new HashMap<>();
+  private static final Map<Keyword, String> strings = new HashMap<>();
 
   static {
     add("let", LET);

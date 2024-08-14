@@ -1,26 +1,26 @@
 package edu.parsers.statements;
 
+import static edu.utils.ParserUtil.isKeyword;
+
+import edu.Token;
+import edu.ast.expressions.IdentifierNode;
 import edu.ast.interfaces.ExpressionNode;
 import edu.ast.interfaces.StatementNode;
 import edu.ast.statements.Kind;
 import edu.ast.statements.Type;
 import edu.ast.statements.VariableDeclarationNode;
-import edu.ast.expressions.IdentifierNode;
 import edu.parsers.ParseExpression;
 import edu.parsers.StatementParser;
 import edu.parsers.expressions.ParseIdentifier;
 import edu.utils.KindProvider;
-import edu.utils.TypeProvider;
-import edu.Token;
 import edu.utils.LexicalRange;
+import edu.utils.TypeProvider;
 import java.util.List;
-
-import static edu.utils.ParserUtil.isKeyword;
 
 public class ParseLet implements StatementParser {
   /*
-  * Expects a ';' at the end
-  */
+   * Expects a ';' at the end
+   */
 
   @Override
   public StatementNode parse(List<Token> tokens) {
@@ -42,26 +42,12 @@ public class ParseLet implements StatementParser {
     Type type = TypeProvider.getType(typeString);
 
     if (isNotInitialized(tokens)) {
-      return new VariableDeclarationNode(
-          start,
-          end,
-          identifier,
-          type,
-          Kind.LET,
-          null
-      );
+      return new VariableDeclarationNode(start, end, identifier, type, Kind.LET, null);
     }
 
     ExpressionNode init = ParseExpression.parse(tokens.subList(5, tokens.size() - 1));
 
-    return new VariableDeclarationNode(
-        start,
-        end,
-        identifier,
-        type,
-        Kind.LET,
-        init
-    );
+    return new VariableDeclarationNode(start, end, identifier, type, Kind.LET, init);
   }
 
   @Override

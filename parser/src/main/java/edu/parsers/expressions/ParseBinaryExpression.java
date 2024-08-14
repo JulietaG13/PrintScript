@@ -1,5 +1,7 @@
 package edu.parsers.expressions;
 
+import static edu.utils.ParserUtil.*;
+
 import edu.Token;
 import edu.ast.expressions.BinaryExpressionNode;
 import edu.ast.interfaces.ExpressionNode;
@@ -7,12 +9,8 @@ import edu.common.OperatorProvider;
 import edu.parsers.ExpressionParser;
 import edu.parsers.ParseExpression;
 import edu.utils.LexicalRange;
-
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
-
-import static edu.utils.ParserUtil.*;
 
 public class ParseBinaryExpression implements ExpressionParser {
 
@@ -40,8 +38,7 @@ public class ParseBinaryExpression implements ExpressionParser {
         end,
         tokens.get(operatorIndex).getContent(),
         ParseExpression.parse(left),
-        ParseExpression.parse(right)
-    );
+        ParseExpression.parse(right));
   }
 
   @Override
@@ -49,14 +46,14 @@ public class ParseBinaryExpression implements ExpressionParser {
     if (tokens.size() < 3) {
       return false;
     }
-    if (isSurroundedByParens(tokens)) {  // call again without surrounding parenthesis
+    if (isSurroundedByParens(tokens)) { // call again without surrounding parenthesis
       return isXExpression(tokens.subList(1, tokens.size() - 1));
     }
 
     List<Token> extraRemoved;
 
     try {
-      extraRemoved = removeExtra(tokens);   // remove args and parenthesis
+      extraRemoved = removeExtra(tokens); // remove args and parenthesis
     } catch (Exception e) {
       return false;
     }
@@ -65,7 +62,7 @@ public class ParseBinaryExpression implements ExpressionParser {
       return false;
     }
 
-    for (int i = 0; i < extraRemoved.size(); i++) {   // check if it is alternated
+    for (int i = 0; i < extraRemoved.size(); i++) { // check if it is alternated
       if (i % 2 == 0) {
         if (isLiteral(extraRemoved, i) || isIdentifier(extraRemoved, i)) {
           continue;
@@ -99,7 +96,7 @@ public class ParseBinaryExpression implements ExpressionParser {
     return false;
   }
 
-  private static List<Token> removeExtra (List<Token> tokens) throws Exception {
+  private static List<Token> removeExtra(List<Token> tokens) throws Exception {
     List<Token> result = new ArrayList<>();
     int totalBalance = 0;
 
@@ -111,10 +108,10 @@ public class ParseBinaryExpression implements ExpressionParser {
 
       if (isOpenParen(tokens, i)) {
         totalBalance++;
-        if (i == 0) {   // skip first opening parenthesis
+        if (i == 0) { // skip first opening parenthesis
           continue;
         }
-        if (isIdentifier(tokens, i - 1)) {  // found a function
+        if (isIdentifier(tokens, i - 1)) { // found a function
           int balance = 1;
           while (balance > 0) { // skip args
             i++;
@@ -126,11 +123,11 @@ public class ParseBinaryExpression implements ExpressionParser {
             }
           }
           continue; // skip closing parenthesis after args
-        } else {  // skip normal opening parenthesis
+        } else { // skip normal opening parenthesis
           continue;
         }
       }
-      if (isCloseParen(tokens, i)) {  // skip normal closing parenthesis
+      if (isCloseParen(tokens, i)) { // skip normal closing parenthesis
         totalBalance--;
         continue;
       }
@@ -143,7 +140,7 @@ public class ParseBinaryExpression implements ExpressionParser {
     return result;
   }
 
-  private static List<Integer> getOperators(List<Token> tokens) {   // only first level
+  private static List<Integer> getOperators(List<Token> tokens) { // only first level
     List<Integer> operators = new ArrayList<>();
 
     int balance = 0;

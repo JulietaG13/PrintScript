@@ -28,19 +28,19 @@ public class PatternManager {
     initializePatterns();
   }
 
-  public PatternManager addKeyword(String keyword){
+  public PatternManager addKeyword(String keyword) {
     List<String> new_keywords = new ArrayList<>(keywords);
     new_keywords.add(keyword);
     return new PatternManager(new_keywords, operators, syntaxes);
   }
 
-  public PatternManager addOperator(String operator){
+  public PatternManager addOperator(String operator) {
     List<String> new_operators = new ArrayList<>(operators);
     new_operators.add(operator);
     return new PatternManager(keywords, new_operators, syntaxes);
   }
 
-  public PatternManager addSyntax(String syntax){
+  public PatternManager addSyntax(String syntax) {
     List<String> new_syntaxes = new ArrayList<>(syntaxes);
     new_syntaxes.add(syntax);
     return new PatternManager(keywords, operators, new_syntaxes);
@@ -55,23 +55,18 @@ public class PatternManager {
   }
 
   private Pattern getKeywordPattern() {
-    String patternString = keywords.stream()
-      .map(Pattern::quote)
-      .collect(Collectors.joining("|", "\\b(", ")\\b"));
+    String patternString =
+        keywords.stream().map(Pattern::quote).collect(Collectors.joining("|", "\\b(", ")\\b"));
     return Pattern.compile(patternString);
   }
 
   private Pattern getOperatorPattern() {
-    String patternString = operators.stream()
-      .map(Pattern::quote)
-      .collect(Collectors.joining("|"));
+    String patternString = operators.stream().map(Pattern::quote).collect(Collectors.joining("|"));
     return Pattern.compile(patternString);
   }
 
   private Pattern getSyntaxPattern() {
-    String patternString = syntaxes.stream()
-      .map(Pattern::quote)
-      .collect(Collectors.joining("|"));
+    String patternString = syntaxes.stream().map(Pattern::quote).collect(Collectors.joining("|"));
     return Pattern.compile(patternString);
   }
 

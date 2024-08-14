@@ -1,7 +1,6 @@
 package edu;
 
 import edu.utils.LexicalRange;
-
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -26,11 +25,11 @@ public class Lexer {
   private void advancePosition(int length) {
     for (int i = 0; i < length; i++) {
       char c = code.charAt(currentPosition.getOffset());
-      currentPosition = new LexicalRange(
-        currentPosition.getOffset() + 1,
-        c == '\n' ? currentPosition.getLine() + 1 : currentPosition.getLine(),
-        c == '\n' ? 0 : currentPosition.getColumn() + 1
-      );
+      currentPosition =
+          new LexicalRange(
+              currentPosition.getOffset() + 1,
+              c == '\n' ? currentPosition.getLine() + 1 : currentPosition.getLine(),
+              c == '\n' ? 0 : currentPosition.getColumn() + 1);
     }
   }
 
@@ -99,10 +98,14 @@ public class Lexer {
   }
 
   private void createToken(String tokenValue, TokenType type) {
-    LexicalRange startRange = new LexicalRange(
-      currentPosition.getOffset(), currentPosition.getLine(), currentPosition.getColumn());
-    LexicalRange endRange = new LexicalRange(
-      currentPosition.getOffset() + tokenValue.length() - 1, currentPosition.getLine(), currentPosition.getColumn() + tokenValue.length() - 1);
+    LexicalRange startRange =
+        new LexicalRange(
+            currentPosition.getOffset(), currentPosition.getLine(), currentPosition.getColumn());
+    LexicalRange endRange =
+        new LexicalRange(
+            currentPosition.getOffset() + tokenValue.length() - 1,
+            currentPosition.getLine(),
+            currentPosition.getColumn() + tokenValue.length() - 1);
     tokens.add(new Token(type, tokenValue, startRange, endRange));
   }
 
@@ -122,5 +125,4 @@ public class Lexer {
     }
     return true;
   }
-
 }

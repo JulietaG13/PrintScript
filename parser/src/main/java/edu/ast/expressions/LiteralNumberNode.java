@@ -7,8 +7,9 @@ import edu.utils.LexicalRange;
 /**
  * @param value TODO(Number)
  */
-public record LiteralNumberNode(LexicalRange start, LexicalRange end, Double value) implements LiteralNode {
-  
+public record LiteralNumberNode(LexicalRange start, LexicalRange end, Double value)
+    implements LiteralNode {
+
   @Override
   public LiteralType getType() {
     return LiteralType.NUMBER;

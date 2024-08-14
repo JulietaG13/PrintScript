@@ -5,7 +5,6 @@ import edu.ast.interfaces.StatementNode;
 import edu.parsers.statements.ParseAssignation;
 import edu.parsers.statements.ParseLet;
 import edu.parsers.statements.ParseStatementExpression;
-
 import java.util.List;
 
 public class ParseStatement {
@@ -16,11 +15,11 @@ public class ParseStatement {
   private static final List<StatementParser> parsers;
 
   static {
-    parsers = List.of(
-        new ParseAssignation(),
-        new ParseLet(),
-        new ParseStatementExpression()
-    ); // TODO(changeable)
+    parsers =
+        List.of(
+            new ParseAssignation(),
+            new ParseLet(),
+            new ParseStatementExpression()); // TODO(changeable)
   }
 
   public static StatementNode parse(List<Token> tokens) {
@@ -30,6 +29,6 @@ public class ParseStatement {
       }
     }
 
-    throw new RuntimeException();   // TODO
+    throw new RuntimeException(); // TODO
   }
 }

@@ -2,11 +2,10 @@ package edu.parsers;
 
 import edu.Token;
 import edu.ast.interfaces.ExpressionNode;
-import edu.parsers.expressions.ParseIdentifier;
-import edu.parsers.expressions.ParseLiteral;
 import edu.parsers.expressions.ParseBinaryExpression;
 import edu.parsers.expressions.ParseCallExpression;
-
+import edu.parsers.expressions.ParseIdentifier;
+import edu.parsers.expressions.ParseLiteral;
 import java.util.List;
 
 public class ParseExpression {
@@ -17,12 +16,12 @@ public class ParseExpression {
   private static final List<ExpressionParser> parsers;
 
   static {
-    parsers = List.of(
-        new ParseBinaryExpression(),
-        new ParseCallExpression(),
-        new ParseIdentifier(),
-        new ParseLiteral()
-    ); // TODO(changeable)
+    parsers =
+        List.of(
+            new ParseBinaryExpression(),
+            new ParseCallExpression(),
+            new ParseIdentifier(),
+            new ParseLiteral()); // TODO(changeable)
   }
 
   public static ExpressionNode parse(List<Token> tokens) {

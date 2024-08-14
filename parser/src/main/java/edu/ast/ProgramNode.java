@@ -19,12 +19,12 @@ public class ProgramNode implements Node {
 
   @Override
   public LexicalRange start() {
-    return new LexicalRange(0,0,0);
+    return new LexicalRange(0, 0, 0);
   }
-  
+
   @Override
   public LexicalRange end() {
-    return null;  // TODO()
+    return null; // TODO()
   }
 
   @Override

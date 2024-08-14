@@ -5,6 +5,9 @@
 plugins {
     // Apply the java Plugin to add support for Java.
     id 'java'
+
+    // Apply the spotless Plugin to add support for code coverage in Java and Kotlin with Spotless.
+    id 'com.diffplug.spotless'
 }
 
 repositories {
@@ -34,4 +37,14 @@ java {
 tasks.named('test') {
     // Use JUnit Platform for unit tests.
     useJUnitPlatform()
+}
+
+// Code formatting configuration
+spotless {
+    java {
+        googleJavaFormat()
+    }
+    kotlin {
+        ktlint()
+    }
 }

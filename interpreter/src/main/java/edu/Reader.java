@@ -67,9 +67,9 @@ public class Reader {
   public Reader write(String varName, Object value) {
     VariableContext newContext;
     if (value instanceof Number) {
-       newContext = variables.setNumberVariable(varName, (Number) value);
+      newContext = variables.setNumberVariable(varName, (Number) value);
     } else if (value instanceof String) {
-       newContext = variables.setStringVariable(varName, (String) value);
+      newContext = variables.setStringVariable(varName, (String) value);
     } else {
       throw new RuntimeException("Tipo de variable no soportado: " + value.getClass());
     }
@@ -84,8 +84,7 @@ public class Reader {
     return variables.hasNumberVariable(varName);
   }
 
-    public VariableContext getVariables() {
-        return variables;
-    }
-
+  public VariableContext getVariables() {
+    return variables;
+  }
 }
