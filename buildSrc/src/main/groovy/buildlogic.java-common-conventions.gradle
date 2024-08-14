@@ -8,6 +8,9 @@ plugins {
 
     // Apply the spotless Plugin to add support for code coverage in Java and Kotlin with Spotless.
     id 'com.diffplug.spotless'
+
+    id 'checkstyle'
+
 }
 
 repositories {
@@ -47,4 +50,12 @@ spotless {
     kotlin {
         ktlint()
     }
+}
+
+checkstyle {
+    toolVersion = '10.3.3'
+    ignoreFailures = false
+    maxWarnings = 0
+    configFile = file("${rootDir}/config/checkstyle/checkstyle.xml")
+
 }
