@@ -39,9 +39,9 @@ tasks.jacocoTestCoverageVerification {
     violationRules {
         rule {
             limit {
-                counter = 'INSTRUCTION'  // Puedes usar LINE, BRANCH, etc.
+                counter = 'INSTRUCTION'
                 value = 'COVEREDRATIO'
-                minimum = 0.80 // 80% de cobertura mínima
+                minimum = 0.80
             }
         }
     }

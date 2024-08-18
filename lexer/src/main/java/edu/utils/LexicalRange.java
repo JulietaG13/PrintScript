@@ -22,4 +22,8 @@ public class LexicalRange {
   public int getColumn() {
     return column;
   }
+
+  public String toString() {
+    return "LexicalRange(offset=" + offset + ", line=" + line + ", column=" + column + ")";
+  }
 }
