@@ -1,7 +1,6 @@
 package edu.reader;
 
-import edu.*;
-
+import edu.VariableContext;
 import java.util.Stack;
 
 public class Reader {

@@ -1,4 +1,3 @@
 package edu;
 
-public class Linter {
-}
+public class Linter {}

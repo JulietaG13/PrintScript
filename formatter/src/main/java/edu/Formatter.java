@@ -1,4 +1,3 @@
 package edu;
 
-public class Formatter {
-}
+public class Formatter {}

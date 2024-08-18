@@ -1,7 +1,5 @@
 package edu.reader;
 
-import edu.reader.*;
-
 public class ReaderResult {
   private final Reader reader;
   private final Object value;
