@@ -20,7 +20,6 @@ public class Lexer {
 
   public List<Token> getTokens() {
     return tokens;
-    // Tokens
   }
 
   private void advancePosition(int length) {
