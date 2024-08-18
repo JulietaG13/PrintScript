@@ -17,7 +17,7 @@ public class ParseLiteral implements ExpressionParser {
   @Override
   public ExpressionNode parse(List<Token> tokens) {
 
-    if (!isXExpression(tokens)) {
+    if (!isXexpression(tokens)) {
       throw new RuntimeException(); // Should never happen
     }
 
@@ -42,7 +42,7 @@ public class ParseLiteral implements ExpressionParser {
   }
 
   @Override
-  public boolean isXExpression(List<Token> tokens) {
+  public boolean isXexpression(List<Token> tokens) {
     return tokens.size() == 1 && isLiteral(tokens, 0);
   }
 

@@ -24,7 +24,7 @@ public class ParseStatement {
 
   public static StatementNode parse(List<Token> tokens) {
     for (StatementParser parser : parsers) {
-      if (parser.isXStatement(tokens)) {
+      if (parser.isXstatement(tokens)) {
         return parser.parse(tokens);
       }
     }

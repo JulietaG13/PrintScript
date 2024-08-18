@@ -11,7 +11,7 @@ import java.util.List;
 public class ParseIdentifier implements ExpressionParser {
   @Override
   public ExpressionNode parse(List<Token> tokens) {
-    if (!isXExpression(tokens)) {
+    if (!isXexpression(tokens)) {
       throw new RuntimeException(); // Should never happen
     }
 
@@ -24,7 +24,7 @@ public class ParseIdentifier implements ExpressionParser {
   }
 
   @Override
-  public boolean isXExpression(List<Token> tokens) {
+  public boolean isXexpression(List<Token> tokens) {
     return isIdentifier(tokens, 0) && tokens.size() == 1;
   }
 }

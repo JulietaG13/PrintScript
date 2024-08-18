@@ -1,7 +1,12 @@
 package edu;
 
-import static edu.TokenProvider.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static edu.TokenProvider.getCloseParen;
+import static edu.TokenProvider.getComma;
+import static edu.TokenProvider.getIdentifier;
+import static edu.TokenProvider.getLiteral;
+import static edu.TokenProvider.getOpenParen;
+import static edu.TokenProvider.getSemicolon;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import edu.ast.ProgramNode;
 import edu.ast.expressions.CallExpressionNode;

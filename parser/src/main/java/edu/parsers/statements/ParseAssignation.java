@@ -1,6 +1,7 @@
 package edu.parsers.statements;
 
-import static edu.utils.ParserUtil.*;
+import static edu.utils.ParserUtil.isAssign;
+import static edu.utils.ParserUtil.isIdentifier;
 
 import edu.Token;
 import edu.ast.expressions.IdentifierNode;
@@ -30,7 +31,7 @@ public class ParseAssignation implements StatementParser {
   }
 
   @Override
-  public boolean isXStatement(List<Token> tokens) {
+  public boolean isXstatement(List<Token> tokens) {
     if (!isIdentifier(tokens, 0)) {
       return false;
     }

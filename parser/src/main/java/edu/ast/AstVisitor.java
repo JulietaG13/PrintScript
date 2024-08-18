@@ -9,7 +9,7 @@ import edu.ast.statements.AssignmentNode;
 import edu.ast.statements.ExpressionStatementNode;
 import edu.ast.statements.VariableDeclarationNode;
 
-public interface ASTVisitor {
+public interface AstVisitor {
   void visit(ProgramNode node);
 
   void visit(AssignmentNode node);

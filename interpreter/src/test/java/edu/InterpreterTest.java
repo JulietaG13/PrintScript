@@ -1,7 +1,9 @@
 package edu;
 
 import edu.ast.ProgramNode;
-import edu.ast.expressions.*;
+import edu.ast.expressions.CallExpressionNode;
+import edu.ast.expressions.IdentifierNode;
+import edu.ast.expressions.LiteralStringNode;
 import edu.ast.interfaces.ExpressionNode;
 import edu.ast.statements.ExpressionStatementNode;
 import edu.ast.statements.Kind;

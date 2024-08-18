@@ -26,7 +26,7 @@ public class ParseExpression {
 
   public static ExpressionNode parse(List<Token> tokens) {
     for (ExpressionParser parser : parsers) {
-      if (parser.isXExpression(tokens)) {
+      if (parser.isXexpression(tokens)) {
         return parser.parse(tokens);
       }
     }

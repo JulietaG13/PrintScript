@@ -1,6 +1,12 @@
 package edu;
 
-import static edu.TokenProvider.*;
+import static edu.TokenProvider.getColon;
+import static edu.TokenProvider.getEquals;
+import static edu.TokenProvider.getIdentifier;
+import static edu.TokenProvider.getLet;
+import static edu.TokenProvider.getLiteral;
+import static edu.TokenProvider.getNumber;
+import static edu.TokenProvider.getSemicolon;
 
 import edu.ast.ProgramNode;
 import java.util.List;

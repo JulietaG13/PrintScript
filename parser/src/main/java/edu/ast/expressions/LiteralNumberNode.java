@@ -1,6 +1,6 @@
 package edu.ast.expressions;
 
-import edu.ast.ASTVisitor;
+import edu.ast.AstVisitor;
 import edu.ast.interfaces.LiteralNode;
 import edu.utils.LexicalRange;
 
@@ -16,7 +16,7 @@ public record LiteralNumberNode(LexicalRange start, LexicalRange end, Double val
   }
 
   @Override
-  public void accept(ASTVisitor visitor) {
+  public void accept(AstVisitor visitor) {
     visitor.visit(this);
   }
 }

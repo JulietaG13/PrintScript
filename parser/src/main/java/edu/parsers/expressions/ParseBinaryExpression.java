@@ -1,6 +1,12 @@
 package edu.parsers.expressions;
 
-import static edu.utils.ParserUtil.*;
+import static edu.utils.ParserUtil.isCloseParen;
+import static edu.utils.ParserUtil.isIdentifier;
+import static edu.utils.ParserUtil.isKeyword;
+import static edu.utils.ParserUtil.isLiteral;
+import static edu.utils.ParserUtil.isOpenParen;
+import static edu.utils.ParserUtil.isOperator;
+import static edu.utils.ParserUtil.isSyntax;
 
 import edu.Token;
 import edu.ast.expressions.BinaryExpressionNode;
@@ -23,7 +29,7 @@ public class ParseBinaryExpression implements ExpressionParser {
       tokens = tokens.subList(1, tokens.size() - 1);
     }
 
-    if (!isXExpression(tokens)) {
+    if (!isXexpression(tokens)) {
       throw new RuntimeException(); // TODO
     }
 
@@ -42,12 +48,12 @@ public class ParseBinaryExpression implements ExpressionParser {
   }
 
   @Override
-  public boolean isXExpression(List<Token> tokens) {
+  public boolean isXexpression(List<Token> tokens) {
     if (tokens.size() < 3) {
       return false;
     }
     if (isSurroundedByParens(tokens)) { // call again without surrounding parenthesis
-      return isXExpression(tokens.subList(1, tokens.size() - 1));
+      return isXexpression(tokens.subList(1, tokens.size() - 1));
     }
 
     List<Token> extraRemoved;

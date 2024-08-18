@@ -29,21 +29,21 @@ public class PatternManager {
   }
 
   public PatternManager addKeyword(String keyword) {
-    List<String> new_keywords = new ArrayList<>(keywords);
-    new_keywords.add(keyword);
-    return new PatternManager(new_keywords, operators, syntaxes);
+    List<String> newKeywords = new ArrayList<>(keywords);
+    newKeywords.add(keyword);
+    return new PatternManager(newKeywords, operators, syntaxes);
   }
 
   public PatternManager addOperator(String operator) {
-    List<String> new_operators = new ArrayList<>(operators);
-    new_operators.add(operator);
-    return new PatternManager(keywords, new_operators, syntaxes);
+    List<String> newOperators = new ArrayList<>(operators);
+    newOperators.add(operator);
+    return new PatternManager(keywords, newOperators, syntaxes);
   }
 
   public PatternManager addSyntax(String syntax) {
-    List<String> new_syntaxes = new ArrayList<>(syntaxes);
-    new_syntaxes.add(syntax);
-    return new PatternManager(keywords, operators, new_syntaxes);
+    List<String> newSyntaxes = new ArrayList<>(syntaxes);
+    newSyntaxes.add(syntax);
+    return new PatternManager(keywords, operators, newSyntaxes);
   }
 
   private void initializePatterns() {

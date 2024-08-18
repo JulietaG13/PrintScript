@@ -13,7 +13,7 @@ public class GlobalTest {
   public void testVariableDeclaration() {
     /* Input: let my_cool_variable: string = "ciclon" */
     String code = "let my_cool_variable: String = \"ciclon\";";
-    ProgramNode program = getAST(code);
+    ProgramNode program = getAst(code);
     VariableContext variableContext = interpret(program);
     assertEquals("ciclon", variableContext.getStringVariable("my_cool_variable"));
   }
@@ -22,7 +22,7 @@ public class GlobalTest {
   public void testPrint() {
     /* Input: "let my_cool_variable: String = \"ciclon\"; println(my_cool_variable);\n" */
     String code = "let my_cool_variable: String = \"ciclon\"; println(my_cool_variable);\n";
-    ProgramNode program = getAST(code);
+    ProgramNode program = getAst(code);
     String printed = getPrintedInfo(program);
     assertEquals("ciclon", printed);
   }
@@ -31,7 +31,7 @@ public class GlobalTest {
   public void testAssignation() {
     /* Input: "let my_cool_variable: String = \"ciclon\"; my_cool_variable = \"hurricane\";" */
     String code = "let my_cool_variable: String = \"ciclon\"; my_cool_variable = \"hurricane\";";
-    ProgramNode program = getAST(code);
+    ProgramNode program = getAst(code);
     VariableContext variableContext = interpret(program);
     assertEquals("hurricane", variableContext.getStringVariable("my_cool_variable"));
   }
@@ -40,12 +40,12 @@ public class GlobalTest {
   public void testBinaryOperation() {
     /* Input: "let age: Number = 10; println(age+5);" */
     String code = "let age: Number = 10; println(age+5);";
-    ProgramNode program = getAST(code);
+    ProgramNode program = getAst(code);
     String printedInfo = getPrintedInfo(program);
     assertEquals("15.0", printedInfo);
   }
 
-  public ProgramNode getAST(String code) {
+  public ProgramNode getAst(String code) {
     Lexer lexer = new Lexer(code);
     lexer.tokenize();
     Parser parser = new Parser();

@@ -1,7 +1,10 @@
 package edu;
 
 import edu.utils.LexicalRange;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -53,7 +56,9 @@ public class Lexer {
       Character c = currentChar.get();
 
       /* Skips whitespaces */
-      if (skipWhitespace(c)) continue;
+      if (skipWhitespace(c)) {
+        continue;
+      }
 
       boolean matched = false;
 
@@ -62,7 +67,8 @@ public class Lexer {
         Pattern pattern = entry.getKey();
         TokenType type = entry.getValue();
 
-        /* Gets the substring from the current position, leaving outside what has already been matched */
+        /* Gets the substring from the current position,
+        leaving outside what has already been matched */
         String sub = code.substring(currentPosition.getOffset());
 
         Matcher matcher = pattern.matcher(sub);

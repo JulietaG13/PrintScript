@@ -1,6 +1,9 @@
 package edu.parsers.expressions;
 
-import static edu.utils.ParserUtil.*;
+import static edu.utils.ParserUtil.isArgSeparator;
+import static edu.utils.ParserUtil.isCloseParen;
+import static edu.utils.ParserUtil.isIdentifier;
+import static edu.utils.ParserUtil.isOpenParen;
 
 import edu.Token;
 import edu.ast.expressions.CallExpressionNode;
@@ -37,7 +40,7 @@ public class ParseCallExpression implements ExpressionParser {
   }
 
   @Override
-  public boolean isXExpression(List<Token> tokens) {
+  public boolean isXexpression(List<Token> tokens) {
     boolean minimum =
         isIdentifier(tokens, 0)
             && tokens.size() >= 3

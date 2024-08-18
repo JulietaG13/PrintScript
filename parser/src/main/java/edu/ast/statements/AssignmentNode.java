@@ -1,6 +1,6 @@
 package edu.ast.statements;
 
-import edu.ast.ASTVisitor;
+import edu.ast.AstVisitor;
 import edu.ast.expressions.IdentifierNode;
 import edu.ast.interfaces.ExpressionNode;
 import edu.ast.interfaces.StatementNode;
@@ -11,7 +11,7 @@ public record AssignmentNode(
     implements StatementNode {
 
   @Override
-  public void accept(ASTVisitor visitor) {
+  public void accept(AstVisitor visitor) {
     visitor.visit(this);
   }
 }

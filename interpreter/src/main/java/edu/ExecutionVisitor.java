@@ -1,12 +1,20 @@
 package edu;
 
-import edu.ast.ASTVisitor;
+import edu.ast.AstVisitor;
 import edu.ast.ProgramNode;
-import edu.ast.expressions.*;
-import edu.ast.interfaces.*;
-import edu.ast.statements.*;
+import edu.ast.expressions.BinaryExpressionNode;
+import edu.ast.expressions.CallExpressionNode;
+import edu.ast.expressions.IdentifierNode;
+import edu.ast.expressions.LiteralNumberNode;
+import edu.ast.expressions.LiteralStringNode;
+import edu.ast.interfaces.ExpressionNode;
+import edu.ast.interfaces.StatementNode;
+import edu.ast.statements.AssignmentNode;
+import edu.ast.statements.ExpressionStatementNode;
+import edu.ast.statements.Kind;
+import edu.ast.statements.VariableDeclarationNode;
 
-public class ExecutionVisitor implements ASTVisitor {
+public class ExecutionVisitor implements AstVisitor {
   private Reader reader;
 
   public ExecutionVisitor(Reader reader) {

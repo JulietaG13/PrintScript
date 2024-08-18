@@ -11,5 +11,5 @@ public interface ExpressionParser {
 
   ExpressionNode parse(List<Token> tokens);
 
-  boolean isXExpression(List<Token> tokens);
+  boolean isXexpression(List<Token> tokens);
 }

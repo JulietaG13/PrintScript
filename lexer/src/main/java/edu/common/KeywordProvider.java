@@ -1,6 +1,8 @@
 package edu.common;
 
-import static edu.common.Keyword.*;
+import static edu.common.Keyword.LET;
+import static edu.common.Keyword.NUMBER;
+import static edu.common.Keyword.STRING;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -28,7 +28,7 @@ public class ParseStatementExpression implements StatementParser {
     List<Token> expressionPart = tokens.subList(0, tokens.size() - 1); // [ id(...) ] ;
 
     for (ExpressionParser parser : parsers) {
-      if (parser.isXExpression(expressionPart)) {
+      if (parser.isXexpression(expressionPart)) {
         return new ExpressionStatementNode(start, end, parser.parse(expressionPart));
       }
     }
@@ -37,11 +37,11 @@ public class ParseStatementExpression implements StatementParser {
   }
 
   @Override
-  public boolean isXStatement(List<Token> tokens) {
+  public boolean isXstatement(List<Token> tokens) {
     List<Token> expressionPart = tokens.subList(0, tokens.size() - 1); // [ id(...) ] ;
 
     for (ExpressionParser parser : parsers) {
-      if (parser.isXExpression(expressionPart)) {
+      if (parser.isXexpression(expressionPart)) {
         return true;
       }
     }

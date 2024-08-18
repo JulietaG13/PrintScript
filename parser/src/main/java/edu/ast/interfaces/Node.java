@@ -1,6 +1,6 @@
 package edu.ast.interfaces;
 
-import edu.ast.ASTVisitor;
+import edu.ast.AstVisitor;
 import edu.utils.LexicalRange;
 
 public interface Node {
@@ -8,5 +8,5 @@ public interface Node {
 
   LexicalRange end();
 
-  void accept(ASTVisitor visitor);
+  void accept(AstVisitor visitor);
 }

@@ -114,9 +114,11 @@ public class TestBinaryOperations {
 
   @Test
   public void testBinaryDoubleIdentifierPrint() {
-    /* Input: let age:Number = 20; let intro:String = "I am "; let measures: String =" years old"; println(intro + age + measures); */
+    /* Input: let age:Number = 20; let intro:String = "I am ";
+    let measures: String =" years old"; println(intro + age + measures); */
     String code =
-        "let age: Number = 20; let intro: String = \"I am \"; let measures: String =\" years old\"; println(intro + age + measures);";
+        "let age: Number = 20; let intro: String = \"I am \"; let measures: "
+            + "String =\" years old\"; println(intro + age + measures);";
     ProgramNode program = compile(code);
     String printedInfo = getPrintedInfo(program);
     assertEquals("I am 20.0 years old", printedInfo);

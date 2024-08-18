@@ -24,7 +24,7 @@ public class ParseLet implements StatementParser {
 
   @Override
   public StatementNode parse(List<Token> tokens) {
-    if (!isXStatement(tokens)) {
+    if (!isXstatement(tokens)) {
       throw new RuntimeException(); // Should never happen
     }
 
@@ -51,7 +51,7 @@ public class ParseLet implements StatementParser {
   }
 
   @Override
-  public boolean isXStatement(List<Token> tokens) {
+  public boolean isXstatement(List<Token> tokens) {
     String keyword = tokens.getFirst().getContent();
     return isKeyword(tokens, 0) && KindProvider.getKind(keyword) == Kind.LET;
   }
