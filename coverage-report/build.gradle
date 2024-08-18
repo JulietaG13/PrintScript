@@ -21,6 +21,20 @@ reporting {
     }
 }
 
+tasks.register('jacocoAggregatedCoverageVerification', JacocoCoverageVerification) {
+    executionData(fileTree(dir: "$buildDir/jacoco", include: "*.exec"))
+
+    violationRules {
+        rule {
+            limit {
+                counter = 'INSTRUCTION'
+                value = 'COVEREDRATIO'
+                minimum = 0.90 // 90% de cobertura mínima para todo el proyecto
+            }
+        }
+    }
+}
+
 tasks.named('check') {
-    dependsOn(tasks.named('testCodeCoverageReport'))
+    dependsOn(tasks.named('testCodeCoverageReport'), tasks.named('jacocoAggregatedCoverageVerification'))
 }

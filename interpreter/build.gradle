@@ -36,3 +36,19 @@ jacocoTestReport {
         html.outputLocation = file("${buildDir}/jacocoHtml")
     }
 }
+
+tasks.jacocoTestCoverageVerification {
+    violationRules {
+        rule {
+            limit {
+                counter = 'INSTRUCTION'  // Puedes usar LINE, BRANCH, etc.
+                value = 'COVEREDRATIO'
+                minimum = 0.80 // 80% de cobertura mínima
+            }
+        }
+    }
+}
+
+tasks.check {
+    dependsOn(tasks.jacocoTestCoverageVerification)
+}
