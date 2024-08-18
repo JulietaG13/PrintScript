@@ -1,6 +1,7 @@
 package edu;
 
-import edu.ast.*;
+import edu.ast.ASTVisitor;
+import edu.ast.ProgramNode;
 import edu.ast.expressions.*;
 import edu.ast.interfaces.*;
 import edu.ast.statements.*;
