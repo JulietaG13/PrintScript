@@ -5,5 +5,5 @@ plugins {
 
 
 rootProject.name = 'PrintScript'
-include('lexer', 'parser', 'interpreter', 'coverage-report')
+include('lexer', 'parser', 'interpreter', 'coverage-report', 'linter')
 
