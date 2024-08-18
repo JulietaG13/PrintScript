@@ -5,9 +5,15 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import edu.ast.ProgramNode;
 import java.util.List;
+
+import edu.reader.*;
+import edu.visitor.*;
 import org.junit.jupiter.api.Test;
 
 public class VisitorTest {
+
+  private final String lineSeparator = System.lineSeparator();
+
   @Test
   public void testVariableAssignment() {
     String code = "let my_cool_variable: String = \"ciclon\";";
@@ -19,7 +25,7 @@ public class VisitorTest {
   @Test
   public void testPrintln() {
     String code = "let my_cool_variable: String = \"ciclon\";\nprintln(my_cool_variable);";
-    String expectedOutput = "ciclon\n";
+    String expectedOutput = "ciclon" + lineSeparator;
     assertEquals(expectedOutput, getOutput(code));
   }
 
@@ -38,7 +44,7 @@ public class VisitorTest {
   @Test
   public void testPrintlnLiteralString() {
     String code = "println(\"Hello World\");";
-    String expectedOutput = "Hello World\n";
+    String expectedOutput = "Hello World" + lineSeparator;
     assertEquals(expectedOutput, getOutput(code));
   }
 

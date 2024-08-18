@@ -1,4 +1,6 @@
-package edu;
+package edu.reader;
+
+import edu.*;
 
 import java.util.Stack;
 

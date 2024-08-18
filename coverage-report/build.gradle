@@ -1,0 +1,40 @@
+plugins {
+    id 'base'
+    id 'jacoco-report-aggregation'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    jacocoAggregation project(':lexer')
+    jacocoAggregation project(':parser')
+    jacocoAggregation project(':interpreter')
+}
+
+reporting {
+    reports {
+        testCodeCoverageReport(JacocoCoverageReport) {
+            testType = TestSuiteType.UNIT_TEST
+        }
+    }
+}
+
+tasks.register('jacocoAggregatedCoverageVerification', JacocoCoverageVerification) {
+    executionData(fileTree(dir: "$buildDir/jacoco", include: "*.exec"))
+
+    violationRules {
+        rule {
+            limit {
+                counter = 'INSTRUCTION'
+                value = 'COVEREDRATIO'
+                minimum = 0.90 // 90% de cobertura mínima para todo el proyecto
+            }
+        }
+    }
+}
+
+tasks.named('check') {
+    dependsOn(tasks.named('testCodeCoverageReport'), tasks.named('jacocoAggregatedCoverageVerification'))
+}

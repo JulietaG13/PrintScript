@@ -5,6 +5,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import edu.ast.ProgramNode;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+
+import edu.reader.*;
+import edu.visitor.*;
 import org.junit.jupiter.api.Test;
 
 public class GlobalTest {

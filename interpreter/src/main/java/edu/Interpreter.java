@@ -1,6 +1,6 @@
 package edu;
 
-import edu.ast.ProgramNode;
+import edu.ast.*;
 
 public class Interpreter {
   private final ExecutionVisitor visitor;
