@@ -1,6 +1,8 @@
 package edu;
 
 import edu.ast.*;
+import edu.reader.*;
+import edu.visitor.*;
 
 public class Interpreter {
   private final ExecutionVisitor visitor;

@@ -4,6 +4,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import edu.ast.ProgramNode;
 import java.util.List;
+
+import edu.reader.*;
+import edu.visitor.*;
 import org.junit.jupiter.api.Test;
 
 public class VisitorTest {

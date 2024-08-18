@@ -1,9 +1,13 @@
-package edu;
+package edu.visitor;
 
 import edu.ast.*;
 import edu.ast.expressions.*;
 import edu.ast.interfaces.*;
 import edu.ast.statements.*;
+import edu.common.*;
+import edu.reader.*;
+import edu.utils.*;
+import edu.utils.OperatorProvider;
 
 public class ExecutionVisitor implements ASTVisitor {
   private Reader reader;
@@ -112,34 +116,12 @@ public class ExecutionVisitor implements ASTVisitor {
     Object right = resultRight.getValue();
     reader = resultRight.getReader();
 
-    String operator = node.operator();
+    String operatorSymbol = node.operator();
+    Operator operator = OperatorProvider.getOperator(operatorSymbol);
 
-    if (isNumber(left) && isNumber(right)) {
-      Number leftNumber = (Number) left;
-      Number rightNumber = (Number) right;
-      switch (operator) {
-        case "+":
-          reader = reader.addLiteral(leftNumber.doubleValue() + rightNumber.doubleValue());
-          break;
-        case "-":
-          reader = reader.addLiteral(leftNumber.doubleValue() - rightNumber.doubleValue());
-          break;
-        case "*":
-          reader = reader.addLiteral(leftNumber.doubleValue() * rightNumber.doubleValue());
-          break;
-        case "/":
-          reader = reader.addLiteral(leftNumber.doubleValue() / rightNumber.doubleValue());
-          break;
-        default:
-          throw new RuntimeException("Operador no soportado: " + operator);
-      }
-    } else if ((isString(left) || isString(right)) && "+".equals(operator)) {
-      // Asegurarse de concatenar en el orden correcto
-      String concatenatedResult = left.toString() + right.toString();
-      reader = reader.addLiteral(concatenatedResult);
-    } else {
-      throw new RuntimeException("Operación no soportada: " + left + " " + operator + " " + right);
-    }
+    Object result = OperatorExecutor.execute(operator, left, right);
+    reader = reader.addLiteral(result);
+
   }
 
   @Override

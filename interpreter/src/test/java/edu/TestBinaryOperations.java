@@ -6,6 +6,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import edu.ast.ProgramNode;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+
+import edu.reader.*;
+import edu.visitor.*;
 import org.junit.jupiter.api.Test;
 
 public class TestBinaryOperations {
