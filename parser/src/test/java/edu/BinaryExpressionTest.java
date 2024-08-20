@@ -20,7 +20,7 @@ import org.junit.jupiter.api.Test;
 public class BinaryExpressionTest {
 
   @Test
-  public void simpleLiterals() { // 3 + 44
+  public void simplliteralEerals() { // 3 + 44
     String op = "+";
     int left = 3;
     int right = 44;
@@ -44,7 +44,7 @@ public class BinaryExpressionTest {
   }
 
   @Test
-  public void simpleLiteralsExtraParens() { // (3 + 44)
+  public void simplliteralEeralsExtraParens() { // (3 + 44)
     String op = "+";
     int left = 3;
     int right = 44;
@@ -70,7 +70,7 @@ public class BinaryExpressionTest {
   }
 
   @Test
-  public void sumThreeLiterals() { // 3 + 44 + 4.5
+  public void sumThreliteralEerals() { // 3 + 44 + 4.5
     String op = "+";
     int fst = 3;
     int sec = 44;
@@ -148,31 +148,31 @@ public class BinaryExpressionTest {
     assert leftExp.right() instanceof BinaryExpressionNode;
     assertEquals(prod, leftExp.operator());
 
-    LiteralNumberNode aLit = (LiteralNumberNode) leftExp.left();
-    BinaryExpressionNode bSumC = (BinaryExpressionNode) leftExp.right();
+    LiteralNumberNode literalA = (LiteralNumberNode) leftExp.left();
+    BinaryExpressionNode expressionSumbc = (BinaryExpressionNode) leftExp.right();
 
-    assertEquals(a, aLit.value());
+    assertEquals(a, literalA.value());
 
-    assert bSumC.left() instanceof LiteralNumberNode;
-    assert bSumC.right() instanceof LiteralNumberNode;
-    assertEquals(sum, bSumC.operator());
+    assert expressionSumbc.left() instanceof LiteralNumberNode;
+    assert expressionSumbc.right() instanceof LiteralNumberNode;
+    assertEquals(sum, expressionSumbc.operator());
 
-    LiteralNumberNode bLit = (LiteralNumberNode) bSumC.left();
-    LiteralNumberNode cLit = (LiteralNumberNode) bSumC.right();
+    LiteralNumberNode literalB = (LiteralNumberNode) expressionSumbc.left();
+    LiteralNumberNode literalC = (LiteralNumberNode) expressionSumbc.right();
 
-    assertEquals(b, bLit.value());
-    assertEquals(c, cLit.value());
+    assertEquals(b, literalB.value());
+    assertEquals(c, literalC.value());
 
     // d * e
     assert rightExp.left() instanceof LiteralNumberNode;
     assert rightExp.right() instanceof LiteralNumberNode;
     assertEquals(prod, rightExp.operator());
 
-    LiteralNumberNode dLit = (LiteralNumberNode) rightExp.left();
-    LiteralNumberNode eLit = (LiteralNumberNode) rightExp.right();
+    LiteralNumberNode literalD = (LiteralNumberNode) rightExp.left();
+    LiteralNumberNode literalE = (LiteralNumberNode) rightExp.right();
 
-    assertEquals(d, dLit.value());
-    assertEquals(e, eLit.value());
+    assertEquals(d, literalD.value());
+    assertEquals(e, literalE.value());
   }
 
   @Test

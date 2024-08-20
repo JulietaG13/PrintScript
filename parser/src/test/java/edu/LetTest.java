@@ -1,7 +1,16 @@
 package edu;
 
-import static edu.TokenProvider.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static edu.TokenProvider.getColon;
+import static edu.TokenProvider.getEquals;
+import static edu.TokenProvider.getIdentifier;
+import static edu.TokenProvider.getLet;
+import static edu.TokenProvider.getLiteral;
+import static edu.TokenProvider.getNumber;
+import static edu.TokenProvider.getSemicolon;
+import static edu.TokenProvider.getString;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import edu.ast.ProgramNode;
 import edu.ast.expressions.LiteralNumberNode;

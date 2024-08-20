@@ -1,6 +1,10 @@
 package edu;
 
-import static edu.TokenProvider.*;
+import static edu.TokenProvider.getEquals;
+import static edu.TokenProvider.getIdentifier;
+import static edu.TokenProvider.getLiteral;
+import static edu.TokenProvider.getOperator;
+import static edu.TokenProvider.getSemicolon;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import edu.ast.ProgramNode;
