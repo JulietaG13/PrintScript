@@ -151,3 +151,4 @@ public class TokenizerTest {
     assertEquals(tokens.get(15).getType(), TokenType.SYNTAX);
   }
 }
+
