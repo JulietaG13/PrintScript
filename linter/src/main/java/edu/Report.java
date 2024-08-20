@@ -37,5 +37,4 @@ public class Report {
       return Optional.of(messages);
     }
   }
-
 }

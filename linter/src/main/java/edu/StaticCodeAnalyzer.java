@@ -2,7 +2,11 @@ package edu;
 
 import edu.ast.AstVisitor;
 import edu.ast.ProgramNode;
-import edu.ast.expressions.*;
+import edu.ast.expressions.BinaryExpressionNode;
+import edu.ast.expressions.CallExpressionNode;
+import edu.ast.expressions.IdentifierNode;
+import edu.ast.expressions.LiteralNumberNode;
+import edu.ast.expressions.LiteralStringNode;
 import edu.ast.interfaces.ExpressionNode;
 import edu.ast.interfaces.StatementNode;
 import edu.ast.statements.AssignmentNode;
@@ -16,7 +20,8 @@ public class StaticCodeAnalyzer implements AstVisitor {
   private Report report;
   private FunctionRule functionRules;
 
-  public StaticCodeAnalyzer(Report report, IdentifierType possibleIdentifier, FunctionRule functionRules) {
+  public StaticCodeAnalyzer(
+      Report report, IdentifierType possibleIdentifier, FunctionRule functionRules) {
     this.possibleIdentifier = possibleIdentifier;
     this.report = report;
     this.functionRules = functionRules;
@@ -69,7 +74,8 @@ public class StaticCodeAnalyzer implements AstVisitor {
   public void visit(IdentifierNode node) {
     String variableName = node.name();
     if (!possibleIdentifier.matches(variableName)) {
-      report.addMessage("Invalid identifier name: " + variableName + " at position " + node.start().toString());
+      report.addMessage(
+          "Invalid identifier name: " + variableName + " at position " + node.start().toString());
     }
   }
 

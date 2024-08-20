@@ -1,14 +1,13 @@
 package edu;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import edu.ast.ProgramNode;
 import edu.functions.NonExpressionPrintln;
 import edu.identifiers.LowerCamelCase;
-import org.junit.jupiter.api.Test;
-
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.Test;
 
 public class TestPrintRules {
   private Report processCode(String code, Linter linter) {
@@ -69,11 +68,11 @@ public class TestPrintRules {
     assertTrue(report.getReport().isPresent());
     List<String> messages = report.getReport().get();
     String expectedOutput =
-      "Error in println function: The println function only accepts identifiers or literals as arguments.\n" +
-      "Argument 1 is invalid:\n" +
-      " - Type: BinaryExpressionNode\n" +
-      " - Position: LexicalRange(offset=8, line=0, column=8)\n" +
-      " - Content: \"Hello\" + \"World\"";
+        "Error in println function: The println function only accepts identifiers or literals as arguments.\n"
+            + "Argument 1 is invalid:\n"
+            + " - Type: BinaryExpressionNode\n"
+            + " - Position: LexicalRange(offset=8, line=0, column=8)\n"
+            + " - Content: \"Hello\" + \"World\"";
     assertEquals(messages.size(), 1);
     assertEquals(messages.get(0), expectedOutput);
   }
@@ -87,11 +86,11 @@ public class TestPrintRules {
     Report report = processCode(code, linter);
     assertTrue(report.getReport().isPresent());
     String expectedOutput =
-      "Error in println function: The println function only accepts identifiers or literals as arguments.\n" +
-      "Argument 1 is invalid:\n" +
-      " - Type: CallExpressionNode\n" +
-      " - Position: LexicalRange(offset=8, line=0, column=8)\n" +
-      " - Content: hello()";
+        "Error in println function: The println function only accepts identifiers or literals as arguments.\n"
+            + "Argument 1 is invalid:\n"
+            + " - Type: CallExpressionNode\n"
+            + " - Position: LexicalRange(offset=8, line=0, column=8)\n"
+            + " - Content: hello()";
     List<String> messages = report.getReport().get();
     assertEquals(messages.size(), 1);
     assertEquals(messages.get(0), expectedOutput);

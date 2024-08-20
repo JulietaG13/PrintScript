@@ -6,15 +6,23 @@ import java.util.Map;
 
 public class TypeProvider {
   private static final Map<String, Type> types = new HashMap<>();
+  private static final Map<Type, String> names = new HashMap<>();
 
   static {
-    types.put("Number", Type.NUMBER);
-    types.put("String", Type.STRING);
+    add("Number", Type.NUMBER);
+    add("String", Type.STRING);
   }
 
   public static Type getType(String typeName) {
     if (types.containsKey(typeName)) {
       return types.get(typeName);
+    }
+    throw new RuntimeException(); // TODO
+  }
+
+  public static String getName(Type type) {
+    if (names.containsKey(type)) {
+      return names.get(type);
     }
     throw new RuntimeException(); // TODO
   }
@@ -48,5 +56,10 @@ public class TypeProvider {
 
   private static boolean isString(String str) {
     return str.startsWith("\"") && str.endsWith("\"");
+  }
+
+  private static void add(String string, Type type) {
+    types.put(string, type);
+    names.put(type, string);
   }
 }
