@@ -33,7 +33,8 @@ public class NonExpressionPrintln implements FunctionRule {
   public String getErrorMessage(CallExpressionNode function) {
     StringBuilder errorMessage = new StringBuilder();
     errorMessage.append(
-        "Error in println function: The println function only accepts identifiers or literals as arguments.");
+        "Error in println function: "
+            + "The println function only accepts identifiers or literals as arguments.");
     for (int i = 0; i < function.args().size(); i++) {
       ExpressionNode arg = function.args().get(i);
       if (isExpression(arg)) {

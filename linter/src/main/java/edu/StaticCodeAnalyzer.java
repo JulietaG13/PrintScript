@@ -2,7 +2,11 @@ package edu;
 
 import edu.ast.AstVisitor;
 import edu.ast.ProgramNode;
-import edu.ast.expressions.*;
+import edu.ast.expressions.BinaryExpressionNode;
+import edu.ast.expressions.CallExpressionNode;
+import edu.ast.expressions.IdentifierNode;
+import edu.ast.expressions.LiteralNumberNode;
+import edu.ast.expressions.LiteralStringNode;
 import edu.ast.interfaces.ExpressionNode;
 import edu.ast.interfaces.StatementNode;
 import edu.ast.statements.AssignmentNode;
