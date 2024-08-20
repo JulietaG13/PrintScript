@@ -1,10 +1,5 @@
 package edu.common;
 
-import static edu.common.Operator.DIVIDE;
-import static edu.common.Operator.MULTIPLY;
-import static edu.common.Operator.SUBTRACT;
-import static edu.common.Operator.SUM;
-
 import java.util.HashMap;
 import java.util.Map;
 

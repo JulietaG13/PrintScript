@@ -4,9 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.util.List;
-
 import edu.utils.LexicalRange;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -74,6 +73,5 @@ public class LexerTest {
   public void testPatternManager() {
     PatternManager patternManager = new PatternManager();
     PatternManager patternManager1 = patternManager.addKeyword("let");
-
   }
 }
