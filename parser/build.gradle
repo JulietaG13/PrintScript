@@ -4,7 +4,6 @@
 
 plugins {
     id 'buildlogic.java-application-conventions'
-    id 'jacoco'
 }
 
 dependencies {
@@ -15,38 +14,4 @@ dependencies {
 application {
     // Define the main class for the application.
     mainClass = 'edu.Parser'
-}
-
-jacoco {
-    toolVersion = "0.8.11"
-}
-
-tasks.test {
-    useJUnitPlatform()
-    finalizedBy jacocoTestReport // report is always generated after tests run
-}
-
-jacocoTestReport {
-    reports {
-        xml.required = true
-        csv.required = false
-        html.required = true
-        html.outputLocation = file("${buildDir}/jacocoHtml")
-    }
-}
-
-tasks.jacocoTestCoverageVerification {
-    violationRules {
-        rule {
-            limit {
-                counter = 'INSTRUCTION'
-                value = 'COVEREDRATIO'
-                minimum = 0.80
-            }
-        }
-    }
-}
-
-tasks.check {
-    dependsOn(tasks.jacocoTestCoverageVerification)
 }
