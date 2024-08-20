@@ -1,7 +1,6 @@
 package edu.utils;
 
 import edu.ast.statements.Type;
-
 import java.util.HashMap;
 import java.util.Map;
 

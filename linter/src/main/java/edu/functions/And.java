@@ -1,9 +1,8 @@
 package edu.functions;
 
 import edu.ast.expressions.CallExpressionNode;
-
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 public class And implements FunctionRule {
   private final List<FunctionRule> rules;

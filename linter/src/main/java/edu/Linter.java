@@ -5,7 +5,6 @@ import edu.functions.And;
 import edu.functions.FunctionRule;
 import edu.identifiers.IdentifierType;
 import edu.identifiers.Or;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,7 +38,8 @@ public class Linter {
     Report report = new Report();
     FunctionRule combinedFunctionRule = combineFunctionRules();
     IdentifierType combinedIdentifierType = combineIdentifierTypes();
-    StaticCodeAnalyzer analyzer = new StaticCodeAnalyzer(report, combinedIdentifierType, combinedFunctionRule);
+    StaticCodeAnalyzer analyzer =
+        new StaticCodeAnalyzer(report, combinedIdentifierType, combinedFunctionRule);
     analyzer.visit(programNode);
     return report;
   }
@@ -51,6 +51,4 @@ public class Linter {
   private FunctionRule combineFunctionRules() {
     return new And(functionRules);
   }
-
 }
-

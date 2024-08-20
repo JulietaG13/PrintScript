@@ -21,7 +21,6 @@ public class RuleParser {
   private static Map<String, String> rulesNewLinesBefore =
       Map.of("println_new_lines_before_call", "println");
 
-
   public static RuleProvider parseRules(JsonObject rules) {
     Set<String> spaceBefore = new HashSet<>();
     Set<String> spaceAfter = new HashSet<>();

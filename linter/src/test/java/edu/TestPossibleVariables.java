@@ -1,14 +1,13 @@
 package edu;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import edu.ast.ProgramNode;
 import edu.identifiers.LowerCamelCase;
 import edu.identifiers.SnakeCase;
 import edu.identifiers.UpperCamelCase;
-import org.junit.jupiter.api.Test;
-
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
 
 public class TestPossibleVariables {
   private Report processCode(String code, Linter linter) {
@@ -37,7 +36,9 @@ public class TestPossibleVariables {
     assertFalse(report.getReport().isEmpty());
     List<String> messages = report.getMessages();
     assertEquals(1, messages.size());
-    assertEquals("Invalid identifier name: snake_case_variable at position LexicalRange(offset=4, line=0, column=4)", messages.get(0));
+    assertEquals(
+        "Invalid identifier name: snake_case_variable at position LexicalRange(offset=4, line=0, column=4)",
+        messages.get(0));
   }
 
   @Test
@@ -57,7 +58,9 @@ public class TestPossibleVariables {
     assertFalse(report.getReport().isEmpty());
     List<String> messages = report.getMessages();
     assertEquals(1, messages.size());
-    assertEquals("Invalid identifier name: UpperCamelCase at position LexicalRange(offset=4, line=0, column=4)", messages.get(0));
+    assertEquals(
+        "Invalid identifier name: UpperCamelCase at position LexicalRange(offset=4, line=0, column=4)",
+        messages.get(0));
   }
 
   @Test
@@ -77,11 +80,13 @@ public class TestPossibleVariables {
     assertFalse(report.getReport().isEmpty());
     List<String> messages = report.getMessages();
     assertEquals(1, messages.size());
-    assertEquals("Invalid identifier name: lowerCamelCase at position LexicalRange(offset=4, line=0, column=4)", messages.get(0));
+    assertEquals(
+        "Invalid identifier name: lowerCamelCase at position LexicalRange(offset=4, line=0, column=4)",
+        messages.get(0));
   }
 
   @Test
-  public void testOrVariableDeclarationError(){
+  public void testOrVariableDeclarationError() {
     String code = "let Camel_SnakeCaseMIX : String;";
     Linter linter = new Linter();
     linter = linter.addIdentifierType(new LowerCamelCase());
@@ -91,11 +96,13 @@ public class TestPossibleVariables {
     assertFalse(report.getReport().isEmpty());
     List<String> messages = report.getMessages();
     assertEquals(1, messages.size());
-    assertEquals("Invalid identifier name: Camel_SnakeCaseMIX at position LexicalRange(offset=4, line=0, column=4)", messages.get(0));
+    assertEquals(
+        "Invalid identifier name: Camel_SnakeCaseMIX at position LexicalRange(offset=4, line=0, column=4)",
+        messages.get(0));
   }
 
   @Test
-  public void testOrVariableDeclaration(){
+  public void testOrVariableDeclaration() {
     String code = "let snake_case : String;";
     Linter linter = new Linter();
     linter = linter.addIdentifierType(new LowerCamelCase());

@@ -19,7 +19,6 @@ import edu.reader.ReaderResult;
 import edu.utils.OperatorExecutor;
 import edu.utils.OperatorProvider;
 
-
 public class ExecutionVisitor implements AstVisitor {
   private Reader reader;
 

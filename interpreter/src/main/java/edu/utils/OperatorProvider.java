@@ -4,7 +4,6 @@ import edu.common.Operator;
 import java.util.HashMap;
 import java.util.Map;
 
-
 public class OperatorProvider {
   private static final Map<String, Operator> operators = new HashMap<>();
 

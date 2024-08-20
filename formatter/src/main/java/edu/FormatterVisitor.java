@@ -16,7 +16,6 @@ import edu.common.Operator;
 import edu.common.OperatorProvider;
 import edu.rules.RuleProvider;
 import edu.utils.TypeProvider;
-
 import java.util.List;
 
 public class FormatterVisitor implements AstVisitor {

@@ -32,7 +32,8 @@ public class NonExpressionPrintln implements FunctionRule {
   @Override
   public String getErrorMessage(CallExpressionNode function) {
     StringBuilder errorMessage = new StringBuilder();
-    errorMessage.append("Error in println function: The println function only accepts identifiers or literals as arguments.");
+    errorMessage.append(
+        "Error in println function: The println function only accepts identifiers or literals as arguments.");
     for (int i = 0; i < function.args().size(); i++) {
       ExpressionNode arg = function.args().get(i);
       if (isExpression(arg)) {
@@ -43,11 +44,17 @@ public class NonExpressionPrintln implements FunctionRule {
   }
 
   private void addArgumentToError(StringBuilder errorMessage, int i, ExpressionNode arg) {
-    errorMessage.append("\n")
-      .append("Argument ").append(i + 1).append(" is invalid:")
-      .append("\n - Type: ").append(arg.getClass().getSimpleName())
-      .append("\n - Position: ").append(arg.start().toString())
-      .append("\n - Content: ").append(formatArgumentContent(arg));
+    errorMessage
+        .append("\n")
+        .append("Argument ")
+        .append(i + 1)
+        .append(" is invalid:")
+        .append("\n - Type: ")
+        .append(arg.getClass().getSimpleName())
+        .append("\n - Position: ")
+        .append(arg.start().toString())
+        .append("\n - Content: ")
+        .append(formatArgumentContent(arg));
   }
 
   private String formatArgumentContent(ExpressionNode arg) {
@@ -59,10 +66,11 @@ public class NonExpressionPrintln implements FunctionRule {
     } else if (arg instanceof CallExpressionNode) {
       CallExpressionNode call = (CallExpressionNode) arg;
       String calleeName = call.callee().name();
-      String arguments = call.args().stream()
-        .map(this::simplifyExpressionContent)
-        .reduce((a, b) -> a + ", " + b)
-        .orElse("");
+      String arguments =
+          call.args().stream()
+              .map(this::simplifyExpressionContent)
+              .reduce((a, b) -> a + ", " + b)
+              .orElse("");
       return calleeName + "(" + arguments + ")";
     }
     return arg.toString();
@@ -82,6 +90,4 @@ public class NonExpressionPrintln implements FunctionRule {
     }
     return expression.toString();
   }
-
-
 }

@@ -150,9 +150,9 @@ public class FormatterTest {
     String input = "let my_cool_variable:String=\"ciclon\";my_cool_variable=\"hurricane\";";
     String expected =
         "let my_cool_variable:String=\"ciclon\";"
-        + lineSeparator
-        + "my_cool_variable=\"hurricane\";"
-        + lineSeparator;
+            + lineSeparator
+            + "my_cool_variable=\"hurricane\";"
+            + lineSeparator;
 
     ProgramNode program = getAst(input);
     Formatter defaultFormatter = new Formatter(RuleParser.parseRules(noExtraSpaceRules));
@@ -165,10 +165,7 @@ public class FormatterTest {
   public void noExtraSpacesBinaryOperation() {
     String input = "let age: Number = 10; println(age+5);";
     String expected =
-        "let age:Number=10.0;"
-            + lineSeparator
-            + "println(age + 5.0);"
-            + lineSeparator;
+        "let age:Number=10.0;" + lineSeparator + "println(age + 5.0);" + lineSeparator;
 
     ProgramNode program = getAst(input);
     Formatter defaultFormatter = new Formatter(RuleParser.parseRules(noExtraSpaceRules));

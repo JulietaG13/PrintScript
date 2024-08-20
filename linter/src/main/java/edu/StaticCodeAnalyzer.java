@@ -16,7 +16,8 @@ public class StaticCodeAnalyzer implements AstVisitor {
   private Report report;
   private FunctionRule functionRules;
 
-  public StaticCodeAnalyzer(Report report, IdentifierType possibleIdentifier, FunctionRule functionRules) {
+  public StaticCodeAnalyzer(
+      Report report, IdentifierType possibleIdentifier, FunctionRule functionRules) {
     this.possibleIdentifier = possibleIdentifier;
     this.report = report;
     this.functionRules = functionRules;
@@ -69,7 +70,8 @@ public class StaticCodeAnalyzer implements AstVisitor {
   public void visit(IdentifierNode node) {
     String variableName = node.name();
     if (!possibleIdentifier.matches(variableName)) {
-      report.addMessage("Invalid identifier name: " + variableName + " at position " + node.start().toString());
+      report.addMessage(
+          "Invalid identifier name: " + variableName + " at position " + node.start().toString());
     }
   }
 
