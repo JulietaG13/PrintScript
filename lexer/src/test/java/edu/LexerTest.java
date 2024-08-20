@@ -5,6 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
+
+import edu.utils.LexicalRange;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -60,5 +62,18 @@ public class LexerTest {
     Lexer invalidLexer = new Lexer("let x = 42 @;");
     Exception exception = assertThrows(RuntimeException.class, invalidLexer::tokenize);
     assertTrue(exception.getMessage().contains("Invalid token"));
+  }
+
+  @Test
+  public void testLexicalRangeToString() {
+    LexicalRange range = new LexicalRange(15, 5, 1);
+    assertEquals("LexicalRange(offset=15, line=5, column=1)", range.toString());
+  }
+
+  @Test
+  public void testPatternManager() {
+    PatternManager patternManager = new PatternManager();
+    PatternManager patternManager1 = patternManager.addKeyword("let");
+
   }
 }
