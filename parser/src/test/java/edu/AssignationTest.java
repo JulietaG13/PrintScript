@@ -24,7 +24,7 @@ public class AssignationTest {
     int value = 4;
     List<Token> input = List.of(getIdentifier(var), getEquals(), getLiteral(value), getSemicolon());
 
-    ProgramNode root = new Parser().parse(input);
+    ProgramNode root = new Parser().parse(input, true);
     StatementNode statement = root.getBody().getFirst();
 
     assert statement instanceof AssignmentNode;
@@ -52,7 +52,7 @@ public class AssignationTest {
             getLiteral(number),
             getSemicolon());
 
-    ProgramNode root = new Parser().parse(input);
+    ProgramNode root = new Parser().parse(input, true);
     StatementNode statement = root.getBody().getFirst();
 
     assert statement instanceof AssignmentNode;

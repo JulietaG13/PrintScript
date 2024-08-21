@@ -15,7 +15,7 @@ public class TestPossibleVariables {
     lexer.tokenize();
     List<Token> tokens = lexer.getTokens();
     Parser parser = new Parser();
-    ProgramNode programNode = parser.parse(tokens);
+    ProgramNode programNode = parser.parse(tokens, true);
     return linter.analyze(programNode);
   }
 

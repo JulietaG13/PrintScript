@@ -29,7 +29,7 @@ public class LetTest {
     List<Token> input =
         List.of(getLet(), getIdentifier("a"), getColon(), getNumber(), getSemicolon());
 
-    ProgramNode root = new Parser().parse(input);
+    ProgramNode root = new Parser().parse(input, true);
     List<StatementNode> statements = root.getBody();
     assertEquals(1, statements.size());
 
@@ -58,7 +58,7 @@ public class LetTest {
             getLiteral(value),
             getSemicolon());
 
-    ProgramNode root = new Parser().parse(input);
+    ProgramNode root = new Parser().parse(input, true);
     List<StatementNode> statements = root.getBody();
     assertEquals(1, statements.size());
 
@@ -91,7 +91,7 @@ public class LetTest {
             getLiteral(value),
             getSemicolon());
 
-    ProgramNode root = new Parser().parse(input);
+    ProgramNode root = new Parser().parse(input, true);
     List<StatementNode> statements = root.getBody();
     assertEquals(1, statements.size());
 
