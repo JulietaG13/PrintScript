@@ -1,6 +1,8 @@
 package edu;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import edu.ast.ProgramNode;
 import edu.identifiers.LowerCamelCase;
@@ -37,7 +39,8 @@ public class TestPossibleVariables {
     List<String> messages = report.getMessages();
     assertEquals(1, messages.size());
     assertEquals(
-        "Invalid identifier name: snake_case_variable at position LexicalRange(offset=4, line=0, column=4)",
+        "Invalid identifier name: snake_case_variable at"
+            + " position LexicalRange(offset=4, line=0, column=4)",
         messages.get(0));
   }
 
@@ -59,7 +62,8 @@ public class TestPossibleVariables {
     List<String> messages = report.getMessages();
     assertEquals(1, messages.size());
     assertEquals(
-        "Invalid identifier name: UpperCamelCase at position LexicalRange(offset=4, line=0, column=4)",
+        "Invalid identifier name: UpperCamelCase at"
+            + " position LexicalRange(offset=4, line=0, column=4)",
         messages.get(0));
   }
 
@@ -81,7 +85,8 @@ public class TestPossibleVariables {
     List<String> messages = report.getMessages();
     assertEquals(1, messages.size());
     assertEquals(
-        "Invalid identifier name: lowerCamelCase at position LexicalRange(offset=4, line=0, column=4)",
+        "Invalid identifier name: lowerCamelCase "
+            + "at position LexicalRange(offset=4, line=0, column=4)",
         messages.get(0));
   }
 
@@ -97,7 +102,8 @@ public class TestPossibleVariables {
     List<String> messages = report.getMessages();
     assertEquals(1, messages.size());
     assertEquals(
-        "Invalid identifier name: Camel_SnakeCaseMIX at position LexicalRange(offset=4, line=0, column=4)",
+        "Invalid identifier name: Camel_SnakeCaseMIX "
+            + "at position LexicalRange(offset=4, line=0, column=4)",
         messages.get(0));
   }
 

@@ -68,7 +68,8 @@ public class TestPrintRules {
     assertTrue(report.getReport().isPresent());
     List<String> messages = report.getReport().get();
     String expectedOutput =
-        "Error in println function: The println function only accepts identifiers or literals as arguments.\n"
+        "Error in println function: The println function "
+            + "only accepts identifiers or literals as arguments.\n"
             + "Argument 1 is invalid:\n"
             + " - Type: BinaryExpressionNode\n"
             + " - Position: LexicalRange(offset=8, line=0, column=8)\n"
@@ -86,7 +87,8 @@ public class TestPrintRules {
     Report report = processCode(code, linter);
     assertTrue(report.getReport().isPresent());
     String expectedOutput =
-        "Error in println function: The println function only accepts identifiers or literals as arguments.\n"
+        "Error in println function: The println function only "
+            + "accepts identifiers or literals as arguments.\n"
             + "Argument 1 is invalid:\n"
             + " - Type: CallExpressionNode\n"
             + " - Position: LexicalRange(offset=8, line=0, column=8)\n"
