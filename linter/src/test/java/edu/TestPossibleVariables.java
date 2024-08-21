@@ -8,9 +8,7 @@ import com.google.gson.JsonObject;
 import edu.ast.ProgramNode;
 import java.util.List;
 
-import edu.identifiers.Or;
-import edu.rules.RuleParser;
-import edu.rules.RuleProvider;
+import edu.rules.RuleParserLinter;
 import org.junit.jupiter.api.Test;
 
 public class TestPossibleVariables {
@@ -52,7 +50,7 @@ public class TestPossibleVariables {
   @Test
   public void testSnakeCaseVariableDeclaration() {
     String code = "let snake_case_variable : String;";
-    Linter linter = new Linter(RuleParser.parseRules(snakeCase));
+    Linter linter = new Linter(RuleParserLinter.parseRules(snakeCase));
     Report report = processCode(code, linter);
     assertTrue(report.getReport().isEmpty());
   }
@@ -60,7 +58,7 @@ public class TestPossibleVariables {
   @Test
   public void testSnakeCaseVariableDeclarationError() {
     String code = "let snake_case_variable : String;";
-    Linter linter = new Linter(RuleParser.parseRules(empty));
+    Linter linter = new Linter(RuleParserLinter.parseRules(empty));
     Report report = processCode(code, linter);
     assertFalse(report.getReport().isEmpty());
     List<String> messages = report.getMessages();
@@ -74,7 +72,7 @@ public class TestPossibleVariables {
   @Test
   public void testUpperCamelCaseVariableDeclaration() {
     String code = "let UpperCamelCase : String;";
-    Linter linter = new Linter(RuleParser.parseRules(upperCamelCase));
+    Linter linter = new Linter(RuleParserLinter.parseRules(upperCamelCase));
     Report report = processCode(code, linter);
     assertTrue(report.getReport().isEmpty());
   }
@@ -82,7 +80,7 @@ public class TestPossibleVariables {
   @Test
   public void testUpperCamelCaseVariableDeclarationError() {
     String code = "let UpperCamelCase : String;";
-    Linter linter = new Linter(RuleParser.parseRules(empty));
+    Linter linter = new Linter(RuleParserLinter.parseRules(empty));
     Report report = processCode(code, linter);
     assertFalse(report.getReport().isEmpty());
     List<String> messages = report.getMessages();
@@ -96,7 +94,7 @@ public class TestPossibleVariables {
   @Test
   public void testLowerCaseVariableDeclaration() {
     String code = "let lowerCamelCase : String;";
-    Linter linter = new Linter(RuleParser.parseRules(lowerCamelCase));
+    Linter linter = new Linter(RuleParserLinter.parseRules(lowerCamelCase));
     Report report = processCode(code, linter);
     assertTrue(report.getReport().isEmpty());
   }
@@ -104,7 +102,7 @@ public class TestPossibleVariables {
   @Test
   public void testLowerCaseVariableDeclarationError() {
     String code = "let lowerCamelCase : String;";
-    Linter linter = new Linter(RuleParser.parseRules(empty));
+    Linter linter = new Linter(RuleParserLinter.parseRules(empty));
     Report report = processCode(code, linter);
     assertFalse(report.getReport().isEmpty());
     List<String> messages = report.getMessages();
@@ -118,7 +116,7 @@ public class TestPossibleVariables {
   @Test
   public void testOrVariableDeclarationError() {
     String code = "let Camel_SnakeCaseMIX : String;";
-    Linter linter = new Linter(RuleParser.parseRules(allCases));
+    Linter linter = new Linter(RuleParserLinter.parseRules(allCases));
     Report report = processCode(code, linter);
     assertFalse(report.getReport().isEmpty());
     List<String> messages = report.getMessages();
@@ -132,7 +130,7 @@ public class TestPossibleVariables {
   @Test
   public void testOrVariableDeclaration() {
     String code = "let snake_case : String;";
-    Linter linter = new Linter(RuleParser.parseRules(allCases));
+    Linter linter = new Linter(RuleParserLinter.parseRules(allCases));
     Report report = processCode(code, linter);
     assertTrue(report.getReport().isEmpty());
   }
@@ -140,7 +138,7 @@ public class TestPossibleVariables {
   @Test
   public void testIdentifierAsFunctionCalls() {
     String code = "sayHallo();";
-    Linter linter = new Linter(RuleParser.parseRules(lowerCamelCase));
+    Linter linter = new Linter(RuleParserLinter.parseRules(lowerCamelCase));
     Report report = processCode(code, linter);
     assertTrue(report.getReport().isEmpty());
   }
@@ -148,7 +146,7 @@ public class TestPossibleVariables {
   @Test
   public void testIdentifierInBinary() {
     String code = "let age: Number = oldAge + 10;";
-    Linter linter = new Linter(RuleParser.parseRules(lowerCamelCase));
+    Linter linter = new Linter(RuleParserLinter.parseRules(lowerCamelCase));
     Report report = processCode(code, linter);
     assertTrue(report.getReport().isEmpty());
   }

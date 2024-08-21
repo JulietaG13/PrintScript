@@ -14,7 +14,7 @@ import edu.ast.statements.ExpressionStatementNode;
 import edu.ast.statements.VariableDeclarationNode;
 import edu.common.Operator;
 import edu.common.OperatorProvider;
-import edu.rules.RuleProvider;
+import edu.rules.FormatterRuleProvider;
 import edu.utils.TypeProvider;
 import java.util.List;
 
@@ -27,11 +27,11 @@ public class FormatterVisitor implements AstVisitor {
   private static final String quotes = "\"";
 
   private final FormatterResult result;
-  private final RuleProvider ruleProvider;
+  private final FormatterRuleProvider ruleProvider;
 
   private Operator lastOperator;
 
-  public FormatterVisitor(RuleProvider ruleProvider) {
+  public FormatterVisitor(FormatterRuleProvider ruleProvider) {
     this.result = new FormatterResult();
     this.ruleProvider = ruleProvider;
   }

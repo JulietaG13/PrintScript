@@ -3,11 +3,10 @@ package edu;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.google.gson.JsonObject;
-import edu.ast.ProgramNode;
-import edu.rules.FormatterRuleParser;
+import edu.utils.CommandContext;
 import org.junit.jupiter.api.Test;
 
-public class FormatterTest {
+public class FormattingCommandTest {
   private static final String lineSeparator = System.lineSeparator();
 
   private static final JsonObject defaultRules;
@@ -43,11 +42,12 @@ public class FormatterTest {
         lineSeparator + "let     my_cool_variable:String    = \"ciclon\";" + lineSeparator;
     String expected = "let my_cool_variable : String = \"ciclon\";" + lineSeparator;
 
-    ProgramNode program = getAst(input);
-    Formatter defaultFormatter = new Formatter(FormatterRuleParser.parseRules(defaultRules));
-    FormatterResult res = defaultFormatter.format(program);
-
-    assertEquals(expected, res.getResult());
+    String[] args = {"Formatting", input, "1.0", defaultRules.toString()};
+    Cli cli = new Cli(args);
+    cli.run();
+    CommandContext context = cli.getCommandContext();
+    FormatterResult formatterResult = context.getFormatterResult();
+    assertEquals(expected, formatterResult.getResult());
   }
 
   @Test
@@ -68,11 +68,12 @@ public class FormatterTest {
             + "println(my_cool_variable);"
             + lineSeparator;
 
-    ProgramNode program = getAst(input);
-    Formatter defaultFormatter = new Formatter(FormatterRuleParser.parseRules(defaultRules));
-    FormatterResult res = defaultFormatter.format(program);
-
-    assertEquals(expected, res.getResult());
+    String[] args = {"Formatting", input, "1.0", defaultRules.toString()};
+    Cli cli = new Cli(args);
+    cli.run();
+    CommandContext context = cli.getCommandContext();
+    FormatterResult formatterResult = context.getFormatterResult();
+    assertEquals(expected, formatterResult.getResult());
   }
 
   @Test
@@ -84,11 +85,12 @@ public class FormatterTest {
             + "my_cool_variable = \"hurricane\";"
             + lineSeparator;
 
-    ProgramNode program = getAst(input);
-    Formatter defaultFormatter = new Formatter(FormatterRuleParser.parseRules(defaultRules));
-    FormatterResult res = defaultFormatter.format(program);
-
-    assertEquals(expected, res.getResult());
+    String[] args = {"Formatting", input, "1.0", defaultRules.toString()};
+    Cli cli = new Cli(args);
+    cli.run();
+    CommandContext context = cli.getCommandContext();
+    FormatterResult formatterResult = context.getFormatterResult();
+    assertEquals(expected, formatterResult.getResult());
   }
 
   @Test
@@ -101,11 +103,12 @@ public class FormatterTest {
             + "println(age + 5.0);"
             + lineSeparator;
 
-    ProgramNode program = getAst(input);
-    Formatter defaultFormatter = new Formatter(FormatterRuleParser.parseRules(defaultRules));
-    FormatterResult res = defaultFormatter.format(program);
-
-    assertEquals(expected, res.getResult());
+    String[] args = {"Formatting", input, "1.0", defaultRules.toString()};
+    Cli cli = new Cli(args);
+    cli.run();
+    CommandContext context = cli.getCommandContext();
+    FormatterResult formatterResult = context.getFormatterResult();
+    assertEquals(expected, formatterResult.getResult());
   }
 
   @Test
@@ -114,11 +117,12 @@ public class FormatterTest {
         lineSeparator + "let     my_cool_variable:String    = \"ciclon\";" + lineSeparator;
     String expected = "let my_cool_variable:String=\"ciclon\";" + lineSeparator;
 
-    ProgramNode program = getAst(input);
-    Formatter defaultFormatter = new Formatter(FormatterRuleParser.parseRules(noExtraSpaceRules));
-    FormatterResult res = defaultFormatter.format(program);
-
-    assertEquals(expected, res.getResult());
+    String[] args = {"Formatting", input, "1.0", noExtraSpaceRules.toString()};
+    Cli cli = new Cli(args);
+    cli.run();
+    CommandContext context = cli.getCommandContext();
+    FormatterResult formatterResult = context.getFormatterResult();
+    assertEquals(expected, formatterResult.getResult());
   }
 
   @Test
@@ -138,11 +142,12 @@ public class FormatterTest {
             + "println(my_cool_variable);"
             + lineSeparator;
 
-    ProgramNode program = getAst(input);
-    Formatter defaultFormatter = new Formatter(FormatterRuleParser.parseRules(noExtraSpaceRules));
-    FormatterResult res = defaultFormatter.format(program);
-
-    assertEquals(expected, res.getResult());
+    String[] args = {"Formatting", input, "1.0", noExtraSpaceRules.toString()};
+    Cli cli = new Cli(args);
+    cli.run();
+    CommandContext context = cli.getCommandContext();
+    FormatterResult formatterResult = context.getFormatterResult();
+    assertEquals(expected, formatterResult.getResult());
   }
 
   @Test
@@ -154,11 +159,12 @@ public class FormatterTest {
             + "my_cool_variable=\"hurricane\";"
             + lineSeparator;
 
-    ProgramNode program = getAst(input);
-    Formatter defaultFormatter = new Formatter(FormatterRuleParser.parseRules(noExtraSpaceRules));
-    FormatterResult res = defaultFormatter.format(program);
-
-    assertEquals(expected, res.getResult());
+    String[] args = {"Formatting", input, "1.0", noExtraSpaceRules.toString()};
+    Cli cli = new Cli(args);
+    cli.run();
+    CommandContext context = cli.getCommandContext();
+    FormatterResult formatterResult = context.getFormatterResult();
+    assertEquals(expected, formatterResult.getResult());
   }
 
   @Test
@@ -167,17 +173,11 @@ public class FormatterTest {
     String expected =
         "let age:Number=10.0;" + lineSeparator + "println(age + 5.0);" + lineSeparator;
 
-    ProgramNode program = getAst(input);
-    Formatter defaultFormatter = new Formatter(FormatterRuleParser.parseRules(noExtraSpaceRules));
-    FormatterResult res = defaultFormatter.format(program);
-
-    assertEquals(expected, res.getResult());
-  }
-
-  public ProgramNode getAst(String input) {
-    Lexer lexer = new Lexer(input);
-    lexer.tokenize();
-    Parser parser = new Parser();
-    return parser.parse(lexer.getTokens());
+    String[] args = {"Formatting", input, "1.0", noExtraSpaceRules.toString()};
+    Cli cli = new Cli(args);
+    cli.run();
+    CommandContext context = cli.getCommandContext();
+    FormatterResult formatterResult = context.getFormatterResult();
+    assertEquals(expected, formatterResult.getResult());
   }
 }

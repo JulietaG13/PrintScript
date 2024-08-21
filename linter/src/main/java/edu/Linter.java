@@ -1,12 +1,12 @@
 package edu;
 
 import edu.ast.ProgramNode;
-import edu.rules.RuleProvider;
+import edu.rules.RuleProviderLinter;
 
 public class Linter {
-  private final RuleProvider ruleProvider;
+  private final RuleProviderLinter ruleProvider;
 
-  public Linter(RuleProvider ruleProvider) {
+  public Linter(RuleProviderLinter ruleProvider) {
     this.ruleProvider = ruleProvider;
   }
 

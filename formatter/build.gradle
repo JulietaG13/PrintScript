@@ -9,3 +9,6 @@ dependencies {
     implementation project(':parser')
     implementation project(':lexer')
 }
+application {
+    mainClass = 'edu.Formatter'
+}

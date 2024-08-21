@@ -12,14 +12,14 @@ import edu.ast.interfaces.StatementNode;
 import edu.ast.statements.AssignmentNode;
 import edu.ast.statements.ExpressionStatementNode;
 import edu.ast.statements.VariableDeclarationNode;
-import edu.rules.RuleProvider;
+import edu.rules.RuleProviderLinter;
 
 public class StaticCodeAnalyzer implements AstVisitor {
   private Report report;
-  private final RuleProvider ruleProvider;
+  private final RuleProviderLinter ruleProvider;
 
   public StaticCodeAnalyzer(
-    Report report, RuleProvider ruleProvider) {
+    Report report, RuleProviderLinter ruleProvider) {
     this.report = report;
     this.ruleProvider = ruleProvider;
   }

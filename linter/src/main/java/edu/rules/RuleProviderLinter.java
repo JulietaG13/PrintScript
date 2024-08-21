@@ -5,14 +5,13 @@ import edu.functions.FunctionRule;
 import edu.identifiers.IdentifierType;
 import edu.identifiers.Or;
 
-import java.util.Map;
 import java.util.Set;
 
-public class RuleProvider {
+public class RuleProviderLinter {
   private final Set<IdentifierType> possibleIdentifiers;
   private final Set<FunctionRule> functionRules;
 
-  public RuleProvider(
+  public RuleProviderLinter(
     Set<IdentifierType> possibleIdentifiers, Set<FunctionRule> functionRules) {
     this.possibleIdentifiers = possibleIdentifiers;
     this.functionRules = functionRules;

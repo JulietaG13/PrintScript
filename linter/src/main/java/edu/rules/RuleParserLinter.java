@@ -11,7 +11,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public class RuleParser {
+public class RuleParserLinter {
 
   private static final Map<String, IdentifierType> rulesPossibleIdentifiers =
     Map.of(
@@ -23,7 +23,7 @@ public class RuleParser {
     Map.of(
       "println_non_expressions", new NonExpressionPrintln());
 
-  public static RuleProvider parseRules(JsonObject rules) {
+  public static RuleProviderLinter parseRules(JsonObject rules) {
     Set<IdentifierType> possibleIdentifiers = new HashSet<>();
     Set<FunctionRule> functionRules = new HashSet<>();
 
@@ -37,6 +37,6 @@ public class RuleParser {
       }
     }
 
-    return new RuleProvider(possibleIdentifiers, functionRules);
+    return new RuleProviderLinter(possibleIdentifiers, functionRules);
   }
 }
