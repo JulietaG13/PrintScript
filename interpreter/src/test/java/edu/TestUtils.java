@@ -1,10 +1,10 @@
 package edu;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import edu.common.Operator;
 import edu.utils.OperatorProvider;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 public class TestUtils {
 
@@ -18,9 +18,12 @@ public class TestUtils {
 
   @Test
   public void testGetOperatorInvalid() {
-    Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-      OperatorProvider.getOperator("%");
-    });
+    Exception exception =
+        assertThrows(
+            IllegalArgumentException.class,
+            () -> {
+              OperatorProvider.getOperator("%");
+            });
     assertEquals("Unknown operator: %", exception.getMessage());
   }
 }

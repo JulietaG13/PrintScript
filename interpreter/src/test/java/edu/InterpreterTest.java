@@ -1,5 +1,7 @@
 package edu;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import edu.ast.ProgramNode;
 import edu.ast.expressions.CallExpressionNode;
 import edu.ast.expressions.IdentifierNode;
@@ -11,12 +13,9 @@ import edu.ast.statements.Type;
 import edu.ast.statements.VariableDeclarationNode;
 import edu.utils.LexicalRange;
 import edu.visitor.*;
-import org.junit.jupiter.api.*;
-
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.*;
 
 public class InterpreterTest {
   public static void main(String[] args) {
@@ -71,5 +70,4 @@ public class InterpreterTest {
     assertTrue(visitor.getReader().getVariables().getNumberVariables().isEmpty());
     assertTrue(visitor.getReader().getVariables().getStringVariables().isEmpty());
   }
-
 }

@@ -1,15 +1,14 @@
 package edu;
 
-import edu.reader.Reader;
-import edu.reader.ReaderResult;
-import org.junit.jupiter.api.Test;
-
-import java.util.Stack;
-import java.util.Map;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import edu.reader.Reader;
+import edu.reader.ReaderResult;
+import java.util.Map;
+import java.util.Stack;
+import org.junit.jupiter.api.Test;
 
 public class TestReader {
 
@@ -113,7 +112,8 @@ public class TestReader {
     Stack<Object> literals = new Stack<>();
     Reader reader = new Reader(new VariableContext(Map.of(), Map.of()), identifiers, literals);
 
-    Exception exception = assertThrows(RuntimeException.class, () -> reader.write("z", new Object()));
+    Exception exception =
+        assertThrows(RuntimeException.class, () -> reader.write("z", new Object()));
     assertEquals("Tipo de variable no soportado: class java.lang.Object", exception.getMessage());
   }
 }

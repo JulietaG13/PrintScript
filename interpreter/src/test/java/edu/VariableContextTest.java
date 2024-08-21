@@ -1,10 +1,11 @@
 package edu;
 
-import org.junit.jupiter.api.Test;
-import java.util.Map;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.util.Map;
+import org.junit.jupiter.api.Test;
 
 public class VariableContextTest {
 
@@ -30,9 +31,12 @@ public class VariableContextTest {
   public void testGetNonExistentNumberVariableThrowsException() {
     VariableContext context = new VariableContext(Map.of(), Map.of());
 
-    Exception exception = assertThrows(RuntimeException.class, () -> {
-      context.getNumberVariable("z");
-    });
+    Exception exception =
+        assertThrows(
+            RuntimeException.class,
+            () -> {
+              context.getNumberVariable("z");
+            });
 
     assertEquals("Variable numérica no encontrada: z", exception.getMessage());
   }
@@ -41,9 +45,12 @@ public class VariableContextTest {
   public void testGetNonExistentStringVariableThrowsException() {
     VariableContext context = new VariableContext(Map.of(), Map.of());
 
-    Exception exception = assertThrows(RuntimeException.class, () -> {
-      context.getStringVariable("w");
-    });
+    Exception exception =
+        assertThrows(
+            RuntimeException.class,
+            () -> {
+              context.getStringVariable("w");
+            });
 
     assertEquals("Variable numérica no encontrada: w", exception.getMessage());
   }
