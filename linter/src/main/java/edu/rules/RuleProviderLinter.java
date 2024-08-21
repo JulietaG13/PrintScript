@@ -4,7 +4,6 @@ import edu.functions.And;
 import edu.functions.FunctionRule;
 import edu.identifiers.IdentifierType;
 import edu.identifiers.Or;
-
 import java.util.Set;
 
 public class RuleProviderLinter {
@@ -12,7 +11,7 @@ public class RuleProviderLinter {
   private final Set<FunctionRule> functionRules;
 
   public RuleProviderLinter(
-    Set<IdentifierType> possibleIdentifiers, Set<FunctionRule> functionRules) {
+      Set<IdentifierType> possibleIdentifiers, Set<FunctionRule> functionRules) {
     this.possibleIdentifiers = possibleIdentifiers;
     this.functionRules = functionRules;
   }

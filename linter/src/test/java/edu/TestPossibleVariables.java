@@ -6,9 +6,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.google.gson.JsonObject;
 import edu.ast.ProgramNode;
-import java.util.List;
-
 import edu.rules.RuleParserLinter;
+import java.util.List;
 import org.junit.jupiter.api.Test;
 
 public class TestPossibleVariables {
@@ -35,7 +34,6 @@ public class TestPossibleVariables {
     allCases.addProperty("upper_camel_case", true);
     allCases.addProperty("lower_camel_case", true);
     allCases.addProperty("snake_case", true);
-
   }
 
   private Report processCode(String code, Linter linter) {

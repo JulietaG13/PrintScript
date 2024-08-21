@@ -30,15 +30,13 @@ public class ParseLiteral implements ExpressionParser {
     Type type = TypeProvider.getTypeFromContent(content);
 
     switch (type) {
-      case NUMBER -> {
+      case NUMBER:
         return new LiteralNumberNode(start, end, Double.parseDouble(content));
-      }
-      case STRING -> {
+      case STRING:
         return new LiteralStringNode(start, end, stripQuotes(content));
-      }
+      default:
+        throw new RuntimeException(); // TODO
     }
-
-    throw new RuntimeException(); // TODO
   }
 
   @Override

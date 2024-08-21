@@ -5,8 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.google.gson.JsonObject;
 import edu.ast.ProgramNode;
-import java.util.List;
 import edu.rules.RuleParserLinter;
+import java.util.List;
 import org.junit.jupiter.api.Test;
 
 public class TestPrintRules {
@@ -21,8 +21,8 @@ public class TestPrintRules {
     nonExpression = new JsonObject();
     nonExpression.addProperty("lower_camel_case", true);
     nonExpression.addProperty("println_non_expressions", true);
-
   }
+
   private Report processCode(String code, Linter linter) {
     Lexer lexer = new Lexer(code);
     lexer.tokenize();
@@ -99,5 +99,4 @@ public class TestPrintRules {
     assertEquals(messages.size(), 1);
     assertEquals(messages.get(0), expectedOutput);
   }
-
 }

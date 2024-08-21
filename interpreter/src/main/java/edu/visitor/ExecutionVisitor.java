@@ -152,7 +152,11 @@ public class ExecutionVisitor implements AstVisitor {
   }
 
   private boolean isPrint(ExpressionNode node) {
-    return node instanceof CallExpressionNode call && "println".equals(call.callee().name());
+    if (node instanceof CallExpressionNode) {
+      CallExpressionNode call = (CallExpressionNode) node;
+      return "println".equals(call.callee().name());
+    }
+    return false;
   }
 
   public Reader getReader() {

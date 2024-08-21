@@ -16,5 +16,4 @@ public class Linter {
     analyzer.visit(programNode);
     return report;
   }
-
 }

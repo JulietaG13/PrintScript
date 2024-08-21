@@ -18,8 +18,7 @@ public class StaticCodeAnalyzer implements AstVisitor {
   private Report report;
   private final RuleProviderLinter ruleProvider;
 
-  public StaticCodeAnalyzer(
-    Report report, RuleProviderLinter ruleProvider) {
+  public StaticCodeAnalyzer(Report report, RuleProviderLinter ruleProvider) {
     this.report = report;
     this.ruleProvider = ruleProvider;
   }
