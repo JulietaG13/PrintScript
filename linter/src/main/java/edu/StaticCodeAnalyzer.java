@@ -12,19 +12,16 @@ import edu.ast.interfaces.StatementNode;
 import edu.ast.statements.AssignmentNode;
 import edu.ast.statements.ExpressionStatementNode;
 import edu.ast.statements.VariableDeclarationNode;
-import edu.functions.FunctionRule;
-import edu.identifiers.IdentifierType;
+import edu.rules.RuleProvider;
 
 public class StaticCodeAnalyzer implements AstVisitor {
-  private IdentifierType possibleIdentifier;
   private Report report;
-  private FunctionRule functionRules;
+  private final RuleProvider ruleProvider;
 
   public StaticCodeAnalyzer(
-      Report report, IdentifierType possibleIdentifier, FunctionRule functionRules) {
-    this.possibleIdentifier = possibleIdentifier;
+    Report report, RuleProvider ruleProvider) {
     this.report = report;
-    this.functionRules = functionRules;
+    this.ruleProvider = ruleProvider;
   }
 
   @Override
@@ -61,8 +58,8 @@ public class StaticCodeAnalyzer implements AstVisitor {
 
   @Override
   public void visit(CallExpressionNode node) {
-    if (!functionRules.matches(node)) {
-      report.addMessage(functionRules.getErrorMessage(node));
+    if (!ruleProvider.getFunctionRules().matches(node)) {
+      report.addMessage(ruleProvider.getFunctionRules().getErrorMessage(node));
     }
     node.callee().accept(this);
     for (ExpressionNode arg : node.args()) {
@@ -73,7 +70,7 @@ public class StaticCodeAnalyzer implements AstVisitor {
   @Override
   public void visit(IdentifierNode node) {
     String variableName = node.name();
-    if (!possibleIdentifier.matches(variableName)) {
+    if (!ruleProvider.getPossibleIdentifiers().matches(variableName)) {
       report.addMessage(
           "Invalid identifier name: " + variableName + " at position " + node.start().toString());
     }

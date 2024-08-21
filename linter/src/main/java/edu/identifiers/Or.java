@@ -1,11 +1,11 @@
 package edu.identifiers;
 
-import java.util.List;
+import java.util.Set;
 
 public class Or implements IdentifierType {
-  private final List<IdentifierType> identifierTypes;
+  private final Set<IdentifierType> identifierTypes;
 
-  public Or(List<IdentifierType> identifierTypes) {
+  public Or(Set<IdentifierType> identifierTypes) {
     this.identifierTypes = identifierTypes;
   }
 
