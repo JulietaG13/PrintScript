@@ -1,10 +1,5 @@
 package edu.common;
 
-import static edu.common.Operator.DIVIDE;
-import static edu.common.Operator.MULTIPLY;
-import static edu.common.Operator.SUBTRACT;
-import static edu.common.Operator.SUM;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,10 +8,10 @@ public class OperatorProvider {
   private static final Map<Operator, String> strings = new HashMap<>();
 
   static {
-    add(SUM.symbol, SUM);
-    add(SUBTRACT.symbol, SUBTRACT);
-    add(MULTIPLY.symbol, MULTIPLY);
-    add(DIVIDE.symbol, DIVIDE);
+    add(Operator.SUM.symbol, Operator.SUM);
+    add(Operator.SUBTRACT.symbol, Operator.SUBTRACT);
+    add(Operator.MULTIPLY.symbol, Operator.MULTIPLY);
+    add(Operator.DIVIDE.symbol, Operator.DIVIDE);
   }
 
   public static Operator getOperator(String name) {

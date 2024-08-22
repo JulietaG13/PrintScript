@@ -6,7 +6,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public class RuleParser {
+public class FormatterRuleParser {
 
   private static Map<String, String> rulesSpaceBefore =
       Map.of(
@@ -21,7 +21,7 @@ public class RuleParser {
   private static Map<String, String> rulesNewLinesBefore =
       Map.of("println_new_lines_before_call", "println");
 
-  public static RuleProvider parseRules(JsonObject rules) {
+  public static FormatterRuleProvider parseRules(JsonObject rules) {
     Set<String> spaceBefore = new HashSet<>();
     Set<String> spaceAfter = new HashSet<>();
     Map<String, Integer> newLinesBefore = new HashMap<>();
@@ -42,7 +42,7 @@ public class RuleParser {
       }
     }
 
-    return new RuleProvider(spaceBefore, spaceAfter, newLinesBefore);
+    return new FormatterRuleProvider(spaceBefore, spaceAfter, newLinesBefore);
   }
 
   /* Configurable

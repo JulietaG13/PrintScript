@@ -27,7 +27,7 @@ public class FunctionTest {
     List<Token> input =
         List.of(getIdentifier(func), getOpenParen(), getCloseParen(), getSemicolon());
 
-    ProgramNode root = new Parser().parse(input);
+    ProgramNode root = new Parser().parse(input, true);
     List<StatementNode> body = root.getBody();
 
     assertEquals(1, body.size());
@@ -50,7 +50,7 @@ public class FunctionTest {
         List.of(
             getIdentifier(func), getOpenParen(), getLiteral(arg), getCloseParen(), getSemicolon());
 
-    ProgramNode root = new Parser().parse(input);
+    ProgramNode root = new Parser().parse(input, true);
     List<StatementNode> body = root.getBody();
 
     assertEquals(1, body.size());
@@ -84,7 +84,7 @@ public class FunctionTest {
             getCloseParen(),
             getSemicolon());
 
-    ProgramNode root = new Parser().parse(input);
+    ProgramNode root = new Parser().parse(input, true);
     List<StatementNode> body = root.getBody();
 
     assertEquals(1, body.size());
@@ -119,7 +119,7 @@ public class FunctionTest {
             getCloseParen(),
             getSemicolon());
 
-    ProgramNode root = new Parser().parse(input);
+    ProgramNode root = new Parser().parse(input, true);
     List<StatementNode> body = root.getBody();
 
     assertEquals(1, body.size());
@@ -152,7 +152,7 @@ public class FunctionTest {
             getCloseParen(),
             getSemicolon());
 
-    ProgramNode root = new Parser().parse(input);
+    ProgramNode root = new Parser().parse(input, true);
     List<StatementNode> body = root.getBody();
 
     assertEquals(1, body.size());

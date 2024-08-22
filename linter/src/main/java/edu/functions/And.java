@@ -3,11 +3,12 @@ package edu.functions;
 import edu.ast.expressions.CallExpressionNode;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class And implements FunctionRule {
-  private final List<FunctionRule> rules;
+  private final Set<FunctionRule> rules;
 
-  public And(List<FunctionRule> rules) {
+  public And(Set<FunctionRule> rules) {
     this.rules = rules;
   }
 

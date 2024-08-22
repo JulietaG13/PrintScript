@@ -29,14 +29,14 @@ public class VariableContext {
 
   public Number getNumberVariable(String name) {
     if (!hasNumberVariable(name)) {
-      throw new RuntimeException("Variable numérica no encontrada: " + name);
+      throw new RuntimeException("Number type variable not found: " + name);
     }
     return numberVariables.get(name);
   }
 
   public String getStringVariable(String name) {
     if (!hasStringVariable(name)) {
-      throw new RuntimeException("Variable numérica no encontrada: " + name);
+      throw new RuntimeException("Number type variable not found: " + name);
     }
     return stringVariables.get(name);
   }

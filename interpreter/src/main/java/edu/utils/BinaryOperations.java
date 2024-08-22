@@ -7,7 +7,7 @@ public class BinaryOperations {
     } else if (isaConcat(left, right)) {
       return left.toString() + right.toString();
     } else {
-      throw new RuntimeException("Operación no soportada: " + left + " + " + right);
+      throw new RuntimeException("Unsupported operation: " + left + " + " + right);
     }
   }
 
@@ -15,7 +15,7 @@ public class BinaryOperations {
     if (isaNumber(left, right)) {
       return ((Number) left).doubleValue() - ((Number) right).doubleValue();
     } else {
-      throw new RuntimeException("Operación no soportada: " + left + " - " + right);
+      throw new RuntimeException("Unsupported operation: " + left + " - " + right);
     }
   }
 
@@ -23,7 +23,7 @@ public class BinaryOperations {
     if (isaNumber(left, right)) {
       return ((Number) left).doubleValue() * ((Number) right).doubleValue();
     } else {
-      throw new RuntimeException("Operación no soportada: " + left + " * " + right);
+      throw new RuntimeException("Unsupported operation: " + left + " * " + right);
     }
   }
 
@@ -31,7 +31,7 @@ public class BinaryOperations {
     if (isaNumber(left, right)) {
       return ((Number) left).doubleValue() / ((Number) right).doubleValue();
     } else {
-      throw new RuntimeException("Operación no soportada: " + left + " / " + right);
+      throw new RuntimeException("Unsupported operation: " + left + " / " + right);
     }
   }
 

@@ -1,12 +1,12 @@
 package edu;
 
 import edu.ast.ProgramNode;
-import edu.rules.RuleProvider;
+import edu.rules.FormatterRuleProvider;
 
 public class Formatter {
-  private final RuleProvider ruleProvider;
+  private final FormatterRuleProvider ruleProvider;
 
-  public Formatter(RuleProvider ruleProvider) {
+  public Formatter(FormatterRuleProvider ruleProvider) {
     this.ruleProvider = ruleProvider;
   }
 

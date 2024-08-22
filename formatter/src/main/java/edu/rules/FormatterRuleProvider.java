@@ -3,12 +3,12 @@ package edu.rules;
 import java.util.Map;
 import java.util.Set;
 
-public class RuleProvider {
+public class FormatterRuleProvider {
   private final Set<String> spaceBefore;
   private final Set<String> spaceAfter;
   private final Map<String, Integer> newLineBefore;
 
-  public RuleProvider(
+  public FormatterRuleProvider(
       Set<String> spaceBefore, Set<String> spaceAfter, Map<String, Integer> newLineBefore) {
     this.spaceBefore = spaceBefore;
     this.spaceAfter = spaceAfter;

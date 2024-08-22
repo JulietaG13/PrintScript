@@ -2,6 +2,7 @@ package edu;
 
 import edu.ast.ProgramNode;
 import edu.ast.interfaces.StatementNode;
+import edu.check.ParserVisitor;
 import edu.parsers.ParseStatement;
 import edu.utils.ParserUtil;
 import java.util.ArrayList;
@@ -9,11 +10,13 @@ import java.util.List;
 
 public class Parser {
 
-  private ProgramNode root;
-
   public ProgramNode parse(List<Token> tokens) {
+    return parse(tokens, false);
+  }
 
-    root = new ProgramNode();
+  public ProgramNode parse(List<Token> tokens, boolean ignoreSemantics) {
+
+    ProgramNode root = new ProgramNode();
 
     if (!ParserUtil.isEndLine(tokens.getLast())) {
       throw new RuntimeException(); // TODO
@@ -25,6 +28,12 @@ public class Parser {
       root.addStatement(statementNode);
     }
 
+    if (ignoreSemantics) {
+      return root;
+    }
+
+    // semantic analysis (would only throw exceptions)
+    new ParserVisitor(root);
     return root;
   }
 
@@ -45,9 +54,5 @@ public class Parser {
     }
 
     return statements;
-  }
-
-  public ProgramNode getRoot() {
-    return root;
   }
 }

@@ -110,7 +110,7 @@ public class ExecutionVisitor implements AstVisitor {
       reader = result1.getReader();
       System.out.println(value);
     } else {
-      throw new RuntimeException("Función no soportada: " + node.callee().name());
+      throw new RuntimeException("Unsupported function: " + node.callee().name());
     }
   }
 
@@ -152,7 +152,11 @@ public class ExecutionVisitor implements AstVisitor {
   }
 
   private boolean isPrint(ExpressionNode node) {
-    return node instanceof CallExpressionNode call && "println".equals(call.callee().name());
+    if (node instanceof CallExpressionNode) {
+      CallExpressionNode call = (CallExpressionNode) node;
+      return "println".equals(call.callee().name());
+    }
+    return false;
   }
 
   public Reader getReader() {

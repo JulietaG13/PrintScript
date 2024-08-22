@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.google.gson.JsonObject;
 import edu.ast.ProgramNode;
-import edu.rules.RuleParser;
+import edu.rules.FormatterRuleParser;
 import org.junit.jupiter.api.Test;
 
 public class FormatterTest {
@@ -44,7 +44,7 @@ public class FormatterTest {
     String expected = "let my_cool_variable : String = \"ciclon\";" + lineSeparator;
 
     ProgramNode program = getAst(input);
-    Formatter defaultFormatter = new Formatter(RuleParser.parseRules(defaultRules));
+    Formatter defaultFormatter = new Formatter(FormatterRuleParser.parseRules(defaultRules));
     FormatterResult res = defaultFormatter.format(program);
 
     assertEquals(expected, res.getResult());
@@ -69,7 +69,7 @@ public class FormatterTest {
             + lineSeparator;
 
     ProgramNode program = getAst(input);
-    Formatter defaultFormatter = new Formatter(RuleParser.parseRules(defaultRules));
+    Formatter defaultFormatter = new Formatter(FormatterRuleParser.parseRules(defaultRules));
     FormatterResult res = defaultFormatter.format(program);
 
     assertEquals(expected, res.getResult());
@@ -85,7 +85,7 @@ public class FormatterTest {
             + lineSeparator;
 
     ProgramNode program = getAst(input);
-    Formatter defaultFormatter = new Formatter(RuleParser.parseRules(defaultRules));
+    Formatter defaultFormatter = new Formatter(FormatterRuleParser.parseRules(defaultRules));
     FormatterResult res = defaultFormatter.format(program);
 
     assertEquals(expected, res.getResult());
@@ -102,7 +102,7 @@ public class FormatterTest {
             + lineSeparator;
 
     ProgramNode program = getAst(input);
-    Formatter defaultFormatter = new Formatter(RuleParser.parseRules(defaultRules));
+    Formatter defaultFormatter = new Formatter(FormatterRuleParser.parseRules(defaultRules));
     FormatterResult res = defaultFormatter.format(program);
 
     assertEquals(expected, res.getResult());
@@ -115,7 +115,7 @@ public class FormatterTest {
     String expected = "let my_cool_variable:String=\"ciclon\";" + lineSeparator;
 
     ProgramNode program = getAst(input);
-    Formatter defaultFormatter = new Formatter(RuleParser.parseRules(noExtraSpaceRules));
+    Formatter defaultFormatter = new Formatter(FormatterRuleParser.parseRules(noExtraSpaceRules));
     FormatterResult res = defaultFormatter.format(program);
 
     assertEquals(expected, res.getResult());
@@ -139,7 +139,7 @@ public class FormatterTest {
             + lineSeparator;
 
     ProgramNode program = getAst(input);
-    Formatter defaultFormatter = new Formatter(RuleParser.parseRules(noExtraSpaceRules));
+    Formatter defaultFormatter = new Formatter(FormatterRuleParser.parseRules(noExtraSpaceRules));
     FormatterResult res = defaultFormatter.format(program);
 
     assertEquals(expected, res.getResult());
@@ -155,7 +155,7 @@ public class FormatterTest {
             + lineSeparator;
 
     ProgramNode program = getAst(input);
-    Formatter defaultFormatter = new Formatter(RuleParser.parseRules(noExtraSpaceRules));
+    Formatter defaultFormatter = new Formatter(FormatterRuleParser.parseRules(noExtraSpaceRules));
     FormatterResult res = defaultFormatter.format(program);
 
     assertEquals(expected, res.getResult());
@@ -168,7 +168,7 @@ public class FormatterTest {
         "let age:Number=10.0;" + lineSeparator + "println(age + 5.0);" + lineSeparator;
 
     ProgramNode program = getAst(input);
-    Formatter defaultFormatter = new Formatter(RuleParser.parseRules(noExtraSpaceRules));
+    Formatter defaultFormatter = new Formatter(FormatterRuleParser.parseRules(noExtraSpaceRules));
     FormatterResult res = defaultFormatter.format(program);
 
     assertEquals(expected, res.getResult());
