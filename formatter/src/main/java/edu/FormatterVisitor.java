@@ -110,7 +110,7 @@ public class FormatterVisitor implements AstVisitor {
     if (parens) {
       result.write(closeParen);
     }
-    lastOperator = null;
+    // lastOperator = null;
   }
 
   private boolean requiresParens(Operator newOperator, Operator lastOperator) {
