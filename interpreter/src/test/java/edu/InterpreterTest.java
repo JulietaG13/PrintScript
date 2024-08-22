@@ -1,6 +1,7 @@
 package edu;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import edu.ast.ProgramNode;
 import edu.ast.expressions.CallExpressionNode;
@@ -12,10 +13,10 @@ import edu.ast.statements.Kind;
 import edu.ast.statements.Type;
 import edu.ast.statements.VariableDeclarationNode;
 import edu.utils.LexicalRange;
-import edu.visitor.*;
+import edu.visitor.ExecutionVisitor;
 import java.util.ArrayList;
 import java.util.List;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.Test;
 
 public class InterpreterTest {
   public static void main(String[] args) {

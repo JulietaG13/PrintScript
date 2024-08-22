@@ -10,6 +10,9 @@ import java.io.PrintStream;
 import org.junit.jupiter.api.Test;
 
 public class TestExecutionCommand {
+
+  private static String lineSeparator = System.lineSeparator();
+
   @Test
   public void testExecutionCommandWithSimpleInput() {
     // Configurar la captura de la salida estándar
@@ -36,7 +39,7 @@ public class TestExecutionCommand {
       // Verificar que el intérprete ejecutó el código correctamente
       String output = outputStream.toString();
       assertEquals(
-          "5.0\n",
+          "5.0" + lineSeparator,
           output,
           "La salida del intérprete debería ser '5' seguido de un salto de línea.");
 
@@ -60,7 +63,7 @@ public class TestExecutionCommand {
 
       String output = outputStream.toString();
       assertEquals(
-          "8.0\n",
+          "8.0" + lineSeparator,
           output,
           "La salida del intérprete debería ser '8.0' seguido de un salto de línea.");
 
@@ -83,7 +86,7 @@ public class TestExecutionCommand {
 
       String output = outputStream.toString();
       assertEquals(
-          "8.0\n",
+          "8.0" + lineSeparator,
           output,
           "La salida del intérprete debería ser '8.0' seguido de un salto de línea.");
 
@@ -106,7 +109,7 @@ public class TestExecutionCommand {
 
       String output = outputStream.toString();
       assertEquals(
-          "8.0\n",
+          "8.0" + lineSeparator,
           output,
           "La salida del intérprete debería ser '8.0' seguido de un salto de línea.");
 
@@ -129,7 +132,7 @@ public class TestExecutionCommand {
 
       String output = outputStream.toString();
       assertEquals(
-          "8.0\n",
+          "8.0" + lineSeparator,
           output,
           "La salida del intérprete debería ser '8.0' seguido de un salto de línea.");
 
@@ -152,7 +155,7 @@ public class TestExecutionCommand {
 
       String output = outputStream.toString();
       assertEquals(
-          "16.0\n",
+          "16.0" + lineSeparator,
           output,
           "La salida del intérprete debería ser '16.0' seguido de un salto de línea.");
 

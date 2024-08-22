@@ -38,7 +38,7 @@ public class VariableContextTest {
               context.getNumberVariable("z");
             });
 
-    assertEquals("Variable numérica no encontrada: z", exception.getMessage());
+    assertEquals("Number type variable not found: z", exception.getMessage());
   }
 
   @Test
@@ -52,7 +52,7 @@ public class VariableContextTest {
               context.getStringVariable("w");
             });
 
-    assertEquals("Variable numérica no encontrada: w", exception.getMessage());
+    assertEquals("Number type variable not found: w", exception.getMessage());
   }
 
   @Test

@@ -65,6 +65,6 @@ public class TestOperatorExecutor {
             () -> {
               OperatorExecutor.execute(multiplyOperator, "Hello", 3);
             });
-    assertEquals("Operación no soportada: Hello * 3", exception.getMessage());
+    assertEquals("Unsupported operation: Hello * 3", exception.getMessage());
   }
 }
