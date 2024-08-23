@@ -1,5 +1,8 @@
 package edu;
 
+import edu.tokens.Token;
+import edu.tokens.TokenType;
+
 public class TokenProvider {
 
   public static Token getLet() {

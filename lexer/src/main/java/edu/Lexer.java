@@ -1,6 +1,7 @@
 package edu;
 
-import edu.utils.LexicalRange;
+import edu.tokens.Token;
+import edu.tokens.TokenType;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;

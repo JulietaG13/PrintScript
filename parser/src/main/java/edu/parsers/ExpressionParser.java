@@ -1,7 +1,7 @@
 package edu.parsers;
 
-import edu.Token;
 import edu.ast.interfaces.ExpressionNode;
+import edu.tokens.Token;
 import java.util.List;
 
 public interface ExpressionParser {

@@ -2,7 +2,7 @@ package edu.parsers.statements;
 
 import static edu.utils.ParserUtil.isKeyword;
 
-import edu.Token;
+import edu.LexicalRange;
 import edu.ast.expressions.IdentifierNode;
 import edu.ast.interfaces.ExpressionNode;
 import edu.ast.interfaces.StatementNode;
@@ -12,8 +12,8 @@ import edu.ast.statements.VariableDeclarationNode;
 import edu.parsers.ParseExpression;
 import edu.parsers.StatementParser;
 import edu.parsers.expressions.ParseIdentifier;
+import edu.tokens.Token;
 import edu.utils.KindProvider;
-import edu.utils.LexicalRange;
 import edu.utils.TypeProvider;
 import java.util.List;
 

@@ -1,12 +1,12 @@
 package edu.parsers.statements;
 
-import edu.Token;
+import edu.LexicalRange;
 import edu.ast.interfaces.StatementNode;
 import edu.ast.statements.ExpressionStatementNode;
 import edu.parsers.ExpressionParser;
 import edu.parsers.StatementParser;
 import edu.parsers.expressions.ParseCallExpression;
-import edu.utils.LexicalRange;
+import edu.tokens.Token;
 import java.util.List;
 
 public class ParseStatementExpression implements StatementParser {

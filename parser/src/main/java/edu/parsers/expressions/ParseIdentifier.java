@@ -2,10 +2,10 @@ package edu.parsers.expressions;
 
 import static edu.utils.ParserUtil.isIdentifier;
 
-import edu.Token;
 import edu.ast.expressions.IdentifierNode;
 import edu.ast.interfaces.ExpressionNode;
 import edu.parsers.ExpressionParser;
+import edu.tokens.Token;
 import java.util.List;
 
 public class ParseIdentifier implements ExpressionParser {

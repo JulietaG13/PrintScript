@@ -8,13 +8,13 @@ import static edu.utils.ParserUtil.isOpenParen;
 import static edu.utils.ParserUtil.isOperator;
 import static edu.utils.ParserUtil.isSyntax;
 
-import edu.Token;
+import edu.LexicalRange;
+import edu.OperatorProvider;
 import edu.ast.expressions.BinaryExpressionNode;
 import edu.ast.interfaces.ExpressionNode;
-import edu.common.OperatorProvider;
 import edu.parsers.ExpressionParser;
 import edu.parsers.ParseExpression;
-import edu.utils.LexicalRange;
+import edu.tokens.Token;
 import java.util.ArrayList;
 import java.util.List;
 

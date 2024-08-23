@@ -2,6 +2,8 @@ package edu;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import edu.tokens.Token;
+import edu.tokens.TokenType;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 

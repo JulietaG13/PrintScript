@@ -2,8 +2,8 @@ package edu.commands;
 
 import edu.Lexer;
 import edu.Parser;
-import edu.Token;
 import edu.ast.ProgramNode;
+import edu.tokens.Token;
 import edu.utils.CommandContext;
 import edu.utils.FileReader;
 import java.io.IOException;

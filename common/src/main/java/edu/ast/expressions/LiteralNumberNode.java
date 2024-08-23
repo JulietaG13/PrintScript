@@ -1,8 +1,8 @@
 package edu.ast.expressions;
 
+import edu.LexicalRange;
 import edu.ast.AstVisitor;
 import edu.ast.interfaces.LiteralNode;
-import edu.utils.LexicalRange;
 
 /**
  * @param value TODO(Number)

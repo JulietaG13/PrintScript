@@ -1,6 +1,6 @@
-package edu;
+package edu.tokens;
 
-import edu.utils.LexicalRange;
+import edu.LexicalRange;
 
 public class Token {
   private final TokenType type;

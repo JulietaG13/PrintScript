@@ -2,13 +2,13 @@ package edu.parsers.expressions;
 
 import static edu.utils.ParserUtil.isLiteral;
 
-import edu.Token;
+import edu.LexicalRange;
 import edu.ast.expressions.LiteralNumberNode;
 import edu.ast.expressions.LiteralStringNode;
 import edu.ast.interfaces.ExpressionNode;
 import edu.ast.statements.Type;
 import edu.parsers.ExpressionParser;
-import edu.utils.LexicalRange;
+import edu.tokens.Token;
 import edu.utils.TypeProvider;
 import java.util.List;
 

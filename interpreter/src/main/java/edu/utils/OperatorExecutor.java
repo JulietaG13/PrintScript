@@ -1,6 +1,6 @@
 package edu.utils;
 
-import edu.common.Operator;
+import edu.Operator;
 
 public class OperatorExecutor {
   private static final BinaryOperations binaryOperations = new BinaryOperations();

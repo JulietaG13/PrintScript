@@ -1,10 +1,10 @@
 package edu.parsers;
 
-import edu.Token;
 import edu.ast.interfaces.StatementNode;
 import edu.parsers.statements.ParseAssignation;
 import edu.parsers.statements.ParseLet;
 import edu.parsers.statements.ParseStatementExpression;
+import edu.tokens.Token;
 import java.util.List;
 
 public class ParseStatement {
