@@ -111,4 +111,13 @@ publishing {
             }
         }
     }
+
+    publications {
+        maven(MavenPublication) {
+            groupId = 'com.ingsis.jcli'
+            artifactId = 'PrintScript'
+            version = '1.0.1'
+            from components.java
+        }
+    }
 }
