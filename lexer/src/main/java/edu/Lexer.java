@@ -3,41 +3,55 @@ package edu;
 import edu.tokens.Token;
 import edu.tokens.TokenType;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Stream;
 
-public class Lexer {
+public class Lexer implements Iterator<Token> {
   private final String code;
   private LexicalRange currentPosition;
   private final PatternManager patterns;
-  private List<Token> tokens;
+  private final List<Token> tokens = new ArrayList<>();
 
   public Lexer(String code) {
     this.code = code;
     this.currentPosition = new LexicalRange(0, 0, 0);
-    this.tokens = new ArrayList<>();
     this.patterns = new PatternManager();
   }
 
-  public List<Token> getTokens() {
-    return tokens;
+  @Override
+  public boolean hasNext() {
+    Optional<Character> currentChar = getCharAt(currentPosition);
+    if (currentChar.isEmpty()) {
+      return false;
+    }
+    Character c = currentChar.get();
+    while (skipWhitespace(c)) {
+      currentChar = getCharAt(currentPosition);
+      if (currentChar.isEmpty()) {
+        return false;
+      }
+      c = currentChar.get();
+    }
+    return currentPosition.getOffset() < code.length();
   }
 
-  public void tokenize() {
+  @Override
+  public Token next() {
     while (currentPosition.getOffset() < code.length()) {
       Optional<Character> currentChar = getCharAt(currentPosition);
 
       if (currentChar.isEmpty()) {
-        break;
+        throw new RuntimeException("Limit exceeded");
       }
+
       Character c = currentChar.get();
 
       if (skipWhitespace(c)) {
         continue;
       }
-
-      boolean matched = false;
 
       for (Map.Entry<PatternMatcher, TokenType> entry : patterns.getMatchers().entrySet()) {
         PatternMatcher matcher = entry.getKey();
@@ -54,20 +68,28 @@ public class Lexer {
             }
           }
 
-          createToken(tokenValue, matcher.getTokenType());
+          Token token = createToken(tokenValue, matcher.getTokenType());
           advancePosition(tokenValue.length());
-          matched = true;
-          break;
+          return token;
         }
       }
 
-      if (!matched) {
-        throw new RuntimeException("Invalid token: " + currentChar.get());
-      }
+      throw new RuntimeException("Invalid token: " + currentChar.get());
+    }
+    throw new RuntimeException("No more tokens available");
+  }
+
+  public void tokenize() {
+    while (hasNext()) {
+      tokens.add(next());
     }
   }
 
-  private void createToken(String tokenValue, TokenType type) {
+  public List<Token> getTokens() {
+    return tokens;
+  }
+
+  private Token createToken(String tokenValue, TokenType type) {
     LexicalRange startRange =
         new LexicalRange(
             currentPosition.getOffset(), currentPosition.getLine(), currentPosition.getColumn());
@@ -76,7 +98,13 @@ public class Lexer {
             currentPosition.getOffset() + tokenValue.length() - 1,
             currentPosition.getLine(),
             currentPosition.getColumn() + tokenValue.length() - 1);
-    tokens.add(new Token(type, tokenValue, startRange, endRange));
+    return new Token(type, tokenValue, startRange, endRange);
+  }
+
+  public void getTokens(Stream.Builder<Token> tokensStream) {
+    while (hasNext()) {
+      tokensStream.accept(next());
+    }
   }
 
   private boolean skipWhitespace(Character currentChar) {
