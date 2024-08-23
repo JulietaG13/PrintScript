@@ -1,8 +1,5 @@
-
 plugins {
     id 'buildlogic.java-application-conventions'
-    id 'maven-publish'
-
 }
 
 dependencies {
@@ -14,25 +11,4 @@ dependencies {
 
 application {
     mainClass = 'edu.Linter'
-}
-
-publishing {
-    repositories {
-        maven {
-            name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/JulietaG13/PrintScript")
-            credentials {
-                username = System.getenv("GITHUB_ACTOR")
-                password = System.getenv("GITHUB_TOKEN")
-            }
-        }
-    }
-    publications {
-        maven(MavenPublication) {
-            groupId = 'com.ingsis.jcli'
-            artifactId = 'printscript-linter'
-            version = '1.0.1'
-            from components.java
-        }
-    }
 }
