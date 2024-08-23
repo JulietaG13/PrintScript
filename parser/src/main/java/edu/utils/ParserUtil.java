@@ -1,7 +1,7 @@
 package edu.utils;
 
-import edu.Token;
-import edu.TokenType;
+import edu.tokens.Token;
+import edu.tokens.TokenType;
 import java.util.List;
 
 public class ParserUtil {

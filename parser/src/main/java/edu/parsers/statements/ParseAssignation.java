@@ -3,7 +3,7 @@ package edu.parsers.statements;
 import static edu.utils.ParserUtil.isAssign;
 import static edu.utils.ParserUtil.isIdentifier;
 
-import edu.Token;
+import edu.LexicalRange;
 import edu.ast.expressions.IdentifierNode;
 import edu.ast.interfaces.ExpressionNode;
 import edu.ast.interfaces.StatementNode;
@@ -11,7 +11,7 @@ import edu.ast.statements.AssignmentNode;
 import edu.parsers.ParseExpression;
 import edu.parsers.StatementParser;
 import edu.parsers.expressions.ParseIdentifier;
-import edu.utils.LexicalRange;
+import edu.tokens.Token;
 import java.util.List;
 
 public class ParseAssignation implements StatementParser {

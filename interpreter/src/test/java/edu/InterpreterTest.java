@@ -12,7 +12,6 @@ import edu.ast.statements.ExpressionStatementNode;
 import edu.ast.statements.Kind;
 import edu.ast.statements.Type;
 import edu.ast.statements.VariableDeclarationNode;
-import edu.utils.LexicalRange;
 import edu.visitor.ExecutionVisitor;
 import java.util.ArrayList;
 import java.util.List;

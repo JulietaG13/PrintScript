@@ -1,6 +1,6 @@
 package edu.utils;
 
-import edu.common.Operator;
+import edu.Operator;
 import java.util.HashMap;
 import java.util.Map;
 

@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import edu.Parser;
-import edu.Token;
+import edu.tokens.Token;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 

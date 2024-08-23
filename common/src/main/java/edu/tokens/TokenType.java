@@ -1,4 +1,4 @@
-package edu;
+package edu.tokens;
 
 public enum TokenType {
   KEYWORD,

@@ -3,7 +3,6 @@ package edu;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import edu.common.Operator;
 import edu.utils.OperatorExecutor;
 import edu.utils.OperatorProvider;
 import org.junit.jupiter.api.Test;

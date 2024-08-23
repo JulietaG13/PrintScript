@@ -1,8 +1,8 @@
 package edu.ast.expressions;
 
+import edu.LexicalRange;
 import edu.ast.AstVisitor;
 import edu.ast.interfaces.LiteralNode;
-import edu.utils.LexicalRange;
 
 public record LiteralStringNode(LexicalRange start, LexicalRange end, String value)
     implements LiteralNode {
