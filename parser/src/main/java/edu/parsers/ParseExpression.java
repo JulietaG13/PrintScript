@@ -1,11 +1,11 @@
 package edu.parsers;
 
-import edu.Token;
 import edu.ast.interfaces.ExpressionNode;
 import edu.parsers.expressions.ParseBinaryExpression;
 import edu.parsers.expressions.ParseCallExpression;
 import edu.parsers.expressions.ParseIdentifier;
 import edu.parsers.expressions.ParseLiteral;
+import edu.tokens.Token;
 import java.util.List;
 
 public class ParseExpression {

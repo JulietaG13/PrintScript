@@ -1,7 +1,7 @@
 package edu.ast.interfaces;
 
+import edu.LexicalRange;
 import edu.ast.AstVisitor;
-import edu.utils.LexicalRange;
 
 public interface Node {
   LexicalRange start();

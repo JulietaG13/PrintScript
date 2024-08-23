@@ -8,9 +8,9 @@ plugins {
 
 dependencies {
     implementation 'org.apache.commons:commons-text'
-    implementation project(':parser')
+    implementation project(':common')
     implementation project(':lexer')
-
+    implementation project(':parser')
 }
 
 application {

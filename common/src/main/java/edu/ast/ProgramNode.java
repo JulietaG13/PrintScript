@@ -1,8 +1,8 @@
 package edu.ast;
 
+import edu.LexicalRange;
 import edu.ast.interfaces.Node;
 import edu.ast.interfaces.StatementNode;
-import edu.utils.LexicalRange;
 import java.util.ArrayList;
 import java.util.List;
 

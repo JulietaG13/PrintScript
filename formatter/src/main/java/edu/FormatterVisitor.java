@@ -12,8 +12,6 @@ import edu.ast.interfaces.StatementNode;
 import edu.ast.statements.AssignmentNode;
 import edu.ast.statements.ExpressionStatementNode;
 import edu.ast.statements.VariableDeclarationNode;
-import edu.common.Operator;
-import edu.common.OperatorProvider;
 import edu.rules.FormatterRuleProvider;
 import edu.utils.TypeProvider;
 import java.util.List;

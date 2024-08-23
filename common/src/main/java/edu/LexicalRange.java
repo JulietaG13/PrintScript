@@ -1,4 +1,4 @@
-package edu.utils;
+package edu;
 
 public class LexicalRange {
   private final int offset;

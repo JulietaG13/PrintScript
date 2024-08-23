@@ -1,4 +1,4 @@
-package edu.common;
+package edu;
 
 public enum Operator {
   SUM("+", 1),

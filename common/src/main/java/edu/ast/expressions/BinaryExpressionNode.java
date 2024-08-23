@@ -1,10 +1,15 @@
 package edu.ast.expressions;
 
+import edu.LexicalRange;
 import edu.ast.AstVisitor;
 import edu.ast.interfaces.ExpressionNode;
-import edu.utils.LexicalRange;
 
-public record IdentifierNode(LexicalRange start, LexicalRange end, String name)
+public record BinaryExpressionNode(
+    LexicalRange start,
+    LexicalRange end,
+    String operator,
+    ExpressionNode left,
+    ExpressionNode right)
     implements ExpressionNode {
   @Override
   public void accept(AstVisitor visitor) {

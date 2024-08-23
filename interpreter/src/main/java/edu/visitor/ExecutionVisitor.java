@@ -1,5 +1,7 @@
 package edu.visitor;
 
+import edu.Operator;
+import edu.OperatorProvider;
 import edu.ast.AstVisitor;
 import edu.ast.ProgramNode;
 import edu.ast.expressions.BinaryExpressionNode;
@@ -13,11 +15,9 @@ import edu.ast.statements.AssignmentNode;
 import edu.ast.statements.ExpressionStatementNode;
 import edu.ast.statements.Kind;
 import edu.ast.statements.VariableDeclarationNode;
-import edu.common.Operator;
 import edu.reader.Reader;
 import edu.reader.ReaderResult;
 import edu.utils.OperatorExecutor;
-import edu.utils.OperatorProvider;
 
 public class ExecutionVisitor implements AstVisitor {
   private Reader reader;
