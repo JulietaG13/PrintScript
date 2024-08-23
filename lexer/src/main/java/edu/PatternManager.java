@@ -11,13 +11,13 @@ public class PatternManager {
   private final List<String> keywords;
   private final List<String> operators;
   private final List<String> syntaxes;
-  private final LinkedHashMap<Pattern, TokenType> patterns;
+  private final LinkedHashMap<PatternMatcher, TokenType> matchers;
 
   public PatternManager() {
     this.keywords = List.of("String", "Number", "let");
     this.operators = List.of("+=", "-=", "*=", "/=", "%", "+", "-", "*", "/", "=");
     this.syntaxes = List.of(";", ":", "(", ")", "{", "}", ",");
-    this.patterns = new LinkedHashMap<>();
+    this.matchers = new LinkedHashMap<>();
     initializePatterns();
   }
 
@@ -25,7 +25,7 @@ public class PatternManager {
     this.keywords = keywords;
     this.operators = operators;
     this.syntaxes = syntaxes;
-    this.patterns = new LinkedHashMap<>();
+    this.matchers = new LinkedHashMap<>();
     initializePatterns();
   }
 
@@ -80,10 +80,10 @@ public class PatternManager {
   }
 
   private void addPattern(Pattern pattern, TokenType tokenType) {
-    patterns.put(pattern, tokenType);
+    matchers.put(new RegexPatternMatcher(pattern, tokenType), tokenType);
   }
 
-  public LinkedHashMap<Pattern, TokenType> getPatterns() {
-    return patterns;
+  public LinkedHashMap<PatternMatcher, TokenType> getMatchers() {
+    return matchers;
   }
 }

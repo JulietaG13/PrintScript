@@ -6,12 +6,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class Lexer {
   private final String code;
-  LexicalRange currentPosition;
+  private LexicalRange currentPosition;
   private final PatternManager patterns;
   private List<Token> tokens;
 
@@ -26,78 +24,43 @@ public class Lexer {
     return tokens;
   }
 
-  private void advancePosition(int length) {
-    for (int i = 0; i < length; i++) {
-      char c = code.charAt(currentPosition.getOffset());
-      currentPosition =
-          new LexicalRange(
-              currentPosition.getOffset() + 1,
-              c == '\n' ? currentPosition.getLine() + 1 : currentPosition.getLine(),
-              c == '\n' ? 0 : currentPosition.getColumn() + 1);
-    }
-  }
-
-  private Optional<Character> getCharAt(LexicalRange position) {
-    if (position.getOffset() >= code.length()) {
-      return Optional.empty();
-    }
-    return Optional.of(code.charAt(position.getOffset()));
-  }
-
-  /* Turns the code into a list of tokens */
   public void tokenize() {
     while (currentPosition.getOffset() < code.length()) {
-      /* Gets the current character */
       Optional<Character> currentChar = getCharAt(currentPosition);
 
-      /* Checks limit has not been reached */
       if (currentChar.isEmpty()) {
         break;
       }
       Character c = currentChar.get();
 
-      /* Skips whitespaces */
       if (skipWhitespace(c)) {
         continue;
       }
 
       boolean matched = false;
 
-      /* Compares the string with the token patterns */
-      for (Map.Entry<Pattern, TokenType> entry : patterns.getPatterns().entrySet()) {
-        Pattern pattern = entry.getKey();
-        TokenType type = entry.getValue();
+      for (Map.Entry<PatternMatcher, TokenType> entry : patterns.getMatchers().entrySet()) {
+        PatternMatcher matcher = entry.getKey();
 
-        /* Gets the substring from the current position,
-        leaving outside what has already been matched */
         String sub = code.substring(currentPosition.getOffset());
+        Optional<MatchResult> matchResult = matcher.findMatch(sub);
 
-        Matcher matcher = pattern.matcher(sub);
+        if (matchResult.isPresent()) {
+          String tokenValue = matchResult.get().getMatchedValue();
 
-        /* Checks if the prefix matches the pattern */
-        if (matcher.lookingAt()) {
-
-          /* Gets the part of the code that matched the pattern */
-          String tokenValue = matcher.group();
-
-          /* If the token is a keyword, it must be a whole word */
-          if (type == TokenType.KEYWORD) {
+          if (matcher.getTokenType() == TokenType.KEYWORD) {
             if (!isWholeWordMatch(tokenValue)) {
               continue;
             }
           }
 
-          /* Creates the token and adds it to the list */
-          createToken(tokenValue, type);
-
-          /* Advances the position */
+          createToken(tokenValue, matcher.getTokenType());
           advancePosition(tokenValue.length());
           matched = true;
           break;
         }
       }
 
-      /* If no pattern matched, it is an invalid token */
       if (!matched) {
         throw new RuntimeException("Invalid token: " + currentChar.get());
       }
@@ -131,5 +94,23 @@ public class Lexer {
       return !Character.isLetterOrDigit(nextChar) && nextChar != '_';
     }
     return true;
+  }
+
+  private void advancePosition(int length) {
+    for (int i = 0; i < length; i++) {
+      char c = code.charAt(currentPosition.getOffset());
+      currentPosition =
+          new LexicalRange(
+              currentPosition.getOffset() + 1,
+              c == '\n' ? currentPosition.getLine() + 1 : currentPosition.getLine(),
+              c == '\n' ? 0 : currentPosition.getColumn() + 1);
+    }
+  }
+
+  private Optional<Character> getCharAt(LexicalRange position) {
+    if (position.getOffset() >= code.length()) {
+      return Optional.empty();
+    }
+    return Optional.of(code.charAt(position.getOffset()));
   }
 }
