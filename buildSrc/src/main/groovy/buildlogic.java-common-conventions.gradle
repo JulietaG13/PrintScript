@@ -114,7 +114,7 @@ publishing {
     publications {
         maven(MavenPublication) {
             groupId = 'com.ingsis.jcli'
-            artifactId = "${project.name}-${project.hasProperty('archiveBaseName') ? archiveBaseName : 'artifact'}"
+            artifactId = "${project.name}"
             version = '1.0.1'
             from components.java
         }
