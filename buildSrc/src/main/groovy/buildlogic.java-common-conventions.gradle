@@ -115,7 +115,7 @@ publishing {
     publications {
         maven(MavenPublication) {
             groupId = 'com.ingsis.jcli'
-            artifactId = 'PrintScript'
+            artifactId = 'printscript'
             version = '1.0.1'
             from components.java
         }
