@@ -11,6 +11,8 @@ import java.util.List;
 
 public class Parser {
 
+  private List<Token> tokens;
+
   public ProgramNode parse(List<Token> tokens) {
     return parse(tokens, false);
   }
