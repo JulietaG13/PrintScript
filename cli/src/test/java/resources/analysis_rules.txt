@@ -1,0 +1,4 @@
+{
+  "lower_camel_case": true,
+  "println_non_expressions": true
+}

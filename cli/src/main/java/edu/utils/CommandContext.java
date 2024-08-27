@@ -11,6 +11,8 @@ public class CommandContext {
 
   private FormatterResult formatterResult;
 
+  private String name;
+
   public ProgramNode getProgramNode() {
     return programNode;
   }
@@ -37,5 +39,13 @@ public class CommandContext {
 
   public void setFormatterResult(FormatterResult formatterResult) {
     this.formatterResult = formatterResult;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public String getName() {
+    return name;
   }
 }
