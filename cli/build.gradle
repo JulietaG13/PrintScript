@@ -1,6 +1,6 @@
-
 plugins {
     id 'buildlogic.java-application-conventions'
+    id 'org.jetbrains.kotlin.jvm'
 }
 
 dependencies {
@@ -12,8 +12,27 @@ dependencies {
     implementation project(':linter')
     implementation project(':formatter')
     implementation project(':common')
+    implementation("com.github.ajalt.clikt:clikt:4.4.0")
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
 }
 
 application {
-    mainClass = 'edu.Cli'
+    mainClass.set('edu.commands.CliKt')
+}
+repositories {
+    mavenCentral()
+}
+kotlin {
+    jvmToolchain(21)
+}
+jar {
+    manifest {
+        attributes(
+                'Main-Class': 'edu.commands.CliKt' // Ensure this is your correct main class
+        )
+    }
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }

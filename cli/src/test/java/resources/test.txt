@@ -1,0 +1,1 @@
+let a: Number = 5; println(a);
