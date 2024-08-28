@@ -14,15 +14,17 @@ class ValidatorCmd() : CliktCommand(name = "validate", help = "Validate the sour
 
     private fun execute() {
         try {
+            println("Starting validation...")
             val text = getText()
             val lexer = Lexer(text)
             lexer.tokenize()
-
             val tokens = lexer.tokens
-
+            println("Tokenizing completed...")
             val parser = Parser()
             val programNode = parser.parse(tokens)
+            println("Parsing completed...")
             commandContext.programNode = programNode
+            println("Validation completed.")
         } catch (e: IOException) {
             println("Error executing validation command: ${e.message}")
         }

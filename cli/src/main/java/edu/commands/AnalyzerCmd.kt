@@ -9,8 +9,8 @@ import edu.ast.ProgramNode
 import edu.rules.RuleParserLinter
 import edu.rules.RuleProviderLinter
 import edu.utils.CommandContext
-import edu.utils.FileReader
 import edu.utils.JsonConfigLoader
+import edu.utils.ProgramNodeUtils
 import java.io.IOException
 
 class AnalyzerCmd : CliktCommand(name = "analyze", help = "Analyze a source code file") {
@@ -19,15 +19,18 @@ class AnalyzerCmd : CliktCommand(name = "analyze", help = "Analyze a source code
     val commandContext = CommandContext()
     private fun execute() {
         try {
-            val text: String = FileReader.readFileToString(sourceFile)
-            val programNode: ProgramNode = createProgramNode(text)
+            println("Starting analysis...")
+            println("Reading file...")
+            val programNode: ProgramNode = ProgramNodeUtils.getProgramNode(sourceFile)
+            println("Parsing completed...")
             val linter = getLinter()
+            println("Analyzing program...")
             val report = linter.analyze(programNode)
+            println("Analysis completed.")
             commandContext.linterReport = report
-
-            println("Análisis completado. Reporte: $report")
+            println("Report: ${report.printReport()}")
         } catch (e: IOException) {
-            println("Error al ejecutar el comando de análisis: " + e.message)
+            println("Error: " + e.message)
         }
     }
     private fun createProgramNode(sourceFile: String): ProgramNode {

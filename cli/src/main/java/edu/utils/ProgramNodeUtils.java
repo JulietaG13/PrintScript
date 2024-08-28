@@ -3,23 +3,19 @@ package edu.utils;
 import edu.Lexer;
 import edu.Parser;
 import edu.ast.ProgramNode;
+import java.io.IOException;
 
 public class ProgramNodeUtils {
-  public static ProgramNode getOrCreateProgramNode(
-      CommandContext commandContext, String sourceFile) {
-    if (commandContext.hasProgramNode()) {
-      return commandContext.getProgramNode();
-    } else {
-      ProgramNode programNode = parseProgram(sourceFile);
-      commandContext.setProgramNode(programNode);
-      return programNode;
-    }
-  }
 
-  private static ProgramNode parseProgram(String sourceFile) {
-    Lexer lexer = new Lexer(sourceFile);
+  public static ProgramNode getProgramNode(String sourceFile) throws IOException {
+    String text = getFileAsString(sourceFile);
+    Lexer lexer = new Lexer(text);
     lexer.tokenize();
     Parser parser = new Parser();
     return parser.parse(lexer.getTokens());
+  }
+
+  public static String getFileAsString(String sourceFile) throws IOException {
+    return FileReader.readFileToString(sourceFile);
   }
 }

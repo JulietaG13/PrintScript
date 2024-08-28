@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import edu.ast.ProgramNode;
 import edu.utils.CommandContext;
-import edu.utils.FileReader;
 import edu.utils.ProgramNodeUtils;
 import java.io.IOException;
 import org.junit.jupiter.api.BeforeEach;
@@ -21,20 +20,23 @@ class TestProgramNodeUtils {
   }
 
   @Test
-  void testGetOrCreateProgramNode_ExistingNode() {
+  void testGetOrCreateProgramNode_ExistingNode() throws IOException {
     // Given: The CommandContext already contains a ProgramNode
     String testFilePath = "src/test/java/resources/test.txt";
-    String text = null;
-    try {
-      text = FileReader.readFileToString(testFilePath);
-    } catch (IOException e) {
-      throw new RuntimeException(e);
-    }
-
     // When: getOrCreateProgramNode is called
-    ProgramNode result = ProgramNodeUtils.getOrCreateProgramNode(commandContext, text);
-
+    ProgramNode result = ProgramNodeUtils.getProgramNode(testFilePath);
     // Then: The existing ProgramNode should be returned
     assertNotNull(result);
+  }
+
+  @Test
+  void testFileReaderInPrgmUtils() {
+    String testFilePath = "src/test/java/resources/test.txt";
+    try {
+      String result = ProgramNodeUtils.getFileAsString(testFilePath);
+      assertNotNull(result);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
   }
 }

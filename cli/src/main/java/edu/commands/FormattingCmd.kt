@@ -4,14 +4,12 @@ import com.github.ajalt.clikt.core.CliktCommand
 import com.github.ajalt.clikt.parameters.options.option
 import edu.Formatter
 import edu.FormatterResult
-import edu.Lexer
-import edu.Parser
 import edu.ast.ProgramNode
 import edu.rules.FormatterRuleParser
 import edu.rules.FormatterRuleProvider
 import edu.utils.CommandContext
-import edu.utils.FileReader
 import edu.utils.JsonConfigLoader
+import edu.utils.ProgramNodeUtils
 import java.io.IOException
 
 class FormattingCmd() : CliktCommand(name = "format", help = "Format the source file") {
@@ -21,21 +19,20 @@ class FormattingCmd() : CliktCommand(name = "format", help = "Format the source 
 
     private fun execute() {
         try {
-            val text: String = FileReader.readFileToString(sourceFile)
-            val programNode: ProgramNode = createProgramNode(text)
+            println("Starting formatting...")
+            println("Reading file...")
+            val programNode: ProgramNode = ProgramNodeUtils.getProgramNode(sourceFile)
+            println("Parsing completed...")
             val formatter = getFormatter()
+            println("Formatting program...")
             val result: FormatterResult = formatter.format(programNode)
+            println("Formatting completed.")
             commandContext.formatterResult = result
+            println("Formatted code:")
             echo(result.result)
         } catch (e: IOException) {
             println("Error executing formatting command: ${e.message}")
         }
-    }
-    private fun createProgramNode(sourceFile: String): ProgramNode {
-        val lexer = Lexer(sourceFile)
-        lexer.tokenize()
-        val parser = Parser()
-        return parser.parse(lexer.tokens)
     }
 
     private fun getFormatter(): Formatter {

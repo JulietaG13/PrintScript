@@ -1,0 +1,71 @@
+let name: String = "Joe";
+let lastName: String = "Doe";
+let fullName: String = name + " " + lastName;
+
+println(fullName);
+
+let a: Number = 10;
+let b: Number = 20;
+let c: Number = a + b;
+let d: Number = c * 2;
+println("The value of d is " + d);
+
+let e: Number = d / 5;
+println("The value of e is " + e);
+
+let result: Number = e - 3;
+println("Final result: " + result);
+
+let x: Number = 100;
+let y: Number = 50;
+x = x / y;
+println("Division result: " + x);
+
+let z: String = "Hello, ";
+z = z + "World!";
+println(z);
+
+let longString: String = "This is a long string to simulate more processing time.";
+let anotherString: String = longString + " And it keeps going with more and more content.";
+
+println(anotherString);
+
+let num1: Number = 123456;
+let num2: Number = 654321;
+let num3: Number = num1 + num2;
+let num4: Number = num3 * 2;
+let num5: Number = num4 / 4;
+let num6: Number = num5 - 98765;
+
+println("Complex calculation result: " + num6);
+
+let combinedString: String = longString + " " + num6 + " " + z + " " + fullName;
+println(combinedString);
+
+let i: Number = 0;
+let sum: Number = 0;
+
+println("Sum of numbers from 0 to 9999: " + sum);
+
+let m: Number = 50;
+let n: Number = 75;
+let o: Number = m * n;
+let p: Number = o / 25;
+let q: Number = p + 123;
+let r: Number = q - 456;
+
+println("Another complex calculation result: " + r);
+
+let alpha: String = "alpha";
+let beta: String = "beta";
+let gamma: String = "gamma";
+let delta: String = alpha + beta + gamma;
+
+println(delta);
+
+let numbers: Number = 1;
+let multiplier: Number = 2;
+
+let finalResult: Number = numbers;
+
+println("Final multiplication result: " + finalResult);
