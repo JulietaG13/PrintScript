@@ -26,47 +26,61 @@ public class Lexer implements Iterator<Token> {
 
   @Override
   public boolean hasNext() {
-    // Avanzar mientras la línea actual esté vacía o contenga solo espacios en blanco
-    while (currentLine != null && currentPosition >= currentLine.length()) {
-      if (fileIterator.hasNext()) {
-        currentLine = fileIterator.next();
-        currentPosition = 0;
-        position = new LexicalRange(position.getOffset(), position.getLine() + 1, 0);
-      } else {
-        currentLine = null;
-        return false;
-      }
-    }
-
-    if (currentLine == null) {
+    if (isEndOfFile()) {
       return false;
     }
+    return true;
+  }
 
+  private boolean isEndOfFile() {
+    while (!lineIsEmpty() && reachedEndOfLine()) {
+      skipToNextLine();
+    }
+    if (lineIsEmpty()) {
+      return true;
+    }
     Optional<Character> currentChar = getCharAt(currentPosition);
     if (currentChar.isEmpty()) {
-      return false;
+      return true;
     }
-
-    // Avanzar espacios en blanco y comprobar si se alcanzó el final de la línea o si se debe
-    // avanzar a la siguiente línea
     while (skipWhitespace(currentChar.get())) {
-      if (currentPosition >= currentLine.length()) {
-        if (fileIterator.hasNext()) {
-          currentLine = fileIterator.next();
-          currentPosition = 0;
-          position = new LexicalRange(position.getOffset(), position.getLine() + 1, 0);
-        } else {
-          currentLine = null;
-          return false;
-        }
+      if (!lineIsEmpty() && reachedEndOfLine()) {
+        skipToNextLine();
+      }
+      if (lineIsEmpty()) {
+        return true;
       }
       currentChar = getCharAt(currentPosition);
       if (currentChar.isEmpty()) {
-        return false;
+        return true;
       }
     }
+    return false;
+  }
 
-    return true;
+  private boolean lineIsEmpty() {
+    if (currentLine == null) {
+      return true;
+    }
+    return false;
+  }
+
+  private void skipToNextLine() {
+    if (fileIterator.hasNext()) {
+      moveToNextLine();
+    } else {
+      currentLine = null;
+    }
+  }
+
+  private void moveToNextLine() {
+    currentLine = fileIterator.next();
+    currentPosition = 0;
+    position = new LexicalRange(position.getOffset(), position.getLine() + 1, 0);
+  }
+
+  private boolean reachedEndOfLine() {
+    return currentPosition >= currentLine.length();
   }
 
   private boolean skipWhitespace(Character currentChar) {
@@ -85,25 +99,15 @@ public class Lexer implements Iterator<Token> {
     if (currentLine == null) {
       throw new RuntimeException("No more tokens available.");
     }
-
     String sub = currentLine.substring(currentPosition);
-
     Optional<Token> token = patterns.matches(sub, position);
-
     if (token.isEmpty()) {
       throw new RuntimeException("Invalid token: " + sub);
     } else {
       Token t = token.get();
       advancePosition(t.getEnd().getOffset() - t.getStart().getOffset() + 1);
-
       if (currentPosition >= currentLine.length()) {
-        if (fileIterator.hasNext()) {
-          currentLine = fileIterator.next();
-          currentPosition = 0;
-          position = new LexicalRange(position.getOffset(), position.getLine() + 1, 0);
-        } else {
-          currentLine = null;
-        }
+        skipToNextLine();
       }
       return t;
     }
