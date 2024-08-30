@@ -1,5 +1,6 @@
 package edu;
 
+import static edu.LexerFactory.createLexerV1;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -98,7 +99,7 @@ public class TestBinaryOperations {
   }
 
   private static ProgramNode compile(String code) {
-    Lexer lexer = new Lexer(code);
+    Lexer lexer = createLexerV1(code);
     lexer.tokenize();
     Parser parser = new Parser();
     ProgramNode program = parser.parse(lexer.getTokens());

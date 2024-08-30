@@ -2,7 +2,7 @@ package edu.commands
 
 import com.github.ajalt.clikt.core.CliktCommand
 import com.github.ajalt.clikt.parameters.options.option
-import edu.Lexer
+import edu.LexerFactory.createLexerV1
 import edu.Linter
 import edu.Parser
 import edu.ast.ProgramNode
@@ -34,7 +34,7 @@ class AnalyzerCmd : CliktCommand(name = "analyze", help = "Analyze a source code
         }
     }
     private fun createProgramNode(sourceFile: String): ProgramNode {
-        val lexer = Lexer(sourceFile)
+        val lexer = createLexerV1(sourceFile)
         lexer.tokenize()
         val parser = Parser()
         return parser.parse(lexer.tokens)

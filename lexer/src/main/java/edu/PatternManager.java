@@ -1,89 +1,63 @@
 package edu;
 
+import edu.patterns.TokenPattern;
+import edu.tokens.Token;
 import edu.tokens.TokenType;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
-import java.util.regex.Pattern;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 public class PatternManager {
-  private final List<String> keywords;
-  private final List<String> operators;
-  private final List<String> syntaxes;
-  private final LinkedHashMap<PatternMatcher, TokenType> matchers;
+  private final List<PatternMatcher> matchers;
 
-  public PatternManager() {
-    this.keywords = List.of("String", "Number", "let");
-    this.operators = List.of("+=", "-=", "*=", "/=", "%", "+", "-", "*", "/", "=");
-    this.syntaxes = List.of(";", ":", "(", ")", "{", "}", ",");
-    this.matchers = new LinkedHashMap<>();
-    initializePatterns();
+  public PatternManager(List<TokenPattern> patterns) {
+    this.matchers = new LinkedList<>();
+    for (TokenPattern pattern : patterns) {
+      RegexPatternMatcher regexPatternMatcher =
+          new RegexPatternMatcher(pattern.getPattern(), pattern.getTokenType());
+      matchers.add(regexPatternMatcher);
+    }
   }
 
-  private PatternManager(List<String> keywords, List<String> operators, List<String> syntaxes) {
-    this.keywords = keywords;
-    this.operators = operators;
-    this.syntaxes = syntaxes;
-    this.matchers = new LinkedHashMap<>();
-    initializePatterns();
+  public Optional<Token> matches(String code, LexicalRange position) {
+    for (PatternMatcher matcher : matchers) {
+
+      Optional<MatchResult> matchResult = matcher.findMatch(code);
+
+      if (matchResult.isPresent()) {
+        String tokenValue = matchResult.get().getMatchedValue();
+
+        if (matcher.getTokenType() == TokenType.KEYWORD) {
+          if (!isWholeWordMatch(tokenValue, code)) {
+            continue;
+          }
+        }
+
+        Token token = createToken(tokenValue, matcher.getTokenType(), position);
+        return Optional.of(token);
+      }
+    }
+    return Optional.empty();
   }
 
-  public PatternManager addKeyword(String keyword) {
-    List<String> newKeywords = new ArrayList<>(keywords);
-    newKeywords.add(keyword);
-    return new PatternManager(newKeywords, operators, syntaxes);
+  private boolean isWholeWordMatch(String tokenValue, String code) {
+    int endOffset = tokenValue.length();
+    if (endOffset < code.length()) {
+      char nextChar = code.charAt(endOffset);
+      return !Character.isLetterOrDigit(nextChar) && nextChar != '_';
+    }
+    return true;
   }
 
-  public PatternManager addOperator(String operator) {
-    List<String> newOperators = new ArrayList<>(operators);
-    newOperators.add(operator);
-    return new PatternManager(keywords, newOperators, syntaxes);
-  }
-
-  public PatternManager addSyntax(String syntax) {
-    List<String> newSyntaxes = new ArrayList<>(syntaxes);
-    newSyntaxes.add(syntax);
-    return new PatternManager(keywords, operators, newSyntaxes);
-  }
-
-  private void initializePatterns() {
-    addPattern(getKeywordPattern(), TokenType.KEYWORD);
-    addPattern(getIdentifierPattern(), TokenType.IDENTIFIER);
-    addPattern(getLiteralPattern(), TokenType.LITERAL);
-    addPattern(getOperatorPattern(), TokenType.OPERATOR);
-    addPattern(getSyntaxPattern(), TokenType.SYNTAX);
-  }
-
-  private Pattern getKeywordPattern() {
-    String patternString =
-        keywords.stream().map(Pattern::quote).collect(Collectors.joining("|", "\\b(", ")\\b"));
-    return Pattern.compile(patternString);
-  }
-
-  private Pattern getOperatorPattern() {
-    String patternString = operators.stream().map(Pattern::quote).collect(Collectors.joining("|"));
-    return Pattern.compile(patternString);
-  }
-
-  private Pattern getSyntaxPattern() {
-    String patternString = syntaxes.stream().map(Pattern::quote).collect(Collectors.joining("|"));
-    return Pattern.compile(patternString);
-  }
-
-  private Pattern getIdentifierPattern() {
-    return Pattern.compile("[a-zA-Z_][a-zA-Z0-9_]*|println");
-  }
-
-  private Pattern getLiteralPattern() {
-    return Pattern.compile("[0-9]+|\"[^\"]*\"");
-  }
-
-  private void addPattern(Pattern pattern, TokenType tokenType) {
-    matchers.put(new RegexPatternMatcher(pattern, tokenType), tokenType);
-  }
-
-  public LinkedHashMap<PatternMatcher, TokenType> getMatchers() {
-    return matchers;
+  private Token createToken(String tokenValue, TokenType type, LexicalRange currentPosition) {
+    LexicalRange startRange =
+        new LexicalRange(
+            currentPosition.getOffset(), currentPosition.getLine(), currentPosition.getColumn());
+    LexicalRange endRange =
+        new LexicalRange(
+            currentPosition.getOffset() + tokenValue.length() - 1,
+            currentPosition.getLine(),
+            currentPosition.getColumn() + tokenValue.length() - 1);
+    return new Token(type, tokenValue, startRange, endRange);
   }
 }

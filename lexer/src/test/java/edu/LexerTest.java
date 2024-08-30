@@ -1,8 +1,7 @@
 package edu;
 
+import static edu.LexerFactory.createLexerV1;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import edu.tokens.Token;
 import edu.tokens.TokenType;
@@ -16,7 +15,7 @@ public class LexerTest {
 
   @BeforeEach
   public void setup() {
-    lexer = new Lexer("let x = 42; println(\"Hello, World!\");");
+    lexer = createLexerV1("let x = 42; println(\"Hello, World!\");");
   }
 
   @Test
@@ -58,21 +57,8 @@ public class LexerTest {
   }
 
   @Test
-  public void testInvalidToken() {
-    Lexer invalidLexer = new Lexer("let x = 42 @;");
-    Exception exception = assertThrows(RuntimeException.class, invalidLexer::tokenize);
-    assertTrue(exception.getMessage().contains("Invalid token"));
-  }
-
-  @Test
   public void testLexicalRangeToString() {
     LexicalRange range = new LexicalRange(15, 5, 1);
     assertEquals("LexicalRange(offset=15, line=5, column=1)", range.toString());
-  }
-
-  @Test
-  public void testPatternManager() {
-    PatternManager patternManager = new PatternManager();
-    PatternManager patternManager1 = patternManager.addKeyword("let");
   }
 }

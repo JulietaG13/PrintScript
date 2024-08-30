@@ -1,5 +1,6 @@
 package edu;
 
+import static edu.LexerFactory.createLexerV1;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import edu.ast.ProgramNode;
@@ -48,7 +49,7 @@ public class GlobalTest {
   }
 
   public ProgramNode getAst(String code) {
-    Lexer lexer = new Lexer(code);
+    Lexer lexer = createLexerV1(code);
     lexer.tokenize();
     Parser parser = new Parser();
     return parser.parse(lexer.getTokens());

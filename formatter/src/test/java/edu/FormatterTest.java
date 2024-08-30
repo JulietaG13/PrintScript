@@ -1,5 +1,6 @@
 package edu;
 
+import static edu.LexerFactory.createLexerV1;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.google.gson.JsonObject;
@@ -175,7 +176,7 @@ public class FormatterTest {
   }
 
   public ProgramNode getAst(String input) {
-    Lexer lexer = new Lexer(input);
+    Lexer lexer = createLexerV1(input);
     lexer.tokenize();
     Parser parser = new Parser();
     return parser.parse(lexer.getTokens());

@@ -1,5 +1,6 @@
 package edu;
 
+import static edu.LexerFactory.createLexerV1;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -56,7 +57,7 @@ public class VisitorTest {
   }
 
   public VariableContext process(String code) {
-    Lexer lexer = new Lexer(code);
+    Lexer lexer = createLexerV1(code);
     lexer.tokenize();
     List<Token> tokens = lexer.getTokens();
 
@@ -74,7 +75,7 @@ public class VisitorTest {
   }
 
   public String getOutput(String code) {
-    Lexer lexer = new Lexer(code);
+    Lexer lexer = createLexerV1(code);
     lexer.tokenize();
     List<Token> tokens = lexer.getTokens();
 

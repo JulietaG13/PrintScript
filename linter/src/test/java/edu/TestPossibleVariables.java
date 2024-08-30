@@ -1,5 +1,6 @@
 package edu;
 
+import static edu.LexerFactory.createLexerV1;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -38,7 +39,7 @@ public class TestPossibleVariables {
   }
 
   private Report processCode(String code, Linter linter) {
-    Lexer lexer = new Lexer(code);
+    Lexer lexer = createLexerV1(code);
     lexer.tokenize();
     List<Token> tokens = lexer.getTokens();
     Parser parser = new Parser();

@@ -1,11 +1,10 @@
 package edu;
 
+import edu.patterns.TokenPattern;
 import edu.tokens.Token;
-import edu.tokens.TokenType;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Stream;
 
@@ -15,10 +14,10 @@ public class Lexer implements Iterator<Token> {
   private final PatternManager patterns;
   private final List<Token> tokens = new ArrayList<>();
 
-  public Lexer(String code) {
+  public Lexer(String code, List<TokenPattern> patterns) {
     this.code = code;
     this.currentPosition = new LexicalRange(0, 0, 0);
-    this.patterns = new PatternManager();
+    this.patterns = new PatternManager(patterns);
   }
 
   @Override
@@ -40,43 +39,17 @@ public class Lexer implements Iterator<Token> {
 
   @Override
   public Token next() {
-    while (currentPosition.getOffset() < code.length()) {
-      Optional<Character> currentChar = getCharAt(currentPosition);
+    String sub = code.substring(currentPosition.getOffset());
 
-      if (currentChar.isEmpty()) {
-        throw new RuntimeException("Limit exceeded");
-      }
+    Optional<Token> token = patterns.matches(sub, currentPosition);
 
-      Character c = currentChar.get();
-
-      if (skipWhitespace(c)) {
-        continue;
-      }
-
-      for (Map.Entry<PatternMatcher, TokenType> entry : patterns.getMatchers().entrySet()) {
-        PatternMatcher matcher = entry.getKey();
-
-        String sub = code.substring(currentPosition.getOffset());
-        Optional<MatchResult> matchResult = matcher.findMatch(sub);
-
-        if (matchResult.isPresent()) {
-          String tokenValue = matchResult.get().getMatchedValue();
-
-          if (matcher.getTokenType() == TokenType.KEYWORD) {
-            if (!isWholeWordMatch(tokenValue)) {
-              continue;
-            }
-          }
-
-          Token token = createToken(tokenValue, matcher.getTokenType());
-          advancePosition(tokenValue.length());
-          return token;
-        }
-      }
-
-      throw new RuntimeException("Invalid token: " + currentChar.get());
+    if (token.isEmpty()) {
+      throw new RuntimeException("Invalid token: " + sub);
+    } else {
+      Token t = token.get();
+      advancePosition(t.getEnd().getOffset() - t.getStart().getOffset() + 1);
+      return t;
     }
-    throw new RuntimeException("No more tokens available");
   }
 
   public void tokenize() {
@@ -87,18 +60,6 @@ public class Lexer implements Iterator<Token> {
 
   public List<Token> getTokens() {
     return tokens;
-  }
-
-  private Token createToken(String tokenValue, TokenType type) {
-    LexicalRange startRange =
-        new LexicalRange(
-            currentPosition.getOffset(), currentPosition.getLine(), currentPosition.getColumn());
-    LexicalRange endRange =
-        new LexicalRange(
-            currentPosition.getOffset() + tokenValue.length() - 1,
-            currentPosition.getLine(),
-            currentPosition.getColumn() + tokenValue.length() - 1);
-    return new Token(type, tokenValue, startRange, endRange);
   }
 
   public void getTokens(Stream.Builder<Token> tokensStream) {
@@ -113,15 +74,6 @@ public class Lexer implements Iterator<Token> {
       return true;
     }
     return false;
-  }
-
-  private boolean isWholeWordMatch(String tokenValue) {
-    int endOffset = currentPosition.getOffset() + tokenValue.length();
-    if (endOffset < code.length()) {
-      char nextChar = code.charAt(endOffset);
-      return !Character.isLetterOrDigit(nextChar) && nextChar != '_';
-    }
-    return true;
   }
 
   private void advancePosition(int length) {

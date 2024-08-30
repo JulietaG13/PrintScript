@@ -8,7 +8,6 @@ public class Runner {
   private final Parser parser;
 
   public Runner(String code) {
-    this.lexer = new Lexer(code);
     this.parser = new Parser();
   }
 

@@ -2,7 +2,7 @@ package edu.commands
 
 import com.github.ajalt.clikt.core.CliktCommand
 import com.github.ajalt.clikt.parameters.options.option
-import edu.Lexer
+import edu.LexerFactory.createLexerV1
 import edu.Parser
 import edu.utils.CommandContext
 import edu.utils.FileReader
@@ -16,7 +16,7 @@ class ValidatorCmd() : CliktCommand(name = "validate", help = "Validate the sour
         try {
             println("Starting validation...")
             val text = getText()
-            val lexer = Lexer(text)
+            val lexer = createLexerV1(text)
             lexer.tokenize()
             val tokens = lexer.tokens
             println("Tokenizing completed...")
