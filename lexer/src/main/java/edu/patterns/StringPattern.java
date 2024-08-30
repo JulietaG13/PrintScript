@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 public class StringPattern implements LiteralPattern {
   @Override
   public Pattern getPattern() {
-    return java.util.regex.Pattern.compile("\"[^\"]*\"");
+    return Pattern.compile("\"[^\"]*\"");
   }
 
   @Override
