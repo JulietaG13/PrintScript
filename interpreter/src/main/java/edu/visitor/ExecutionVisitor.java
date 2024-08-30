@@ -13,17 +13,17 @@ import edu.ast.interfaces.ExpressionNode;
 import edu.ast.interfaces.StatementNode;
 import edu.ast.statements.AssignmentNode;
 import edu.ast.statements.ExpressionStatementNode;
-import edu.ast.statements.Kind;
 import edu.ast.statements.VariableDeclarationNode;
-import edu.reader.Reader;
+import edu.handlers.HandlerRegistry;
+import edu.reader.InterpreterReader;
 import edu.reader.ReaderResult;
 import edu.utils.OperatorExecutor;
 
 public class ExecutionVisitor implements AstVisitor {
-  private Reader reader;
+  private InterpreterReader interpreterReader;
 
-  public ExecutionVisitor(Reader reader) {
-    this.reader = reader;
+  public ExecutionVisitor(InterpreterReader interpreterReader) {
+    this.interpreterReader = interpreterReader;
   }
 
   @Override
@@ -37,22 +37,10 @@ public class ExecutionVisitor implements AstVisitor {
   public void visit(VariableDeclarationNode node) {
     node.id().accept(this);
     node.init().accept(this);
-
-    ReaderResult resultId = reader.getIdentifier();
-    Reader newReader = resultId.getReader();
-    reader = newReader;
-    String varName = resultId.getValue().toString();
-    ReaderResult resultValue = reader.getLiteral();
-    Reader newReader1 = resultValue.getReader();
-    reader = newReader1;
-    Object value = resultValue.getValue();
-
-    if (node.kind() == Kind.LET) {
-      Reader newReader3 = reader.write(varName, value);
-      reader = newReader3;
-    } else {
-      throw new RuntimeException("Tipo de variable no soportado: " + node.kind());
-    }
+    InterpreterReader newInterpreterReader =
+        (InterpreterReader)
+            HandlerRegistry.getStatementHandler(node).handle(node, interpreterReader);
+    interpreterReader = newInterpreterReader;
   }
 
   @Override
@@ -60,26 +48,26 @@ public class ExecutionVisitor implements AstVisitor {
     node.id().accept(this);
     node.value().accept(this);
 
-    String varName = reader.getIdentifier().getValue().toString();
-    Object value = reader.getLiteral().getValue();
+    String varName = interpreterReader.getIdentifier().getValue().toString();
+    Object value = interpreterReader.getLiteral().getValue();
 
     if (isNumberVariable(varName) && isNumber(value)) {
-      Reader newReader = reader.write(varName, value);
-      reader = newReader;
+      InterpreterReader newInterpreterReader = interpreterReader.write(varName, value);
+      interpreterReader = newInterpreterReader;
     } else if (isStringVariable(varName) && isString(value)) {
-      Reader newReader = reader.write(varName, value);
-      reader = newReader;
+      InterpreterReader newInterpreterReader = interpreterReader.write(varName, value);
+      interpreterReader = newInterpreterReader;
     } else {
       throw new RuntimeException("Variable no definida: " + varName);
     }
   }
 
   private boolean isStringVariable(String varName) {
-    return reader.isStringVariable(varName);
+    return interpreterReader.isStringVariable(varName);
   }
 
   private boolean isNumberVariable(String varName) {
-    return reader.isNumberVariable(varName);
+    return interpreterReader.isNumberVariable(varName);
   }
 
   private static boolean isString(Object value) {
@@ -103,11 +91,11 @@ public class ExecutionVisitor implements AstVisitor {
       arg.accept(this);
     }
     if (isPrint(node)) {
-      ReaderResult result = reader.read();
+      ReaderResult result = interpreterReader.read();
       Object value = result.getValue();
-      reader = result.getReader();
-      ReaderResult result1 = reader.getIdentifier();
-      reader = result1.getReader();
+      interpreterReader = result.getReader();
+      ReaderResult result1 = interpreterReader.getIdentifier();
+      interpreterReader = result1.getReader();
       System.out.println(value);
     } else {
       throw new RuntimeException("Unsupported function: " + node.callee().name());
@@ -117,38 +105,38 @@ public class ExecutionVisitor implements AstVisitor {
   @Override
   public void visit(BinaryExpressionNode node) {
     node.left().accept(this);
-    ReaderResult resultLeft = reader.read();
+    ReaderResult resultLeft = interpreterReader.read();
     Object left = resultLeft.getValue();
-    reader = resultLeft.getReader();
+    interpreterReader = resultLeft.getReader();
 
     node.right().accept(this);
-    ReaderResult resultRight = reader.read();
+    ReaderResult resultRight = interpreterReader.read();
     Object right = resultRight.getValue();
-    reader = resultRight.getReader();
+    interpreterReader = resultRight.getReader();
 
     String operatorSymbol = node.operator();
     Operator operator = OperatorProvider.getOperator(operatorSymbol);
 
     Object result = OperatorExecutor.execute(operator, left, right);
-    reader = reader.addLiteral(result);
+    interpreterReader = interpreterReader.addLiteral(result);
   }
 
   @Override
   public void visit(IdentifierNode node) {
-    Reader newReader = reader.addIdentifier(node.name());
-    reader = newReader;
+    InterpreterReader newInterpreterReader = interpreterReader.addIdentifier(node.name());
+    interpreterReader = newInterpreterReader;
   }
 
   @Override
   public void visit(LiteralNumberNode node) {
-    Reader newReader = reader.addLiteral(node.value());
-    reader = newReader;
+    InterpreterReader newInterpreterReader = interpreterReader.addLiteral(node.value());
+    interpreterReader = newInterpreterReader;
   }
 
   @Override
   public void visit(LiteralStringNode node) {
-    Reader newReader = reader.addLiteral(node.value());
-    reader = newReader;
+    InterpreterReader newInterpreterReader = interpreterReader.addLiteral(node.value());
+    interpreterReader = newInterpreterReader;
   }
 
   private boolean isPrint(ExpressionNode node) {
@@ -159,7 +147,7 @@ public class ExecutionVisitor implements AstVisitor {
     return false;
   }
 
-  public Reader getReader() {
-    return reader;
+  public InterpreterReader getReader() {
+    return interpreterReader;
   }
 }

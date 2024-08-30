@@ -3,41 +3,44 @@ package edu.reader;
 import edu.VariableContext;
 import java.util.Stack;
 
-public class Reader {
+public class InterpreterReader {
   private final VariableContext variables;
   private final Stack<String> identifiers;
   private final Stack<Object> literals;
 
-  public Reader(VariableContext variables, Stack<String> identifiers, Stack<Object> literals) {
+  public InterpreterReader(
+      VariableContext variables, Stack<String> identifiers, Stack<Object> literals) {
     this.variables = variables;
     this.identifiers = identifiers;
     this.literals = literals;
   }
 
-  public Reader addIdentifier(String identifier) {
+  public InterpreterReader addIdentifier(String identifier) {
     Stack<String> newIdentifiers = (Stack<String>) identifiers.clone();
     newIdentifiers.add(identifier);
-    return new Reader(variables, newIdentifiers, literals);
+    return new InterpreterReader(variables, newIdentifiers, literals);
   }
 
-  public Reader addLiteral(Object literal) {
+  public InterpreterReader addLiteral(Object literal) {
     Stack<Object> newLiterals = (Stack<Object>) literals.clone();
     newLiterals.add(literal);
-    return new Reader(variables, identifiers, newLiterals);
+    return new InterpreterReader(variables, identifiers, newLiterals);
   }
 
   public ReaderResult getIdentifier() {
     Stack<String> newIdentifiers = (Stack<String>) identifiers.clone();
     String identifier = newIdentifiers.pop();
-    Reader newReader = new Reader(variables, newIdentifiers, literals);
-    return new ReaderResult(newReader, identifier);
+    InterpreterReader newInterpreterReader =
+        new InterpreterReader(variables, newIdentifiers, literals);
+    return new ReaderResult(newInterpreterReader, identifier);
   }
 
   public ReaderResult getLiteral() {
     Stack<Object> newLiterals = (Stack<Object>) literals.clone();
     Object literal = newLiterals.pop();
-    Reader newReader = new Reader(variables, identifiers, newLiterals);
-    return new ReaderResult(newReader, literal);
+    InterpreterReader newInterpreterReader =
+        new InterpreterReader(variables, identifiers, newLiterals);
+    return new ReaderResult(newInterpreterReader, literal);
   }
 
   public boolean hasLiteral() {
@@ -54,27 +57,37 @@ public class Reader {
     } else {
       ReaderResult result = getIdentifier();
       String id = (String) result.getValue();
-      Reader newReader = result.getReader();
+      InterpreterReader newInterpreterReader = result.getReader();
       if (isStringVariable(id)) {
-        return new ReaderResult(newReader, variables.getStringVariable(id));
+        return new ReaderResult(newInterpreterReader, variables.getStringVariable(id));
       } else if (isNumberVariable(id)) {
-        return new ReaderResult(newReader, variables.getNumberVariable(id));
+        return new ReaderResult(newInterpreterReader, variables.getNumberVariable(id));
+      } else if (variables.hasBooleanVariable(id)) {
+        return new ReaderResult(newInterpreterReader, variables.getBooleanVariable(id));
       } else {
         throw new RuntimeException("Variable no definida: " + id);
       }
     }
   }
 
-  public Reader write(String varName, Object value) {
+  public InterpreterReader write(String varName, Object value) {
     VariableContext newContext;
     if (value instanceof Number) {
       newContext = variables.setNumberVariable(varName, (Number) value);
     } else if (value instanceof String) {
       newContext = variables.setStringVariable(varName, (String) value);
+    } else if (value instanceof Boolean) {
+      newContext = variables.setBooleanVariable(varName, (Boolean) value);
     } else {
       throw new RuntimeException("Tipo de variable no soportado: " + value.getClass());
     }
-    return new Reader(newContext, identifiers, literals);
+    return new InterpreterReader(newContext, identifiers, literals);
+  }
+
+  public InterpreterReader writeConst(String varName) {
+    VariableContext newContext;
+    newContext = variables.setConstant(varName);
+    return new InterpreterReader(newContext, identifiers, literals);
   }
 
   public boolean isStringVariable(String varName) {

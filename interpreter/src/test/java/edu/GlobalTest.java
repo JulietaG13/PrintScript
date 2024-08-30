@@ -4,7 +4,7 @@ import static edu.LexerFactory.createLexerV1;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import edu.ast.ProgramNode;
-import edu.reader.Reader;
+import edu.reader.InterpreterReader;
 import edu.visitor.ExecutionVisitor;
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
@@ -63,8 +63,13 @@ public class GlobalTest {
 
   public VariableContext interpret(ProgramNode node) {
     VariableContext variableContext =
-        new VariableContext(new java.util.HashMap<>(), new java.util.HashMap<>());
-    Reader reader = new Reader(variableContext, new java.util.Stack<>(), new java.util.Stack<>());
+        new VariableContext(
+            new java.util.HashMap<>(),
+            new java.util.HashMap<>(),
+            new java.util.HashMap<>(),
+            new java.util.HashSet<>());
+    InterpreterReader reader =
+        new InterpreterReader(variableContext, new java.util.Stack<>(), new java.util.Stack<>());
     ExecutionVisitor visitor = new ExecutionVisitor(reader);
     visitor.visit(node);
     return visitor.getReader().getVariables();

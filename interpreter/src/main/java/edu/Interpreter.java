@@ -1,8 +1,9 @@
 package edu;
 
 import edu.ast.ProgramNode;
-import edu.reader.Reader;
+import edu.reader.InterpreterReader;
 import edu.visitor.ExecutionVisitor;
+import java.util.HashSet;
 
 public class Interpreter {
   private final ExecutionVisitor visitor;
@@ -10,8 +11,12 @@ public class Interpreter {
   public Interpreter() {
     this.visitor =
         new ExecutionVisitor(
-            new Reader(
-                new VariableContext(new java.util.HashMap<>(), new java.util.HashMap<>()),
+            new InterpreterReader(
+                new VariableContext(
+                    new java.util.HashMap<>(),
+                    new java.util.HashMap<>(),
+                    new java.util.HashMap<>(),
+                    new HashSet<>()),
                 new java.util.Stack<>(),
                 new java.util.Stack<>()));
   }

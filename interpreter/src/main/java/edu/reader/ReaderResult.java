@@ -1,16 +1,16 @@
 package edu.reader;
 
 public class ReaderResult {
-  private final Reader reader;
+  private final InterpreterReader interpreterReader;
   private final Object value;
 
-  public ReaderResult(Reader reader, Object value) {
-    this.reader = reader;
+  public ReaderResult(InterpreterReader interpreterReader, Object value) {
+    this.interpreterReader = interpreterReader;
     this.value = value;
   }
 
-  public Reader getReader() {
-    return reader;
+  public InterpreterReader getReader() {
+    return interpreterReader;
   }
 
   public Object getValue() {

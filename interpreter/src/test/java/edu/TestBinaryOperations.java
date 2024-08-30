@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import edu.ast.ProgramNode;
-import edu.reader.Reader;
+import edu.reader.InterpreterReader;
 import edu.visitor.ExecutionVisitor;
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
@@ -21,8 +21,13 @@ public class TestBinaryOperations {
 
   public VariableContext interpret(ProgramNode node) {
     VariableContext variableContext =
-        new VariableContext(new java.util.HashMap<>(), new java.util.HashMap<>());
-    Reader reader = new Reader(variableContext, new java.util.Stack<>(), new java.util.Stack<>());
+        new VariableContext(
+            new java.util.HashMap<>(),
+            new java.util.HashMap<>(),
+            new java.util.HashMap<>(),
+            new java.util.HashSet<>());
+    InterpreterReader reader =
+        new InterpreterReader(variableContext, new java.util.Stack<>(), new java.util.Stack<>());
     ExecutionVisitor visitor = new ExecutionVisitor(reader);
     visitor.visit(node);
     return visitor.getReader().getVariables();
@@ -43,7 +48,6 @@ public class TestBinaryOperations {
 
   @Test
   public void testBinaryStringDeclaration() {
-    /* Input: let greeting: String = "Hello" + "World"; */
     String code = "let greeting: String = \"Hello \" + \"World\";";
     ProgramNode program = compile(code);
     VariableContext variableContext = interpret(program);
@@ -52,7 +56,6 @@ public class TestBinaryOperations {
 
   @Test
   public void testDoubleBinaryStringDeclaration() {
-    /* Input: let greeting: String = "I am" + 20 + "years old"; */
     String code = "let age: String = \"I am \" + 20 + \" years old\";";
     ProgramNode program = compile(code);
     VariableContext variableContext = interpret(program);
@@ -61,7 +64,6 @@ public class TestBinaryOperations {
 
   @Test
   public void testBinaryNumberDeclaration() {
-    /* Input: let age:Number = 10 + 5; */
     String code = "let age: Number = 10 + 5;";
     ProgramNode program = compile(code);
     VariableContext variableContext = interpret(program);
@@ -71,7 +73,6 @@ public class TestBinaryOperations {
 
   @Test
   public void testPrintBinaryPrint() {
-    /* Input: println(10 + 5); */
     String code = "println(10 + 5);";
     ProgramNode program = compile(code);
     String output = getPrintedInfo(program);
@@ -80,7 +81,6 @@ public class TestBinaryOperations {
 
   @Test
   public void testPrintBinaryIdentifierNumber() {
-    /* Input: let age: Number = 10; println(age + 5); */
     String code = "let age: Number = 10; println(age + 5);";
     ProgramNode program = compile(code);
     String output = getPrintedInfo(program);
@@ -89,7 +89,6 @@ public class TestBinaryOperations {
 
   @Test
   public void testPrintBinaryIdentifiers() {
-    /* Input: let age: Number = 10; let plus: Number = 5; println(age + plus); */
     String code = "let age: Number = 10; let plus: Number = 5; println(age + plus);";
     ProgramNode program = compile(code);
     String actualOutput = getPrintedInfo(program);
@@ -98,7 +97,6 @@ public class TestBinaryOperations {
 
   @Test
   public void testDoubleBinaryStringPrint() {
-    /* Input: println("I am" + 20 + "years old"); */
     String code = "println(\"I am \" + 20 + \" years old\");";
     ProgramNode program = compile(code);
     String printedInfo = getPrintedInfo(program);
@@ -115,7 +113,6 @@ public class TestBinaryOperations {
 
   @Test
   public void testBinaryStringIdentifierPrint() {
-    /* Input: let age:Number = 20; println("I am" + age + "years old"); */
     String code = "let age: Number = 20; println(\"I am \" + age + \" years old\");";
     ProgramNode program = compile(code);
     String printedInfo = getPrintedInfo(program);
@@ -124,8 +121,6 @@ public class TestBinaryOperations {
 
   @Test
   public void testBinaryDoubleIdentifierPrint() {
-    /* Input: let age:Number = 20; let intro:String = "I am ";
-    let measures: String =" years old"; println(intro + age + measures); */
     String code =
         "let age: Number = 20; let intro: String = \"I am \"; let measures: "
             + "String =\" years old\"; println(intro + age + measures);";
@@ -136,7 +131,6 @@ public class TestBinaryOperations {
 
   @Test
   public void testBinaryIdentifierFirst() {
-    /* Input: let greet:String = "Hola "; println(greet + "ine"); */
     String code = "let greet: String = \"Hola \"; println(greet + \"ine\");";
     ProgramNode program = compile(code);
     String printedInfo = getPrintedInfo(program);
@@ -145,7 +139,6 @@ public class TestBinaryOperations {
 
   @Test
   public void testBinaryDifferentPriorities() {
-    /* Input: let age: Number = 5 + 2 * 5; */
     String code = "let age: Number = 5 + 2 * 5;";
     ProgramNode program = compile(code);
     VariableContext info = interpret(program);
@@ -154,7 +147,6 @@ public class TestBinaryOperations {
 
   @Test
   public void testBinaryDifferentPrioritiesAltered() {
-    /* Input: let age: Number = 5 * 2 + 5; */
     String code = "let age: Number = 5 * 2 + 5;";
     ProgramNode program = compile(code);
     VariableContext info = interpret(program);

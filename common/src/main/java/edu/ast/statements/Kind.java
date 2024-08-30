@@ -1,5 +1,6 @@
 package edu.ast.statements;
 
 public enum Kind {
-  LET
+  LET,
+  CONST
 }
