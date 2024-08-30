@@ -2,10 +2,10 @@ package edu.commands
 
 import com.github.ajalt.clikt.core.CliktCommand
 import com.github.ajalt.clikt.parameters.options.option
+import edu.FileReader.openFile
 import edu.LexerFactory.createLexerV1
 import edu.Parser
 import edu.utils.CommandContext
-import edu.utils.FileReader
 import java.io.IOException
 
 class ValidatorCmd() : CliktCommand(name = "validate", help = "Validate the source file") {
@@ -15,8 +15,8 @@ class ValidatorCmd() : CliktCommand(name = "validate", help = "Validate the sour
     private fun execute() {
         try {
             println("Starting validation...")
-            val text = getText()
-            val lexer = createLexerV1(text)
+            val fileReader = openFile(sourceFile)
+            val lexer = createLexerV1(fileReader)
             lexer.tokenize()
             val tokens = lexer.tokens
             println("Tokenizing completed...")
@@ -27,15 +27,6 @@ class ValidatorCmd() : CliktCommand(name = "validate", help = "Validate the sour
             println("Validation completed.")
         } catch (e: IOException) {
             println("Error executing validation command: ${e.message}")
-        }
-    }
-
-    private fun getText(): String {
-        return try {
-            FileReader.readFileToString(sourceFile)
-        } catch (e: IOException) {
-            println("Error reading source file: ${e.message}")
-            throw e
         }
     }
 

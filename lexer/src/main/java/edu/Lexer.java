@@ -9,45 +9,102 @@ import java.util.Optional;
 import java.util.stream.Stream;
 
 public class Lexer implements Iterator<Token> {
-  private final String code;
-  private LexicalRange currentPosition;
+  private LexicalRange position;
   private final PatternManager patterns;
   private final List<Token> tokens = new ArrayList<>();
+  private final Iterator<String> fileIterator;
+  private String currentLine;
+  private int currentPosition;
 
-  public Lexer(String code, List<TokenPattern> patterns) {
-    this.code = code;
-    this.currentPosition = new LexicalRange(0, 0, 0);
+  public Lexer(Iterator<String> fileIterator, List<TokenPattern> patterns) {
+    this.fileIterator = fileIterator;
+    this.position = new LexicalRange(0, 0, 0);
     this.patterns = new PatternManager(patterns);
+    this.currentLine = fileIterator.hasNext() ? fileIterator.next() : null;
+    this.currentPosition = 0;
   }
 
   @Override
   public boolean hasNext() {
+    // Avanzar mientras la línea actual esté vacía o contenga solo espacios en blanco
+    while (currentLine != null && currentPosition >= currentLine.length()) {
+      if (fileIterator.hasNext()) {
+        currentLine = fileIterator.next();
+        currentPosition = 0;
+        position = new LexicalRange(position.getOffset(), position.getLine() + 1, 0);
+      } else {
+        currentLine = null;
+        return false;
+      }
+    }
+
+    if (currentLine == null) {
+      return false;
+    }
+
     Optional<Character> currentChar = getCharAt(currentPosition);
     if (currentChar.isEmpty()) {
       return false;
     }
-    Character c = currentChar.get();
-    while (skipWhitespace(c)) {
+
+    // Avanzar espacios en blanco y comprobar si se alcanzó el final de la línea o si se debe
+    // avanzar a la siguiente línea
+    while (skipWhitespace(currentChar.get())) {
+      if (currentPosition >= currentLine.length()) {
+        if (fileIterator.hasNext()) {
+          currentLine = fileIterator.next();
+          currentPosition = 0;
+          position = new LexicalRange(position.getOffset(), position.getLine() + 1, 0);
+        } else {
+          currentLine = null;
+          return false;
+        }
+      }
       currentChar = getCharAt(currentPosition);
       if (currentChar.isEmpty()) {
         return false;
       }
-      c = currentChar.get();
     }
-    return currentPosition.getOffset() < code.length();
+
+    return true;
+  }
+
+  private boolean skipWhitespace(Character currentChar) {
+    boolean skipped = false;
+    while (currentChar != null
+        && (Character.isWhitespace(currentChar) || currentChar == '\n' || currentChar == '\r')) {
+      advancePosition(1);
+      currentChar = getCharAt(currentPosition).orElse(null);
+      skipped = true;
+    }
+    return skipped;
   }
 
   @Override
   public Token next() {
-    String sub = code.substring(currentPosition.getOffset());
+    if (currentLine == null) {
+      throw new RuntimeException("No more tokens available.");
+    }
 
-    Optional<Token> token = patterns.matches(sub, currentPosition);
+    String sub = currentLine.substring(currentPosition);
+
+    Optional<Token> token = patterns.matches(sub, position);
 
     if (token.isEmpty()) {
       throw new RuntimeException("Invalid token: " + sub);
     } else {
       Token t = token.get();
       advancePosition(t.getEnd().getOffset() - t.getStart().getOffset() + 1);
+
+      if (currentPosition >= currentLine.length()) {
+        if (fileIterator.hasNext()) {
+          currentLine = fileIterator.next();
+          currentPosition = 0;
+          position = new LexicalRange(position.getOffset(), position.getLine() + 1, 0);
+        } else {
+          currentLine = null;
+        }
+      }
       return t;
     }
   }
@@ -68,29 +125,17 @@ public class Lexer implements Iterator<Token> {
     }
   }
 
-  private boolean skipWhitespace(Character currentChar) {
-    if (Character.isWhitespace(currentChar)) {
-      advancePosition(1);
-      return true;
-    }
-    return false;
-  }
-
   private void advancePosition(int length) {
-    for (int i = 0; i < length; i++) {
-      char c = code.charAt(currentPosition.getOffset());
-      currentPosition =
-          new LexicalRange(
-              currentPosition.getOffset() + 1,
-              c == '\n' ? currentPosition.getLine() + 1 : currentPosition.getLine(),
-              c == '\n' ? 0 : currentPosition.getColumn() + 1);
-    }
+    position =
+        new LexicalRange(
+            position.getOffset() + length, position.getLine(), position.getColumn() + length);
+    currentPosition += length;
   }
 
-  private Optional<Character> getCharAt(LexicalRange position) {
-    if (position.getOffset() >= code.length()) {
-      return Optional.empty();
+  private Optional<Character> getCharAt(int position) {
+    if (currentLine != null && position < currentLine.length()) {
+      return Optional.of(currentLine.charAt(position));
     }
-    return Optional.of(code.charAt(position.getOffset()));
+    return Optional.empty();
   }
 }

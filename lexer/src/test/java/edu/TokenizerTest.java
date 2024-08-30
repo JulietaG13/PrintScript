@@ -5,14 +5,20 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import edu.tokens.Token;
 import edu.tokens.TokenType;
+import java.io.BufferedReader;
+import java.util.Iterator;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 
 public class TokenizerTest {
+  private Iterator<String> createIteratorFromString(String code) {
+    return new BufferedReader(new java.io.StringReader(code)).lines().iterator();
+  }
+
   @Test
   public void testBasicTokenize() {
     String code = "let x = 10;";
-    Lexer context = createLexerV1(code);
+    Lexer context = createLexerV1(createIteratorFromString(code));
     context.tokenize();
     assertEquals(5, context.getTokens().size());
     List<Token> tokens = context.getTokens();
@@ -36,7 +42,7 @@ public class TokenizerTest {
   @Test
   public void testPrintTokenize() {
     String code = "println(10)";
-    Lexer context = createLexerV1(code);
+    Lexer context = createLexerV1(createIteratorFromString(code));
     context.tokenize();
     assertEquals(4, context.getTokens().size());
   }
@@ -44,7 +50,7 @@ public class TokenizerTest {
   @Test
   public void testPrefixTokenize() {
     String code = "10+\"hola\"";
-    Lexer context = createLexerV1(code);
+    Lexer context = createLexerV1(createIteratorFromString(code));
     context.tokenize();
     assertEquals(3, context.getTokens().size());
     List<Token> tokens = context.getTokens();
@@ -56,7 +62,7 @@ public class TokenizerTest {
   @Test
   public void testWholeWordMatch() {
     String code = "let letdown";
-    Lexer context = createLexerV1(code);
+    Lexer context = createLexerV1(createIteratorFromString(code));
     context.tokenize();
     assertEquals(2, context.getTokens().size());
     List<Token> tokens = context.getTokens();
@@ -67,7 +73,7 @@ public class TokenizerTest {
   @Test
   public void testComplexCode() {
     String code = "Number let age = 20;\nNumber let year= 2003; println(age + year);";
-    Lexer context = createLexerV1(code);
+    Lexer context = createLexerV1(createIteratorFromString(code));
     context.tokenize();
     assertEquals(19, context.getTokens().size());
     List<Token> tokens = context.getTokens();
@@ -95,7 +101,7 @@ public class TokenizerTest {
   @Test
   public void testFunctionCall() {
     String code = "add(4+1);";
-    Lexer context = createLexerV1(code);
+    Lexer context = createLexerV1(createIteratorFromString(code));
     context.tokenize();
     List<Token> tokens = context.getTokens();
     assertEquals(7, tokens.size());
@@ -111,7 +117,7 @@ public class TokenizerTest {
   @Test
   public void variableDeclarationWithFunctionCall() {
     String code = "let age: Number=add(19,1);";
-    Lexer context = createLexerV1(code);
+    Lexer context = createLexerV1(createIteratorFromString(code));
     context.tokenize();
     List<Token> tokens = context.getTokens();
     assertEquals(12, tokens.size());
@@ -132,7 +138,7 @@ public class TokenizerTest {
   @Test
   public void variableDeclarationWithFunctionCallAnd() {
     String code = "let age: Number=sub(19,1); age+=1;";
-    Lexer context = createLexerV1(code);
+    Lexer context = createLexerV1(createIteratorFromString(code));
     context.tokenize();
     List<Token> tokens = context.getTokens();
     assertEquals(16, tokens.size());

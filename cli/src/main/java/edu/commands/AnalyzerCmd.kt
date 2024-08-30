@@ -2,10 +2,8 @@ package edu.commands
 
 import com.github.ajalt.clikt.core.CliktCommand
 import com.github.ajalt.clikt.parameters.options.option
-import edu.LexerFactory.createLexerV1
 import edu.Linter
 import edu.LinterFactory.createLinterV1
-import edu.Parser
 import edu.ast.ProgramNode
 import edu.utils.CommandContext
 import edu.utils.JsonConfigLoader
@@ -31,12 +29,6 @@ class AnalyzerCmd : CliktCommand(name = "analyze", help = "Analyze a source code
         } catch (e: IOException) {
             println("Error: " + e.message)
         }
-    }
-    private fun createProgramNode(sourceFile: String): ProgramNode {
-        val lexer = createLexerV1(sourceFile)
-        lexer.tokenize()
-        val parser = Parser()
-        return parser.parse(lexer.tokens)
     }
 
     @Throws(IOException::class)

@@ -6,11 +6,17 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import edu.ast.ProgramNode;
 import edu.reader.Reader;
 import edu.visitor.ExecutionVisitor;
+import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.util.Iterator;
 import org.junit.jupiter.api.Test;
 
 public class GlobalTest {
+
+  private Iterator<String> createIteratorFromString(String code) {
+    return new BufferedReader(new java.io.StringReader(code)).lines().iterator();
+  }
 
   @Test
   public void testVariableDeclaration() {
@@ -49,7 +55,7 @@ public class GlobalTest {
   }
 
   public ProgramNode getAst(String code) {
-    Lexer lexer = createLexerV1(code);
+    Lexer lexer = createLexerV1(createIteratorFromString(code));
     lexer.tokenize();
     Parser parser = new Parser();
     return parser.parse(lexer.getTokens());

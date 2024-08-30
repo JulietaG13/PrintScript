@@ -7,11 +7,18 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import edu.ast.ProgramNode;
 import edu.reader.Reader;
 import edu.visitor.ExecutionVisitor;
+import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.util.Iterator;
 import org.junit.jupiter.api.Test;
 
 public class TestBinaryOperations {
+
+  private Iterator<String> createIteratorFromString(String code) {
+    return new BufferedReader(new java.io.StringReader(code)).lines().iterator();
+  }
+
   public VariableContext interpret(ProgramNode node) {
     VariableContext variableContext =
         new VariableContext(new java.util.HashMap<>(), new java.util.HashMap<>());
@@ -98,8 +105,8 @@ public class TestBinaryOperations {
     assertEquals("I am 20.0 years old", printedInfo);
   }
 
-  private static ProgramNode compile(String code) {
-    Lexer lexer = createLexerV1(code);
+  private ProgramNode compile(String code) {
+    Lexer lexer = createLexerV1(createIteratorFromString(code));
     lexer.tokenize();
     Parser parser = new Parser();
     ProgramNode program = parser.parse(lexer.getTokens());

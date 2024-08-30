@@ -3,7 +3,6 @@ package edu;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import edu.utils.FileReader;
 import java.io.IOException;
 import org.junit.jupiter.api.Test;
 

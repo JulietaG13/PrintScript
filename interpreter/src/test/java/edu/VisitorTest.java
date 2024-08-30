@@ -8,12 +8,18 @@ import edu.ast.ProgramNode;
 import edu.reader.Reader;
 import edu.tokens.Token;
 import edu.visitor.ExecutionVisitor;
+import java.io.BufferedReader;
+import java.util.Iterator;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 
 public class VisitorTest {
 
   private final String lineSeparator = System.lineSeparator();
+
+  private Iterator<String> createIteratorFromString(String code) {
+    return new BufferedReader(new java.io.StringReader(code)).lines().iterator();
+  }
 
   @Test
   public void testVariableAssignment() {
@@ -57,7 +63,7 @@ public class VisitorTest {
   }
 
   public VariableContext process(String code) {
-    Lexer lexer = createLexerV1(code);
+    Lexer lexer = createLexerV1(createIteratorFromString(code));
     lexer.tokenize();
     List<Token> tokens = lexer.getTokens();
 
@@ -75,7 +81,7 @@ public class VisitorTest {
   }
 
   public String getOutput(String code) {
-    Lexer lexer = createLexerV1(code);
+    Lexer lexer = createLexerV1(createIteratorFromString(code));
     lexer.tokenize();
     List<Token> tokens = lexer.getTokens();
 

@@ -9,6 +9,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import com.google.gson.JsonObject;
 import edu.ast.ProgramNode;
 import edu.tokens.Token;
+import java.io.BufferedReader;
+import java.util.Iterator;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 
@@ -38,8 +40,12 @@ public class TestPossibleVariables {
     allCases.addProperty("snake_case", true);
   }
 
+  private Iterator<String> createIteratorFromString(String code) {
+    return new BufferedReader(new java.io.StringReader(code)).lines().iterator();
+  }
+
   private Report processCode(String code, Linter linter) {
-    Lexer lexer = createLexerV1(code);
+    Lexer lexer = createLexerV1(createIteratorFromString(code));
     lexer.tokenize();
     List<Token> tokens = lexer.getTokens();
     Parser parser = new Parser();

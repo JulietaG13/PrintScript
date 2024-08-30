@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import edu.tokens.Token;
 import edu.tokens.TokenType;
+import java.io.BufferedReader;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,7 +16,9 @@ public class LexerTest {
 
   @BeforeEach
   public void setup() {
-    lexer = createLexerV1("let x = 42; println(\"Hello, World!\");");
+    BufferedReader bufferedReader =
+        new BufferedReader(new java.io.StringReader("let x = 42; println(\"Hello, World!\");"));
+    lexer = createLexerV1(bufferedReader.lines().iterator());
   }
 
   @Test

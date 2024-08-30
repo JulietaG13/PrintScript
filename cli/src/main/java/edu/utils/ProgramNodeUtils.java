@@ -1,7 +1,9 @@
 package edu.utils;
 
+import static edu.FileReader.openFile;
 import static edu.LexerFactory.createLexerV1;
 
+import edu.FileReader;
 import edu.Lexer;
 import edu.Parser;
 import edu.ast.ProgramNode;
@@ -10,8 +12,7 @@ import java.io.IOException;
 public class ProgramNodeUtils {
 
   public static ProgramNode getProgramNode(String sourceFile) throws IOException {
-    String text = getFileAsString(sourceFile);
-    Lexer lexer = createLexerV1(text);
+    Lexer lexer = createLexerV1(openFile(sourceFile));
     lexer.tokenize();
     Parser parser = new Parser();
     return parser.parse(lexer.getTokens());

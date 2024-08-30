@@ -6,6 +6,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import com.google.gson.JsonObject;
 import edu.ast.ProgramNode;
 import edu.rules.FormatterRuleParser;
+import java.io.BufferedReader;
+import java.util.Iterator;
 import org.junit.jupiter.api.Test;
 
 public class FormatterExpressionTest {
@@ -89,8 +91,12 @@ public class FormatterExpressionTest {
     assertEquals(expected, res.getResult());
   }
 
+  private Iterator<String> createIteratorFromString(String code) {
+    return new BufferedReader(new java.io.StringReader(code)).lines().iterator();
+  }
+
   public ProgramNode getAst(String input) {
-    Lexer lexer = createLexerV1(input);
+    Lexer lexer = createLexerV1(createIteratorFromString(input));
     lexer.tokenize();
     Parser parser = new Parser();
     return parser.parse(lexer.getTokens());

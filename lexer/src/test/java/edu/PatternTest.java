@@ -6,9 +6,7 @@ import edu.patterns.BooleanPattern;
 import edu.patterns.NumberPattern;
 import edu.patterns.StringPattern;
 import edu.tokens.TokenType;
-
 import java.util.regex.Pattern;
-
 import org.junit.jupiter.api.Test;
 
 public class PatternTest {

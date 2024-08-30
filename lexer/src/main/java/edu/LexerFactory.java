@@ -10,11 +10,12 @@ import edu.patterns.OperatorPattern;
 import edu.patterns.StringPattern;
 import edu.patterns.SyntaxPattern;
 import edu.patterns.TokenPattern;
+import java.util.Iterator;
 import java.util.List;
 
 public class LexerFactory {
 
-  public static Lexer createLexerV1(String code) {
+  public static Lexer createLexerV1(Iterator<String> file) {
     List<String> keywords = List.of("String", "Number", "let");
     List<String> operators = List.of("+=", "-=", "*=", "/=", "%", "+", "-", "*", "/", "=");
     List<String> syntaxes = List.of(";", ":", "(", ")", "{", "}", ",");
@@ -26,10 +27,10 @@ public class LexerFactory {
             new OperatorPattern(operators),
             new SyntaxPattern(syntaxes),
             new IdentifierPattern());
-    return new Lexer(code, patterns);
+    return new Lexer(file, patterns);
   }
 
-  public static Lexer createLexerV2(String code) {
+  public static Lexer createLexerV2(Iterator<String> file) {
     List<String> keywords = List.of("String", "Number", "let", "const", "Boolean");
     List<String> operators =
         List.of("else if", "if", "else", "+=", "-=", "*=", "/=", "%", "+", "-", "*", "/", "=");
@@ -43,6 +44,6 @@ public class LexerFactory {
             new OperatorPattern(operators),
             new SyntaxPattern(syntaxes),
             new IdentifierPattern());
-    return new Lexer(code, patterns);
+    return new Lexer(file, patterns);
   }
 }
