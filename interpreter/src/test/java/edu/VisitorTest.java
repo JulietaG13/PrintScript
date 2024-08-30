@@ -23,7 +23,7 @@ public class VisitorTest {
 
   @Test
   public void testVariableAssignment() {
-    String code = "let my_cool_variable: String = \"ciclon\";";
+    String code = "let my_cool_variable: string = \"ciclon\";";
     VariableContext variableContext = process(code);
     assertTrue(variableContext.hasStringVariable("my_cool_variable"));
     assertEquals("ciclon", variableContext.getStringVariable("my_cool_variable"));
@@ -31,7 +31,7 @@ public class VisitorTest {
 
   @Test
   public void testPrintln() {
-    String code = "let my_cool_variable: String = \"ciclon\";\nprintln(my_cool_variable);";
+    String code = "let my_cool_variable: string = \"ciclon\";\nprintln(my_cool_variable);";
     String expectedOutput = "ciclon" + lineSeparator;
     assertEquals(expectedOutput, getOutput(code));
   }

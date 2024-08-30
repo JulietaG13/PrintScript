@@ -16,7 +16,7 @@ import java.util.List;
 public class LexerFactory {
 
   public static Lexer createLexerV1(Iterator<String> file) {
-    List<String> keywords = List.of("String", "Number", "let");
+    List<String> keywords = List.of("string", "number", "let");
     List<String> operators = List.of("+=", "-=", "*=", "/=", "%", "+", "-", "*", "/", "=");
     List<String> syntaxes = List.of(";", ":", "(", ")", "{", "}", ",");
     List<LiteralPattern> types = List.of(new StringPattern(), new NumberPattern());
@@ -31,7 +31,7 @@ public class LexerFactory {
   }
 
   public static Lexer createLexerV2(Iterator<String> file) {
-    List<String> keywords = List.of("String", "Number", "let", "const", "Boolean");
+    List<String> keywords = List.of("string", "number", "let", "const", "boolean");
     List<String> operators =
         List.of("else if", "if", "else", "+=", "-=", "*=", "/=", "%", "+", "-", "*", "/", "=");
     List<String> syntaxes = List.of(";", ":", "(", ")", "{", "}", ",");

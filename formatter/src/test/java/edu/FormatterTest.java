@@ -47,8 +47,8 @@ public class FormatterTest {
   @Test
   public void defaultVariableDeclaration() {
     String input =
-        lineSeparator + "let     my_cool_variable:String    = \"ciclon\";" + lineSeparator;
-    String expected = "let my_cool_variable : String = \"ciclon\";" + lineSeparator;
+        lineSeparator + "let     my_cool_variable:string    = \"ciclon\";" + lineSeparator;
+    String expected = "let my_cool_variable : string = \"ciclon\";" + lineSeparator;
 
     ProgramNode program = getAst(input);
     Formatter defaultFormatter = new Formatter(FormatterRuleParser.parseRules(defaultRules));
@@ -62,14 +62,14 @@ public class FormatterTest {
     String input =
         "let             "
             + lineSeparator
-            + "my_cool_variable: String=\"ciclon\";"
+            + "my_cool_variable: string=\"ciclon\";"
             + lineSeparator
             + lineSeparator
             + lineSeparator
             + "println  (       my_cool_variable)  ;  ";
 
     String expected =
-        "let my_cool_variable : String = \"ciclon\";"
+        "let my_cool_variable : string = \"ciclon\";"
             + lineSeparator
             + lineSeparator
             + "println(my_cool_variable);"
@@ -84,9 +84,9 @@ public class FormatterTest {
 
   @Test
   public void defaultAssignments() {
-    String input = "let my_cool_variable:String=\"ciclon\";my_cool_variable=\"hurricane\";";
+    String input = "let my_cool_variable:string=\"ciclon\";my_cool_variable=\"hurricane\";";
     String expected =
-        "let my_cool_variable : String = \"ciclon\";"
+        "let my_cool_variable : string = \"ciclon\";"
             + lineSeparator
             + "my_cool_variable = \"hurricane\";"
             + lineSeparator;
@@ -100,9 +100,9 @@ public class FormatterTest {
 
   @Test
   public void defaultBinaryOperation() {
-    String input = "let age: Number = 10; println(age+5);";
+    String input = "let age: number = 10; println(age+5);";
     String expected =
-        "let age : Number = 10.0;"
+        "let age : number = 10.0;"
             + lineSeparator
             + lineSeparator
             + "println(age + 5.0);"
@@ -118,8 +118,8 @@ public class FormatterTest {
   @Test
   public void noExtraSpacesVariableDeclaration() {
     String input =
-        lineSeparator + "let     my_cool_variable:String    = \"ciclon\";" + lineSeparator;
-    String expected = "let my_cool_variable:String=\"ciclon\";" + lineSeparator;
+        lineSeparator + "let     my_cool_variable:string    = \"ciclon\";" + lineSeparator;
+    String expected = "let my_cool_variable:string=\"ciclon\";" + lineSeparator;
 
     ProgramNode program = getAst(input);
     Formatter defaultFormatter = new Formatter(FormatterRuleParser.parseRules(noExtraSpaceRules));
@@ -133,14 +133,14 @@ public class FormatterTest {
     String input =
         "let             "
             + lineSeparator
-            + "my_cool_variable: String=\"ciclon\";"
+            + "my_cool_variable: string=\"ciclon\";"
             + lineSeparator
             + lineSeparator
             + lineSeparator
             + "println  (       my_cool_variable)  ;  ";
 
     String expected =
-        "let my_cool_variable:String=\"ciclon\";"
+        "let my_cool_variable:string=\"ciclon\";"
             + lineSeparator
             + "println(my_cool_variable);"
             + lineSeparator;
@@ -154,9 +154,9 @@ public class FormatterTest {
 
   @Test
   public void noExtraSpacesAssignments() {
-    String input = "let my_cool_variable:String=\"ciclon\";my_cool_variable=\"hurricane\";";
+    String input = "let my_cool_variable:string=\"ciclon\";my_cool_variable=\"hurricane\";";
     String expected =
-        "let my_cool_variable:String=\"ciclon\";"
+        "let my_cool_variable:string=\"ciclon\";"
             + lineSeparator
             + "my_cool_variable=\"hurricane\";"
             + lineSeparator;
@@ -170,9 +170,9 @@ public class FormatterTest {
 
   @Test
   public void noExtraSpacesBinaryOperation() {
-    String input = "let age: Number = 10; println(age+5);";
+    String input = "let age: number = 10; println(age+5);";
     String expected =
-        "let age:Number=10.0;" + lineSeparator + "println(age + 5.0);" + lineSeparator;
+        "let age:number=10.0;" + lineSeparator + "println(age + 5.0);" + lineSeparator;
 
     ProgramNode program = getAst(input);
     Formatter defaultFormatter = new Formatter(FormatterRuleParser.parseRules(noExtraSpaceRules));

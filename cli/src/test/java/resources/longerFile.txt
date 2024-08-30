@@ -1,26 +1,26 @@
-let name: String = "Joe";
-let lastName: String = "Doe";
-let fullName: String = name + " " + lastName;
+let name: string = "Joe";
+let lastName: string = "Doe";
+let fullName: string = name + " " + lastName;
 
 println(fullName);
 
-let a: Number = 10;
-let b: Number = 20;
-let c: Number = a + b;
-let d: Number = c * 2;
+let a: number = 10;
+let b: number = 20;
+let c: number = a + b;
+let d: number = c * 2;
 println("The value of d is " + d);
 
-let e: Number = d / 5;
+let e: number = d / 5;
 println("The value of e is " + e);
 
-let result: Number = e - 3;
+let result: number = e - 3;
 println("Final result: " + result);
 
-let x: Number = 100;
-let y: Number = 50;
+let x: number = 100;
+let y: number = 50;
 x = x / y;
 println("Division result: " + x);
 
-let z: String = "Hello, ";
+let z: string = "Hello, ";
 z = z + "World!";
 println(z);

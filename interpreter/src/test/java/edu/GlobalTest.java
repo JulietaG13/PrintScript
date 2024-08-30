@@ -21,7 +21,7 @@ public class GlobalTest {
   @Test
   public void testVariableDeclaration() {
     /* Input: let my_cool_variable: string = "ciclon" */
-    String code = "let my_cool_variable: String = \"ciclon\";";
+    String code = "let my_cool_variable: string = \"ciclon\";";
     ProgramNode program = getAst(code);
     VariableContext variableContext = interpret(program);
     assertEquals("ciclon", variableContext.getStringVariable("my_cool_variable"));
@@ -30,7 +30,7 @@ public class GlobalTest {
   @Test
   public void testPrint() {
     /* Input: "let my_cool_variable: String = \"ciclon\"; println(my_cool_variable);\n" */
-    String code = "let my_cool_variable: String = \"ciclon\"; println(my_cool_variable);\n";
+    String code = "let my_cool_variable: string = \"ciclon\"; println(my_cool_variable);\n";
     ProgramNode program = getAst(code);
     String printed = getPrintedInfo(program);
     assertEquals("ciclon", printed);
@@ -39,7 +39,7 @@ public class GlobalTest {
   @Test
   public void testAssignation() {
     /* Input: "let my_cool_variable: String = \"ciclon\"; my_cool_variable = \"hurricane\";" */
-    String code = "let my_cool_variable: String = \"ciclon\"; my_cool_variable = \"hurricane\";";
+    String code = "let my_cool_variable: string = \"ciclon\"; my_cool_variable = \"hurricane\";";
     ProgramNode program = getAst(code);
     VariableContext variableContext = interpret(program);
     assertEquals("hurricane", variableContext.getStringVariable("my_cool_variable"));
@@ -48,7 +48,7 @@ public class GlobalTest {
   @Test
   public void testBinaryOperation() {
     /* Input: "let age: Number = 10; println(age+5);" */
-    String code = "let age: Number = 10; println(age+5);";
+    String code = "let age: number = 10; println(age+5);";
     ProgramNode program = getAst(code);
     String printedInfo = getPrintedInfo(program);
     assertEquals("15.0", printedInfo);

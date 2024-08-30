@@ -25,7 +25,7 @@ import org.junit.jupiter.api.Test;
 public class LetTest {
 
   @Test
-  public void noInitialValue() { // let a : Number;
+  public void noInitialValue() { // let a : number;
     String var = "a";
     List<Token> input =
         List.of(getLet(), getIdentifier("a"), getColon(), getNumber(), getSemicolon());

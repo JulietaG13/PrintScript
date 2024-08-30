@@ -21,7 +21,7 @@ public class TestFileReader {
   @Test
   void testReadFileToString() throws IOException {
     String filePath = "src/test/java/resources/test.txt";
-    String expectedContent = "let a: Number = 5; println(a);" + System.lineSeparator();
+    String expectedContent = "let a: number = 5; println(a);" + System.lineSeparator();
     String content = FileReader.readFileToString(filePath);
     assertEquals(expectedContent, content);
   }

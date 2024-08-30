@@ -72,7 +72,7 @@ public class TokenizerTest {
 
   @Test
   public void testComplexCode() {
-    String code = "Number let age = 20;\nNumber let year= 2003; println(age + year);";
+    String code = "number let age = 20;\nnumber let year= 2003; println(age + year);";
     Lexer context = createLexerV1(createIteratorFromString(code));
     context.tokenize();
     assertEquals(19, context.getTokens().size());
@@ -116,7 +116,7 @@ public class TokenizerTest {
 
   @Test
   public void variableDeclarationWithFunctionCall() {
-    String code = "let age: Number=add(19,1);";
+    String code = "let age: number=add(19,1);";
     Lexer context = createLexerV1(createIteratorFromString(code));
     context.tokenize();
     List<Token> tokens = context.getTokens();
@@ -137,7 +137,7 @@ public class TokenizerTest {
 
   @Test
   public void variableDeclarationWithFunctionCallAnd() {
-    String code = "let age: Number=sub(19,1); age+=1;";
+    String code = "let age: number=sub(19,1); age+=1;";
     Lexer context = createLexerV1(createIteratorFromString(code));
     context.tokenize();
     List<Token> tokens = context.getTokens();

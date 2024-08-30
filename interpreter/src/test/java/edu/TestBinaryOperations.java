@@ -48,7 +48,7 @@ public class TestBinaryOperations {
 
   @Test
   public void testBinaryStringDeclaration() {
-    String code = "let greeting: String = \"Hello \" + \"World\";";
+    String code = "let greeting: string = \"Hello \" + \"World\";";
     ProgramNode program = compile(code);
     VariableContext variableContext = interpret(program);
     assertEquals("Hello World", variableContext.getStringVariable("greeting"));
@@ -56,7 +56,7 @@ public class TestBinaryOperations {
 
   @Test
   public void testDoubleBinaryStringDeclaration() {
-    String code = "let age: String = \"I am \" + 20 + \" years old\";";
+    String code = "let age: string = \"I am \" + 20 + \" years old\";";
     ProgramNode program = compile(code);
     VariableContext variableContext = interpret(program);
     assertEquals("I am 20.0 years old", variableContext.getStringVariable("age"));
@@ -64,7 +64,7 @@ public class TestBinaryOperations {
 
   @Test
   public void testBinaryNumberDeclaration() {
-    String code = "let age: Number = 10 + 5;";
+    String code = "let age: number = 10 + 5;";
     ProgramNode program = compile(code);
     VariableContext variableContext = interpret(program);
     assertTrue(variableContext.hasNumberVariable("age"));
@@ -81,7 +81,7 @@ public class TestBinaryOperations {
 
   @Test
   public void testPrintBinaryIdentifierNumber() {
-    String code = "let age: Number = 10; println(age + 5);";
+    String code = "let age: number = 10; println(age + 5);";
     ProgramNode program = compile(code);
     String output = getPrintedInfo(program);
     assertEquals(15.0, Double.parseDouble(output));
@@ -89,7 +89,7 @@ public class TestBinaryOperations {
 
   @Test
   public void testPrintBinaryIdentifiers() {
-    String code = "let age: Number = 10; let plus: Number = 5; println(age + plus);";
+    String code = "let age: number = 10; let plus: number = 5; println(age + plus);";
     ProgramNode program = compile(code);
     String actualOutput = getPrintedInfo(program);
     assertEquals(15.0, Double.parseDouble(actualOutput));
@@ -113,7 +113,7 @@ public class TestBinaryOperations {
 
   @Test
   public void testBinaryStringIdentifierPrint() {
-    String code = "let age: Number = 20; println(\"I am \" + age + \" years old\");";
+    String code = "let age: number = 20; println(\"I am \" + age + \" years old\");";
     ProgramNode program = compile(code);
     String printedInfo = getPrintedInfo(program);
     assertEquals("I am 20.0 years old", printedInfo);
@@ -122,8 +122,8 @@ public class TestBinaryOperations {
   @Test
   public void testBinaryDoubleIdentifierPrint() {
     String code =
-        "let age: Number = 20; let intro: String = \"I am \"; let measures: "
-            + "String =\" years old\"; println(intro + age + measures);";
+        "let age: number = 20; let intro: string = \"I am \"; let measures: "
+            + "string =\" years old\"; println(intro + age + measures);";
     ProgramNode program = compile(code);
     String printedInfo = getPrintedInfo(program);
     assertEquals("I am 20.0 years old", printedInfo);
@@ -131,7 +131,7 @@ public class TestBinaryOperations {
 
   @Test
   public void testBinaryIdentifierFirst() {
-    String code = "let greet: String = \"Hola \"; println(greet + \"ine\");";
+    String code = "let greet: string = \"Hola \"; println(greet + \"ine\");";
     ProgramNode program = compile(code);
     String printedInfo = getPrintedInfo(program);
     assertEquals("Hola ine", printedInfo);
@@ -139,7 +139,7 @@ public class TestBinaryOperations {
 
   @Test
   public void testBinaryDifferentPriorities() {
-    String code = "let age: Number = 5 + 2 * 5;";
+    String code = "let age: number = 5 + 2 * 5;";
     ProgramNode program = compile(code);
     VariableContext info = interpret(program);
     assertEquals(15.0, info.getNumberVariable("age"));
@@ -147,7 +147,7 @@ public class TestBinaryOperations {
 
   @Test
   public void testBinaryDifferentPrioritiesAltered() {
-    String code = "let age: Number = 5 * 2 + 5;";
+    String code = "let age: number = 5 * 2 + 5;";
     ProgramNode program = compile(code);
     VariableContext info = interpret(program);
     assertEquals(15.0, info.getNumberVariable("age"));

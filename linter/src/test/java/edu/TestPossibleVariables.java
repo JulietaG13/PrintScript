@@ -49,13 +49,13 @@ public class TestPossibleVariables {
     lexer.tokenize();
     List<Token> tokens = lexer.getTokens();
     Parser parser = new Parser();
-    ProgramNode programNode = parser.parse(tokens, true);
+    ProgramNode programNode = parser.parse(tokens, false);
     return linter.analyze(programNode);
   }
 
   @Test
   public void testSnakeCaseVariableDeclaration() {
-    String code = "let snake_case_variable : String;";
+    String code = "let snake_case_variable : string;";
     Linter linter = createLinterV1(snakeCase);
     Report report = processCode(code, linter);
     assertTrue(report.getReport().isEmpty());
@@ -63,7 +63,7 @@ public class TestPossibleVariables {
 
   @Test
   public void testSnakeCaseVariableDeclarationError() {
-    String code = "let snake_case_variable : String;";
+    String code = "let snake_case_variable : string;";
     Linter linter = createLinterV1(empty);
     Report report = processCode(code, linter);
     assertFalse(report.getReport().isEmpty());
@@ -77,7 +77,7 @@ public class TestPossibleVariables {
 
   @Test
   public void testUpperCamelCaseVariableDeclaration() {
-    String code = "let UpperCamelCase : String;";
+    String code = "let UpperCamelCase : string;";
     Linter linter = createLinterV1(upperCamelCase);
     Report report = processCode(code, linter);
     assertTrue(report.getReport().isEmpty());
@@ -85,7 +85,7 @@ public class TestPossibleVariables {
 
   @Test
   public void testUpperCamelCaseVariableDeclarationError() {
-    String code = "let UpperCamelCase : String;";
+    String code = "let UpperCamelCase : string;";
     Linter linter = createLinterV1(empty);
     Report report = processCode(code, linter);
     assertFalse(report.getReport().isEmpty());
@@ -99,7 +99,7 @@ public class TestPossibleVariables {
 
   @Test
   public void testLowerCaseVariableDeclaration() {
-    String code = "let lowerCamelCase : String;";
+    String code = "let lowerCamelCase : string;";
     Linter linter = createLinterV1(lowerCamelCase);
     Report report = processCode(code, linter);
     assertTrue(report.getReport().isEmpty());
@@ -107,7 +107,7 @@ public class TestPossibleVariables {
 
   @Test
   public void testLowerCaseVariableDeclarationError() {
-    String code = "let lowerCamelCase : String;";
+    String code = "let lowerCamelCase : string;";
     Linter linter = createLinterV1(empty);
     Report report = processCode(code, linter);
     assertFalse(report.getReport().isEmpty());
@@ -121,7 +121,7 @@ public class TestPossibleVariables {
 
   @Test
   public void testOrVariableDeclarationError() {
-    String code = "let Camel_SnakeCaseMIX : String;";
+    String code = "let Camel_SnakeCaseMIX : string;";
     Linter linter = createLinterV1(allCases);
     Report report = processCode(code, linter);
     assertFalse(report.getReport().isEmpty());
@@ -135,7 +135,7 @@ public class TestPossibleVariables {
 
   @Test
   public void testOrVariableDeclaration() {
-    String code = "let snake_case : String;";
+    String code = "let snake_case : string;";
     Linter linter = createLinterV1(allCases);
     Report report = processCode(code, linter);
     assertTrue(report.getReport().isEmpty());
@@ -151,7 +151,7 @@ public class TestPossibleVariables {
 
   @Test
   public void testIdentifierInBinary() {
-    String code = "let age: Number = oldAge + 10;";
+    String code = "let oldAge : number = 5; let age: number = oldAge + 10;";
     Linter linter = createLinterV1(lowerCamelCase);
     Report report = processCode(code, linter);
     assertTrue(report.getReport().isEmpty());

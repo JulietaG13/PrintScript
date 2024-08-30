@@ -17,7 +17,7 @@ public class LexerVersion2Test {
 
   @Test
   public void testBoolean() {
-    String code = "let X: Boolean = true;";
+    String code = "let X: boolean = true;";
     Lexer lexer = createLexerV2(createIteratorFromString(code));
     lexer.tokenize();
     List<Token> tokens = lexer.getTokens();
@@ -39,7 +39,7 @@ public class LexerVersion2Test {
 
   @Test
   public void testConst() {
-    String code = "const X: Boolean = true;";
+    String code = "const X: boolean = true;";
     Lexer lexer = createLexerV2(createIteratorFromString(code));
     lexer.tokenize();
     List<Token> tokens = lexer.getTokens();
@@ -134,5 +134,49 @@ public class LexerVersion2Test {
     assertEquals(tokens.get(14).getEnd().getLine(), 3);
     assertEquals(tokens.get(15).getType(), TokenType.SYNTAX);
     assertEquals(tokens.get(15).getEnd().getOffset(), 32);
+  }
+
+  @Test
+  public void testIfInsideIf() {
+    String code = "if (true) {\n  if (false) {\n    x = 1;\n  }\n}";
+    Lexer lexer = createLexerV2(createIteratorFromString(code));
+    lexer.tokenize();
+    List<Token> tokens = lexer.getTokens();
+    assertEquals(tokens.get(0).getType(), TokenType.OPERATOR);
+    assertEquals(tokens.get(0).getEnd().getOffset(), 1);
+    assertEquals(tokens.get(1).getType(), TokenType.SYNTAX);
+    assertEquals(tokens.get(1).getEnd().getOffset(), 3);
+    assertEquals(tokens.get(2).getType(), TokenType.LITERAL);
+    assertEquals(tokens.get(2).getEnd().getOffset(), 7);
+    assertEquals(tokens.get(3).getType(), TokenType.SYNTAX);
+    assertEquals(tokens.get(3).getEnd().getOffset(), 8);
+    assertEquals(tokens.get(4).getType(), TokenType.SYNTAX);
+    assertEquals(tokens.get(4).getEnd().getOffset(), 10);
+    assertEquals(tokens.get(5).getType(), TokenType.OPERATOR);
+    assertEquals(tokens.get(5).getEnd().getOffset(), 14);
+    assertEquals(tokens.get(6).getType(), TokenType.SYNTAX);
+    assertEquals(tokens.get(6).getEnd().getOffset(), 16);
+    assertEquals(tokens.get(7).getType(), TokenType.LITERAL);
+    assertEquals(tokens.get(7).getEnd().getOffset(), 21);
+    assertEquals(tokens.get(8).getType(), TokenType.SYNTAX);
+    assertEquals(tokens.get(8).getEnd().getOffset(), 22);
+    assertEquals(tokens.get(9).getType(), TokenType.SYNTAX);
+    assertEquals(tokens.get(9).getEnd().getOffset(), 24);
+    assertEquals(tokens.get(9).getEnd().getLine(), 1);
+    assertEquals(tokens.get(10).getType(), TokenType.IDENTIFIER);
+    assertEquals(tokens.get(10).getEnd().getOffset(), 29);
+    assertEquals(tokens.get(10).getEnd().getLine(), 2);
+    assertEquals(tokens.get(11).getType(), TokenType.OPERATOR);
+    assertEquals(tokens.get(11).getEnd().getOffset(), 31);
+    assertEquals(tokens.get(11).getEnd().getLine(), 2);
+    assertEquals(tokens.get(12).getType(), TokenType.LITERAL);
+    assertEquals(tokens.get(12).getEnd().getOffset(), 33);
+    assertEquals(tokens.get(12).getEnd().getLine(), 2);
+    assertEquals(tokens.get(13).getType(), TokenType.SYNTAX);
+    assertEquals(tokens.get(13).getEnd().getOffset(), 34);
+    assertEquals(tokens.get(13).getEnd().getLine(), 2);
+    assertEquals(tokens.get(14).getType(), TokenType.SYNTAX);
+    assertEquals(tokens.get(14).getEnd().getOffset(), 37);
+    assertEquals(tokens.get(14).getEnd().getLine(), 3);
   }
 }

@@ -14,7 +14,7 @@ class TestFormattingCommand {
         // Configurar el archivo de prueba
         val filePath = "src/test/java/resources/input.txt"
         val rulesPath = "src/test/java/resources/rules.txt"
-        val expectedOutput = "let my_cool_variable : String = \"ciclon\";" + lineSeparator
+        val expectedOutput = "let my_cool_variable : string = \"ciclon\";" + lineSeparator
 
         val args = arrayOf("Formatting", filePath, "1.0", "--config-file=$rulesPath")
 

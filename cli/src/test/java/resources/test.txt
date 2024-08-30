@@ -1,1 +1,1 @@
-let a: Number = 5; println(a);
+let a: number = 5; println(a);

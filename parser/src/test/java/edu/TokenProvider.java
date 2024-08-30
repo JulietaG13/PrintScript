@@ -10,11 +10,11 @@ public class TokenProvider {
   }
 
   public static Token getNumber() {
-    return new Token(TokenType.KEYWORD, "Number", null, null);
+    return new Token(TokenType.KEYWORD, "number", null, null);
   }
 
   public static Token getString() {
-    return new Token(TokenType.KEYWORD, "String", null, null);
+    return new Token(TokenType.KEYWORD, "string", null, null);
   }
 
   public static Token getOperator(String operator) {

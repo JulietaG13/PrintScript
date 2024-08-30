@@ -9,8 +9,8 @@ public class TypeProvider {
   private static final Map<Type, String> names = new HashMap<>();
 
   static {
-    add("Number", Type.NUMBER);
-    add("String", Type.STRING);
+    add("number", Type.NUMBER);
+    add("string", Type.STRING);
   }
 
   public static Type getType(String typeName) {
