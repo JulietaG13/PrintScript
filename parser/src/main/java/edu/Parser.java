@@ -1,17 +1,68 @@
 package edu;
 
+import static edu.utils.ParserUtil.isCloseBracket;
+import static edu.utils.ParserUtil.isOpenBracket;
+import static edu.utils.ParserUtil.isSemicolon;
+
 import edu.ast.ProgramNode;
 import edu.ast.interfaces.StatementNode;
 import edu.check.ParserVisitor;
+import edu.exceptions.UnexpectedTokenException;
 import edu.parsers.ParseStatement;
 import edu.tokens.Token;
-import edu.utils.ParserUtil;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.NoSuchElementException;
 
-public class Parser {
+public class Parser implements Iterator<StatementNode> {
 
-  private List<Token> tokens;
+  private final Lexer lexer;
+
+  public Parser() {
+    this.lexer = null;
+  }
+
+  public Parser(Lexer lexer) {
+    this.lexer = lexer;
+  }
+
+  @Override
+  public boolean hasNext() {
+    return lexer.hasNext();
+  }
+
+  @Override
+  public StatementNode next() {
+    if (!hasNext()) {
+      throw new NoSuchElementException("No more tokens to parse");
+    }
+
+    List<Token> tokens = new ArrayList<>();
+    int bracketBalance = 0;
+
+    Token current;
+    do {
+      current = lexer.next();
+      tokens.add(current);
+
+      if (isOpenBracket(current)) {
+        bracketBalance++;
+      }
+      if (isCloseBracket(current)) {
+        bracketBalance--;
+        if (bracketBalance < 0) {
+          throw new UnexpectedTokenException(current);
+        }
+      }
+    } while (!(bracketBalance == 0 && isEndOfStatement(current)));
+
+    return ParseStatement.parse(tokens);
+  }
+
+  private static boolean isEndOfStatement(Token t) {
+    return isSemicolon(t) || isCloseBracket(t);
+  }
 
   public ProgramNode parse(List<Token> tokens) {
     return parse(tokens, false);
@@ -21,7 +72,7 @@ public class Parser {
 
     ProgramNode root = new ProgramNode();
 
-    if (!ParserUtil.isEndLine(tokens.getLast())) {
+    if (!isSemicolon(tokens.getLast())) {
       throw new RuntimeException(); // TODO
     }
     List<List<Token>> statements = split(tokens);
@@ -46,7 +97,7 @@ public class Parser {
 
     for (Token token : tokens) {
       current.add(token);
-      if (ParserUtil.isEndLine(token)) {
+      if (isSemicolon(token)) {
         statements.add(new ArrayList<>(current));
         current.clear();
       }

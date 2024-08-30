@@ -67,12 +67,36 @@ public class ParserUtil {
     return isSyntax(token) && token.getContent().equals(",");
   }
 
-  public static boolean isEndLine(List<Token> tokens, int i) {
-    return isEndLine(tokens.get(i));
+  public static boolean isSemicolon(List<Token> tokens, int i) {
+    return isSemicolon(tokens.get(i));
   }
 
-  public static boolean isEndLine(Token token) {
+  public static boolean isSemicolon(Token token) {
     return isSyntax(token) && token.getContent().equals(";");
+  }
+
+  public static boolean isOpenBracket(List<Token> tokens, int i) {
+    return isOpenBracket(tokens.get(i));
+  }
+
+  public static boolean isOpenBracket(Token token) {
+    return isSyntax(token) && token.getContent().equals("{");
+  }
+
+  public static boolean isCloseBracket(List<Token> tokens, int i) {
+    return isCloseBracket(tokens.get(i));
+  }
+
+  public static boolean isCloseBracket(Token token) {
+    return isSyntax(token) && token.getContent().equals("}");
+  }
+
+  public static boolean isColon(List<Token> tokens, int i) {
+    return isColon(tokens.get(i));
+  }
+
+  public static boolean isColon(Token token) {
+    return isSyntax(token) && token.getContent().equals(":");
   }
 
   public static boolean isAssign(List<Token> tokens, int i) {
