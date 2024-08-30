@@ -4,10 +4,9 @@ import com.github.ajalt.clikt.core.CliktCommand
 import com.github.ajalt.clikt.parameters.options.option
 import edu.LexerFactory.createLexerV1
 import edu.Linter
+import edu.LinterFactory.createLinterV1
 import edu.Parser
 import edu.ast.ProgramNode
-import edu.rules.RuleParserLinter
-import edu.rules.RuleProviderLinter
 import edu.utils.CommandContext
 import edu.utils.JsonConfigLoader
 import edu.utils.ProgramNodeUtils
@@ -42,14 +41,8 @@ class AnalyzerCmd : CliktCommand(name = "analyze", help = "Analyze a source code
 
     @Throws(IOException::class)
     private fun getLinter(): Linter {
-        return Linter(getRules())
-    }
-
-    @Throws(IOException::class)
-    private fun getRules(): RuleProviderLinter {
         val config = JsonConfigLoader.loadFromFile(configFile)
-        val ruleProvider = RuleParserLinter.parseRules(config)
-        return ruleProvider
+        return createLinterV1(config)
     }
 
     override fun run() {

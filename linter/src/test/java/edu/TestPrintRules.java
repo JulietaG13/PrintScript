@@ -1,12 +1,12 @@
 package edu;
 
 import static edu.LexerFactory.createLexerV1;
+import static edu.LinterFactory.createLinterV1;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.google.gson.JsonObject;
 import edu.ast.ProgramNode;
-import edu.rules.RuleParserLinter;
 import edu.tokens.Token;
 import java.util.List;
 import org.junit.jupiter.api.Test;
@@ -37,7 +37,7 @@ public class TestPrintRules {
   @Test
   public void testNoRules() {
     String code = "println(10);";
-    Linter linter = new Linter(RuleParserLinter.parseRules(noRules));
+    Linter linter = createLinterV1(noRules);
     Report report = processCode(code, linter);
     assertTrue(report.getReport().isEmpty());
   }
@@ -45,7 +45,7 @@ public class TestPrintRules {
   @Test
   public void testLiteralNumberPrint() {
     String code = "println(10);";
-    Linter linter = new Linter(RuleParserLinter.parseRules(nonExpression));
+    Linter linter = createLinterV1(nonExpression);
     Report report = processCode(code, linter);
     assertTrue(report.getReport().isEmpty());
   }
@@ -53,7 +53,7 @@ public class TestPrintRules {
   @Test
   public void testIdentifierPrint() {
     String code = "println(hello);";
-    Linter linter = new Linter(RuleParserLinter.parseRules(nonExpression));
+    Linter linter = createLinterV1(nonExpression);
     Report report = processCode(code, linter);
     assertTrue(report.getReport().isEmpty());
   }
@@ -61,7 +61,7 @@ public class TestPrintRules {
   @Test
   public void testLiteralStringPrint() {
     String code = "println(\"Hello\");";
-    Linter linter = new Linter(RuleParserLinter.parseRules(nonExpression));
+    Linter linter = createLinterV1(nonExpression);
     Report report = processCode(code, linter);
     assertTrue(report.getReport().isEmpty());
   }
@@ -69,7 +69,7 @@ public class TestPrintRules {
   @Test
   public void testExpressionError() {
     String code = "println(\"Hello\" + \"World\");";
-    Linter linter = new Linter(RuleParserLinter.parseRules(nonExpression));
+    Linter linter = createLinterV1(nonExpression);
     Report report = processCode(code, linter);
     assertTrue(report.getReport().isPresent());
     List<String> messages = report.getReport().get();
@@ -87,7 +87,7 @@ public class TestPrintRules {
   @Test
   public void testExpressionCallError() {
     String code = "println(hello());";
-    Linter linter = new Linter(RuleParserLinter.parseRules(nonExpression));
+    Linter linter = createLinterV1(nonExpression);
     Report report = processCode(code, linter);
     assertTrue(report.getReport().isPresent());
     String expectedOutput =

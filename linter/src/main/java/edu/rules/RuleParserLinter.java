@@ -2,30 +2,27 @@ package edu.rules;
 
 import com.google.gson.JsonObject;
 import edu.functions.FunctionRule;
-import edu.functions.NonExpressionPrintln;
 import edu.identifiers.IdentifierType;
-import edu.identifiers.LowerCamelCase;
-import edu.identifiers.SnakeCase;
-import edu.identifiers.UpperCamelCase;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
 public class RuleParserLinter {
+  private static final Map<String, IdentifierType> rulesPossibleIdentifiers = new HashMap<>();
+  private static final Map<String, FunctionRule> rulesFunctionCalls = new HashMap<>();
 
-  private static final Map<String, IdentifierType> rulesPossibleIdentifiers =
-      Map.of(
-          "snake_case", new SnakeCase(),
-          "lower_camel_case", new LowerCamelCase(),
-          "upper_camel_case", new UpperCamelCase());
+  public static void addIdentifiers(Map<String, IdentifierType> identifiers) {
+    rulesPossibleIdentifiers.putAll(identifiers);
+  }
 
-  private static final Map<String, FunctionRule> rulesFunctionCalls =
-      Map.of("println_non_expressions", new NonExpressionPrintln());
+  public static void addFunctionRules(Map<String, FunctionRule> functionCalls) {
+    rulesFunctionCalls.putAll(functionCalls);
+  }
 
   public static RuleProviderLinter parseRules(JsonObject rules) {
     Set<IdentifierType> possibleIdentifiers = new HashSet<>();
     Set<FunctionRule> functionRules = new HashSet<>();
-
     for (String key : rules.keySet()) {
       if (rules.has(key) && rules.get(key).getAsBoolean()) {
         if (rulesPossibleIdentifiers.containsKey(key)) {
@@ -35,7 +32,6 @@ public class RuleParserLinter {
         }
       }
     }
-
     return new RuleProviderLinter(possibleIdentifiers, functionRules);
   }
 }

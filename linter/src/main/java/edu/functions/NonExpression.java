@@ -7,10 +7,16 @@ import edu.ast.expressions.LiteralStringNode;
 import edu.ast.interfaces.ExpressionNode;
 import edu.ast.interfaces.LiteralNode;
 
-public class NonExpressionPrintln implements FunctionRule {
+public class NonExpression implements FunctionRule {
+  private final String functionName;
+
+  public NonExpression(String function) {
+    this.functionName = function;
+  }
+
   @Override
   public boolean matches(CallExpressionNode function) {
-    if (isPrintFunction(function)) {
+    if (isFunctionType(function)) {
       for (ExpressionNode arg : function.args()) {
         if (isExpression(arg)) {
           return false;
@@ -25,8 +31,8 @@ public class NonExpressionPrintln implements FunctionRule {
     return !(arg instanceof IdentifierNode || arg instanceof LiteralNode);
   }
 
-  private static boolean isPrintFunction(CallExpressionNode function) {
-    return "println".equals(function.callee().name());
+  private boolean isFunctionType(CallExpressionNode function) {
+    return functionName.equals(function.callee().name());
   }
 
   @Override
@@ -34,7 +40,9 @@ public class NonExpressionPrintln implements FunctionRule {
     StringBuilder errorMessage = new StringBuilder();
     errorMessage.append(
         "Error in println function: "
-            + "The println function only accepts identifiers or literals as arguments.");
+            + "The "
+            + functionName
+            + " function only accepts identifiers or literals as arguments.");
     for (int i = 0; i < function.args().size(); i++) {
       ExpressionNode arg = function.args().get(i);
       if (isExpression(arg)) {
@@ -59,8 +67,7 @@ public class NonExpressionPrintln implements FunctionRule {
   }
 
   private String formatArgumentContent(ExpressionNode arg) {
-    if (arg instanceof BinaryExpressionNode) {
-      BinaryExpressionNode binary = (BinaryExpressionNode) arg;
+    if (arg instanceof BinaryExpressionNode binary) {
       String leftContent = simplifyExpressionContent(binary.left());
       String rightContent = simplifyExpressionContent(binary.right());
       return leftContent + " " + binary.operator() + " " + rightContent;
