@@ -65,7 +65,7 @@ public class LexerVersion2Test {
     Lexer lexer = createLexerV2(createIteratorFromString(code));
     lexer.tokenize();
     List<Token> tokens = lexer.getTokens();
-    assertEquals(tokens.get(0).getType(), TokenType.OPERATOR);
+    assertEquals(tokens.get(0).getType(), TokenType.KEYWORD);
     assertEquals(tokens.get(0).getEnd().getOffset(), 1);
     assertEquals(tokens.get(1).getType(), TokenType.SYNTAX);
     assertEquals(tokens.get(1).getEnd().getOffset(), 3);
@@ -95,7 +95,7 @@ public class LexerVersion2Test {
     Lexer lexer = createLexerV2(createIteratorFromString(code));
     lexer.tokenize();
     List<Token> tokens = lexer.getTokens();
-    assertEquals(tokens.get(0).getType(), TokenType.OPERATOR);
+    assertEquals(tokens.get(0).getType(), TokenType.KEYWORD);
     assertEquals(tokens.get(0).getEnd().getOffset(), 1);
     assertEquals(tokens.get(1).getType(), TokenType.SYNTAX);
     assertEquals(tokens.get(1).getEnd().getOffset(), 3);
@@ -117,7 +117,7 @@ public class LexerVersion2Test {
     assertEquals(tokens.get(9).getType(), TokenType.SYNTAX);
     assertEquals(tokens.get(9).getEnd().getOffset(), 19);
     assertEquals(tokens.get(9).getEnd().getLine(), 2);
-    assertEquals(tokens.get(10).getType(), TokenType.OPERATOR);
+    assertEquals(tokens.get(10).getType(), TokenType.KEYWORD);
     assertEquals(tokens.get(10).getEnd().getOffset(), 23);
     assertEquals(tokens.get(10).getEnd().getLine(), 2);
     assertEquals(tokens.get(11).getType(), TokenType.SYNTAX);
@@ -142,7 +142,7 @@ public class LexerVersion2Test {
     Lexer lexer = createLexerV2(createIteratorFromString(code));
     lexer.tokenize();
     List<Token> tokens = lexer.getTokens();
-    assertEquals(tokens.get(0).getType(), TokenType.OPERATOR);
+    assertEquals(tokens.get(0).getType(), TokenType.KEYWORD);
     assertEquals(tokens.get(0).getEnd().getOffset(), 1);
     assertEquals(tokens.get(1).getType(), TokenType.SYNTAX);
     assertEquals(tokens.get(1).getEnd().getOffset(), 3);
@@ -152,7 +152,7 @@ public class LexerVersion2Test {
     assertEquals(tokens.get(3).getEnd().getOffset(), 8);
     assertEquals(tokens.get(4).getType(), TokenType.SYNTAX);
     assertEquals(tokens.get(4).getEnd().getOffset(), 10);
-    assertEquals(tokens.get(5).getType(), TokenType.OPERATOR);
+    assertEquals(tokens.get(5).getType(), TokenType.KEYWORD);
     assertEquals(tokens.get(5).getEnd().getOffset(), 14);
     assertEquals(tokens.get(6).getType(), TokenType.SYNTAX);
     assertEquals(tokens.get(6).getEnd().getOffset(), 16);

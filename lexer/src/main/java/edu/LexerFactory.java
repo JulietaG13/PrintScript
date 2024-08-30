@@ -31,9 +31,9 @@ public class LexerFactory {
   }
 
   public static Lexer createLexerV2(Iterator<String> file) {
-    List<String> keywords = List.of("string", "number", "let", "const", "boolean");
-    List<String> operators =
-        List.of("else if", "if", "else", "+=", "-=", "*=", "/=", "%", "+", "-", "*", "/", "=");
+    List<String> keywords =
+        List.of("else if", "if", "else", "string", "number", "let", "const", "boolean");
+    List<String> operators = List.of("+=", "-=", "*=", "/=", "%", "+", "-", "*", "/", "=");
     List<String> syntaxes = List.of(";", ":", "(", ")", "{", "}", ",");
     List<LiteralPattern> types =
         List.of(new StringPattern(), new NumberPattern(), new BooleanPattern());
