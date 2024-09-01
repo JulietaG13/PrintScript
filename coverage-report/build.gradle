@@ -12,6 +12,8 @@ dependencies {
     jacocoAggregation project(':parser')
     jacocoAggregation project(':interpreter')
     jacocoAggregation project(':linter')
+    jacocoAggregation project(':cli')
+    jacocoAggregation project(':formatter')
 }
 
 reporting {
