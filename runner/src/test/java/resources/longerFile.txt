@@ -1,0 +1,26 @@
+let name: string = "Joe";
+let lastName: string = "Doe";
+let fullName: string = name + " " + lastName;
+
+println(fullName);
+
+let a: number = 10;
+let b: number = 20;
+let c: number = a + b;
+let d: number = c * 2;
+println("The value of d is " + d);
+
+let e: number = d / 5;
+println("The value of e is " + e);
+
+let result: number = e - 3;
+println("Final result: " + result);
+
+let x: number = 100;
+let y: number = 50;
+x = x / y;
+println("Division result: " + x);
+
+let z: string = "Hello, ";
+z = z + "World!";
+println(z);
