@@ -1,12 +1,13 @@
 package edu;
 
+import edu.exceptions.InvalidTokenException;
 import edu.patterns.TokenPattern;
 import edu.tokens.Token;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
-import java.util.stream.Stream;
 
 public class Lexer implements Iterator<Token> {
   private LexicalRange position;
@@ -14,14 +15,14 @@ public class Lexer implements Iterator<Token> {
   private final List<Token> tokens = new ArrayList<>();
   private final Iterator<String> fileIterator;
   private String currentLine;
-  private int currentPosition;
+  private int positionInLine;
 
   public Lexer(Iterator<String> fileIterator, List<TokenPattern> patterns) {
     this.fileIterator = fileIterator;
     this.position = new LexicalRange(0, 0, 0);
     this.patterns = new PatternManager(patterns);
     this.currentLine = fileIterator.hasNext() ? fileIterator.next() : null;
-    this.currentPosition = 0;
+    this.positionInLine = 0;
   }
 
   @Override
@@ -39,7 +40,7 @@ public class Lexer implements Iterator<Token> {
     if (lineIsEmpty()) {
       return true;
     }
-    Optional<Character> currentChar = getCharAt(currentPosition);
+    Optional<Character> currentChar = getCharAt(positionInLine);
     if (currentChar.isEmpty()) {
       return true;
     }
@@ -50,7 +51,7 @@ public class Lexer implements Iterator<Token> {
       if (lineIsEmpty()) {
         return true;
       }
-      currentChar = getCharAt(currentPosition);
+      currentChar = getCharAt(positionInLine);
       if (currentChar.isEmpty()) {
         return true;
       }
@@ -75,12 +76,12 @@ public class Lexer implements Iterator<Token> {
 
   private void moveToNextLine() {
     currentLine = fileIterator.next();
-    currentPosition = 0;
+    positionInLine = 0;
     position = new LexicalRange(position.getOffset(), position.getLine() + 1, 0);
   }
 
   private boolean reachedEndOfLine() {
-    return currentPosition >= currentLine.length();
+    return positionInLine >= currentLine.length();
   }
 
   private boolean skipWhitespace(Character currentChar) {
@@ -88,7 +89,7 @@ public class Lexer implements Iterator<Token> {
     while (currentChar != null
         && (Character.isWhitespace(currentChar) || currentChar == '\n' || currentChar == '\r')) {
       advancePosition(1);
-      currentChar = getCharAt(currentPosition).orElse(null);
+      currentChar = getCharAt(positionInLine).orElse(null);
       skipped = true;
     }
     return skipped;
@@ -97,16 +98,16 @@ public class Lexer implements Iterator<Token> {
   @Override
   public Token next() {
     if (currentLine == null) {
-      throw new RuntimeException("No more tokens available.");
+      throw new NoSuchElementException("No more code to read.");
     }
-    String sub = currentLine.substring(currentPosition);
+    String sub = currentLine.substring(positionInLine);
     Optional<Token> token = patterns.matches(sub, position);
     if (token.isEmpty()) {
-      throw new RuntimeException("Invalid token: " + sub);
+      throw new InvalidTokenException(sub, position);
     } else {
       Token t = token.get();
       advancePosition(t.getEnd().getOffset() - t.getStart().getOffset() + 1);
-      if (currentPosition >= currentLine.length()) {
+      if (positionInLine >= currentLine.length()) {
         skipToNextLine();
       }
       return t;
@@ -123,17 +124,11 @@ public class Lexer implements Iterator<Token> {
     return tokens;
   }
 
-  public void getTokens(Stream.Builder<Token> tokensStream) {
-    while (hasNext()) {
-      tokensStream.accept(next());
-    }
-  }
-
   private void advancePosition(int length) {
     position =
         new LexicalRange(
             position.getOffset() + length, position.getLine(), position.getColumn() + length);
-    currentPosition += length;
+    positionInLine += length;
   }
 
   private Optional<Character> getCharAt(int position) {
