@@ -9,12 +9,20 @@ public class TokenProvider {
     return new Token(TokenType.KEYWORD, "let", null, null);
   }
 
+  public static Token getConst() {
+    return new Token(TokenType.KEYWORD, "const", null, null);
+  }
+
   public static Token getNumber() {
     return new Token(TokenType.KEYWORD, "number", null, null);
   }
 
   public static Token getString() {
     return new Token(TokenType.KEYWORD, "string", null, null);
+  }
+
+  public static Token getBoolean() {
+    return new Token(TokenType.KEYWORD, "boolean", null, null);
   }
 
   public static Token getOperator(String operator) {

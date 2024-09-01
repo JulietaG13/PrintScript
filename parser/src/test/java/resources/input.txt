@@ -1,0 +1,20 @@
+let name: string = "Joe";
+let lastName: string = "Doe";
+let fullName: string = name + " " + lastName;
+
+println(fullName);
+
+let a: number = 10;
+let b: number = 20;
+println("The value of a + b is " + (a + b));
+
+const var: boolean = true;
+if (var) {
+    a = 15;
+}
+
+if (false) {
+    a = 20;
+} else {
+    a = 10;
+}

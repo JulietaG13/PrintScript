@@ -2,6 +2,7 @@ package edu.parsers.expressions;
 
 import static edu.utils.ParserUtil.isIdentifier;
 
+import edu.Parser;
 import edu.ast.expressions.IdentifierNode;
 import edu.ast.interfaces.ExpressionNode;
 import edu.parsers.ExpressionParser;
@@ -10,7 +11,7 @@ import java.util.List;
 
 public class ParseIdentifier implements ExpressionParser {
   @Override
-  public ExpressionNode parse(List<Token> tokens) {
+  public ExpressionNode parse(List<Token> tokens, Parser parser) {
     if (!isXexpression(tokens)) {
       throw new RuntimeException(); // Should never happen
     }
@@ -19,8 +20,8 @@ public class ParseIdentifier implements ExpressionParser {
     return new IdentifierNode(token.getStart(), token.getEnd(), token.getContent());
   }
 
-  public IdentifierNode parse(Token token) {
-    return (IdentifierNode) parse(List.of(token));
+  public IdentifierNode parse(Token token, Parser parser) {
+    return (IdentifierNode) parse(List.of(token), parser);
   }
 
   @Override

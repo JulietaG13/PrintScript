@@ -52,11 +52,19 @@ public class ParserUtil {
   }
 
   public static boolean isOpenParen(List<Token> tokens, int i) {
-    return isSyntax(tokens, i) && tokens.get(i).getContent().equals("(");
+    return isOpenParen(tokens.get(i));
+  }
+
+  public static boolean isOpenParen(Token token) {
+    return isSyntax(token) && token.getContent().equals("(");
   }
 
   public static boolean isCloseParen(List<Token> tokens, int i) {
-    return isSyntax(tokens, i) && tokens.get(i).getContent().equals(")");
+    return isCloseParen(tokens.get(i));
+  }
+
+  public static boolean isCloseParen(Token token) {
+    return isSyntax(token) && token.getContent().equals(")");
   }
 
   public static boolean isArgSeparator(List<Token> tokens, int i) {
@@ -97,6 +105,10 @@ public class ParserUtil {
 
   public static boolean isColon(Token token) {
     return isSyntax(token) && token.getContent().equals(":");
+  }
+
+  public static boolean isEndOfStatement(Token token) {
+    return isSemicolon(token) || isCloseBracket(token);
   }
 
   public static boolean isAssign(List<Token> tokens, int i) {

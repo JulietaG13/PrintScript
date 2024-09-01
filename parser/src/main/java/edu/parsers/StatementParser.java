@@ -1,15 +1,16 @@
 package edu.parsers;
 
+import edu.Parser;
 import edu.ast.interfaces.StatementNode;
 import edu.tokens.Token;
 import java.util.List;
 
 public interface StatementParser {
   /*
-   * Expects a ';' at the end
+   * Expects ';' or '}' at the end
    */
 
-  StatementNode parse(List<Token> tokens);
+  StatementNode parse(List<Token> tokens, Parser parser);
 
   boolean isXstatement(List<Token> tokens);
 }

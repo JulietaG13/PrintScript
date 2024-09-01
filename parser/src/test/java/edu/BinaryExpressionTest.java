@@ -13,7 +13,6 @@ import edu.ast.expressions.CallExpressionNode;
 import edu.ast.expressions.IdentifierNode;
 import edu.ast.expressions.LiteralNumberNode;
 import edu.ast.interfaces.ExpressionNode;
-import edu.parsers.ParseExpression;
 import edu.tokens.Token;
 import java.util.List;
 import org.junit.jupiter.api.Test;
@@ -21,13 +20,13 @@ import org.junit.jupiter.api.Test;
 public class BinaryExpressionTest {
 
   @Test
-  public void simplliteralEerals() { // 3 + 44
+  public void simpleLiterals() { // 3 + 44
     String op = "+";
     int left = 3;
     int right = 44;
     List<Token> input = List.of(getLiteral(left), getOperator(op), getLiteral(right));
 
-    ExpressionNode exp = ParseExpression.parse(input);
+    ExpressionNode exp = new Parser().parseExpression(input);
 
     assert exp instanceof BinaryExpressionNode;
     BinaryExpressionNode binaryExp = (BinaryExpressionNode) exp;
@@ -45,7 +44,7 @@ public class BinaryExpressionTest {
   }
 
   @Test
-  public void simplliteralEeralsExtraParens() { // (3 + 44)
+  public void simpleLiteralsExtraParens() { // (3 + 44)
     String op = "+";
     int left = 3;
     int right = 44;
@@ -53,7 +52,7 @@ public class BinaryExpressionTest {
         List.of(
             getOpenParen(), getLiteral(left), getOperator(op), getLiteral(right), getCloseParen());
 
-    ExpressionNode exp = ParseExpression.parse(input);
+    ExpressionNode exp = new Parser().parseExpression(input);
 
     assert exp instanceof BinaryExpressionNode;
     BinaryExpressionNode binaryExp = (BinaryExpressionNode) exp;
@@ -71,7 +70,7 @@ public class BinaryExpressionTest {
   }
 
   @Test
-  public void sumThreliteralEerals() { // 3 + 44 + 4.5
+  public void sumThreeLiterals() { // 3 + 44 + 4.5
     String op = "+";
     int fst = 3;
     int sec = 44;
@@ -80,7 +79,7 @@ public class BinaryExpressionTest {
         List.of(
             getLiteral(fst), getOperator(op), getLiteral(sec), getOperator(op), getLiteral(thr));
 
-    ExpressionNode exp = ParseExpression.parse(input);
+    ExpressionNode exp = new Parser().parseExpression(input);
     System.out.println(exp);
 
     assert exp instanceof BinaryExpressionNode;
@@ -130,7 +129,7 @@ public class BinaryExpressionTest {
             getOperator(prod),
             getLiteral(e));
 
-    ExpressionNode exp = ParseExpression.parse(input);
+    ExpressionNode exp = new Parser().parseExpression(input);
     System.out.println(exp);
 
     assert exp instanceof BinaryExpressionNode;
@@ -200,7 +199,7 @@ public class BinaryExpressionTest {
             getOpenParen(),
             getCloseParen());
 
-    ExpressionNode exp = ParseExpression.parse(input);
+    ExpressionNode exp = new Parser().parseExpression(input);
     System.out.println(exp);
 
     assert exp instanceof BinaryExpressionNode;

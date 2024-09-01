@@ -9,6 +9,7 @@ public class KindProvider {
 
   static {
     kinds.put("let", Kind.LET);
+    kinds.put("const", Kind.CONST);
   }
 
   public static Kind getKind(String kindName) {

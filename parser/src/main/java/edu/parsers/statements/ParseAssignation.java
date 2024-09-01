@@ -4,11 +4,11 @@ import static edu.utils.ParserUtil.isAssign;
 import static edu.utils.ParserUtil.isIdentifier;
 
 import edu.LexicalRange;
+import edu.Parser;
 import edu.ast.expressions.IdentifierNode;
 import edu.ast.interfaces.ExpressionNode;
 import edu.ast.interfaces.StatementNode;
 import edu.ast.statements.AssignmentNode;
-import edu.parsers.ParseExpression;
 import edu.parsers.StatementParser;
 import edu.parsers.expressions.ParseIdentifier;
 import edu.tokens.Token;
@@ -17,15 +17,15 @@ import java.util.List;
 public class ParseAssignation implements StatementParser {
 
   @Override
-  public StatementNode parse(List<Token> tokens) {
+  public StatementNode parse(List<Token> tokens, Parser parser) {
     LexicalRange start = tokens.getFirst().getStart();
     LexicalRange end = tokens.getFirst().getEnd();
 
     String operator = tokens.get(1).getContent();
-    IdentifierNode id = new ParseIdentifier().parse(tokens.getFirst());
+    IdentifierNode id = new ParseIdentifier().parse(tokens.getFirst(), parser);
 
     List<Token> expressionPart = tokens.subList(2, tokens.size() - 1); // id = [...] ;
-    ExpressionNode expression = ParseExpression.parse(expressionPart);
+    ExpressionNode expression = parser.parseExpression(expressionPart);
 
     return new AssignmentNode(start, end, operator, id, expression);
   }

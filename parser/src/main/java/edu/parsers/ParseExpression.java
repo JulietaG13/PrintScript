@@ -1,5 +1,6 @@
 package edu.parsers;
 
+import edu.Parser;
 import edu.ast.interfaces.ExpressionNode;
 import edu.parsers.expressions.ParseBinaryExpression;
 import edu.parsers.expressions.ParseCallExpression;
@@ -27,7 +28,7 @@ public class ParseExpression {
   public static ExpressionNode parse(List<Token> tokens) {
     for (ExpressionParser parser : parsers) {
       if (parser.isXexpression(tokens)) {
-        return parser.parse(tokens);
+        return parser.parse(tokens, new Parser());
       }
     }
     throw new RuntimeException(); // TODO

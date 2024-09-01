@@ -10,10 +10,10 @@ import static edu.utils.ParserUtil.isSyntax;
 
 import edu.LexicalRange;
 import edu.OperatorProvider;
+import edu.Parser;
 import edu.ast.expressions.BinaryExpressionNode;
 import edu.ast.interfaces.ExpressionNode;
 import edu.parsers.ExpressionParser;
-import edu.parsers.ParseExpression;
 import edu.tokens.Token;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +21,7 @@ import java.util.List;
 public class ParseBinaryExpression implements ExpressionParser {
 
   @Override
-  public ExpressionNode parse(List<Token> tokens) {
+  public ExpressionNode parse(List<Token> tokens, Parser parser) {
     LexicalRange start = tokens.getFirst().getStart();
     LexicalRange end = tokens.getLast().getEnd();
 
@@ -43,8 +43,8 @@ public class ParseBinaryExpression implements ExpressionParser {
         start,
         end,
         tokens.get(operatorIndex).getContent(),
-        ParseExpression.parse(left),
-        ParseExpression.parse(right));
+        parser.parseExpression(left),
+        parser.parseExpression(right));
   }
 
   @Override

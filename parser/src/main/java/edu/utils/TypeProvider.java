@@ -11,6 +11,7 @@ public class TypeProvider {
   static {
     add("number", Type.NUMBER);
     add("string", Type.STRING);
+    add("boolean", Type.BOOLEAN);
   }
 
   public static Type getType(String typeName) {
@@ -34,6 +35,9 @@ public class TypeProvider {
     if (isString(content)) {
       return Type.STRING;
     }
+    if (isBoolean(content)) {
+      return Type.BOOLEAN;
+    }
     throw new RuntimeException(); // TODO
   }
 
@@ -56,6 +60,10 @@ public class TypeProvider {
 
   private static boolean isString(String str) {
     return str.startsWith("\"") && str.endsWith("\"");
+  }
+
+  private static boolean isBoolean(String str) {
+    return str.equals("true") || str.equals("false");
   }
 
   private static void add(String string, Type type) {

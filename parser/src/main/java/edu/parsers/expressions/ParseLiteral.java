@@ -3,6 +3,8 @@ package edu.parsers.expressions;
 import static edu.utils.ParserUtil.isLiteral;
 
 import edu.LexicalRange;
+import edu.Parser;
+import edu.ast.expressions.LiteralBooleanNode;
 import edu.ast.expressions.LiteralNumberNode;
 import edu.ast.expressions.LiteralStringNode;
 import edu.ast.interfaces.ExpressionNode;
@@ -15,7 +17,7 @@ import java.util.List;
 public class ParseLiteral implements ExpressionParser {
 
   @Override
-  public ExpressionNode parse(List<Token> tokens) {
+  public ExpressionNode parse(List<Token> tokens, Parser parser) {
 
     if (!isXexpression(tokens)) {
       throw new RuntimeException(); // Should never happen
@@ -29,14 +31,12 @@ public class ParseLiteral implements ExpressionParser {
     String content = token.getContent();
     Type type = TypeProvider.getTypeFromContent(content);
 
-    switch (type) {
-      case NUMBER:
-        return new LiteralNumberNode(start, end, Double.parseDouble(content));
-      case STRING:
-        return new LiteralStringNode(start, end, stripQuotes(content));
-      default:
-        throw new RuntimeException(); // TODO
-    }
+    return switch (type) {
+      case NUMBER -> new LiteralNumberNode(start, end, Double.parseDouble(content));
+      case STRING -> new LiteralStringNode(start, end, stripQuotes(content));
+      case BOOLEAN -> new LiteralBooleanNode(start, end, Boolean.parseBoolean(content));
+      default -> throw new RuntimeException();
+    };
   }
 
   @Override

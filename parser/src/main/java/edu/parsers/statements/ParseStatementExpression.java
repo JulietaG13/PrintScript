@@ -1,6 +1,7 @@
 package edu.parsers.statements;
 
 import edu.LexicalRange;
+import edu.Parser;
 import edu.ast.interfaces.StatementNode;
 import edu.ast.statements.ExpressionStatementNode;
 import edu.parsers.ExpressionParser;
@@ -22,14 +23,15 @@ public class ParseStatementExpression implements StatementParser {
   }
 
   @Override
-  public StatementNode parse(List<Token> tokens) {
+  public StatementNode parse(List<Token> tokens, Parser parser) {
     LexicalRange start = tokens.getFirst().getStart();
     LexicalRange end = tokens.getFirst().getEnd();
     List<Token> expressionPart = tokens.subList(0, tokens.size() - 1); // [ id(...) ] ;
 
-    for (ExpressionParser parser : parsers) {
-      if (parser.isXexpression(expressionPart)) {
-        return new ExpressionStatementNode(start, end, parser.parse(expressionPart));
+    for (ExpressionParser expressionParser : parsers) {
+      if (expressionParser.isXexpression(expressionPart)) {
+        return new ExpressionStatementNode(
+            start, end, expressionParser.parse(expressionPart, parser));
       }
     }
 

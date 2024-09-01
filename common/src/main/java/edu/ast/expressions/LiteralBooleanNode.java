@@ -4,16 +4,16 @@ import edu.LexicalRange;
 import edu.ast.AstVisitor;
 import edu.ast.interfaces.LiteralNode;
 
-public record LiteralNumberNode(LexicalRange start, LexicalRange end, Double value)
+public record LiteralBooleanNode(LexicalRange start, LexicalRange end, boolean value)
     implements LiteralNode {
 
   @Override
   public LiteralType getType() {
-    return LiteralType.NUMBER;
+    return LiteralType.BOOLEAN;
   }
 
   @Override
-  public void accept(AstVisitor visitor) {
-    visitor.visit(this);
+  public void accept(AstVisitor visitor) { // TODO
+    // visitor.visit(this);
   }
 }

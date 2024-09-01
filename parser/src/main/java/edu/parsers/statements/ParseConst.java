@@ -19,7 +19,7 @@ import edu.utils.KindProvider;
 import edu.utils.TypeProvider;
 import java.util.List;
 
-public class ParseLet implements StatementParser {
+public class ParseConst implements StatementParser {
   /*
    * Expects a ';' at the end
    */
@@ -43,13 +43,13 @@ public class ParseLet implements StatementParser {
     String typeString = tokens.get(3).getContent();
     Type type = TypeProvider.getType(typeString);
 
-    if (isNotInitialized(tokens)) {
-      return new VariableDeclarationNode(start, end, identifier, type, Kind.LET, null);
+    if (isNotInitialized(tokens)) { // TODO (is it allowed?)
+      return new VariableDeclarationNode(start, end, identifier, type, Kind.CONST, null);
     }
 
     ExpressionNode init = parser.parseExpression(tokens.subList(5, tokens.size() - 1));
 
-    return new VariableDeclarationNode(start, end, identifier, type, Kind.LET, init);
+    return new VariableDeclarationNode(start, end, identifier, type, Kind.CONST, init);
   }
 
   @Override
@@ -61,7 +61,7 @@ public class ParseLet implements StatementParser {
     } catch (Exception e) {
       return false;
     }
-    return isKeyword(tokens, 0) && kind == Kind.LET;
+    return isKeyword(tokens, 0) && kind == Kind.CONST;
   }
 
   private boolean isNotInitialized(List<Token> tokens) {

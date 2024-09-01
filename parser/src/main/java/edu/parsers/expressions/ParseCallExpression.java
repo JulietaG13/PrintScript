@@ -6,11 +6,11 @@ import static edu.utils.ParserUtil.isIdentifier;
 import static edu.utils.ParserUtil.isOpenParen;
 
 import edu.LexicalRange;
+import edu.Parser;
 import edu.ast.expressions.CallExpressionNode;
 import edu.ast.expressions.IdentifierNode;
 import edu.ast.interfaces.ExpressionNode;
 import edu.parsers.ExpressionParser;
-import edu.parsers.ParseExpression;
 import edu.tokens.Token;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +21,7 @@ public class ParseCallExpression implements ExpressionParser {
    */
 
   @Override
-  public ExpressionNode parse(List<Token> tokens) {
+  public ExpressionNode parse(List<Token> tokens, Parser parser) {
     String name = tokens.getFirst().getContent();
     LexicalRange start = tokens.getFirst().getStart();
     LexicalRange end = tokens.getLast().getEnd();
@@ -33,7 +33,7 @@ public class ParseCallExpression implements ExpressionParser {
     List<ExpressionNode> args = new ArrayList<>();
 
     for (List<Token> expression : expressions) {
-      args.add(ParseExpression.parse(expression));
+      args.add(parser.parseExpression(expression));
     }
 
     return new CallExpressionNode(start, end, identifier, args);
@@ -86,13 +86,23 @@ public class ParseCallExpression implements ExpressionParser {
     List<List<Token>> args = new ArrayList<>();
     List<Token> current = new ArrayList<>();
 
+    int parenBalance = 0;
     for (Token token : tokens) {
-      if (isArgSeparator(token)) {
+
+      if (isOpenParen(token)) {
+        parenBalance++;
+      }
+      if (isCloseParen(token)) {
+        parenBalance--;
+      }
+
+      if (parenBalance == 0 && isArgSeparator(token)) {
         if (current.isEmpty()) {
           throw new RuntimeException(); // TODO(double commas / empty arg)
         }
         args.add(new ArrayList<>(current));
         current.clear();
+
       } else {
         current.add(token);
       }
