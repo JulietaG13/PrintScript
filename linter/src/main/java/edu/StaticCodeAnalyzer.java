@@ -1,7 +1,5 @@
 package edu;
 
-import edu.ast.AstVisitor;
-import edu.ast.ProgramNode;
 import edu.ast.expressions.BinaryExpressionNode;
 import edu.ast.expressions.CallExpressionNode;
 import edu.ast.expressions.IdentifierNode;
@@ -14,7 +12,7 @@ import edu.ast.statements.ExpressionStatementNode;
 import edu.ast.statements.VariableDeclarationNode;
 import edu.rules.RuleProviderLinter;
 
-public class StaticCodeAnalyzer implements AstVisitor {
+public class StaticCodeAnalyzer {
   private Report report;
   private final RuleProviderLinter ruleProvider;
 
@@ -23,65 +21,78 @@ public class StaticCodeAnalyzer implements AstVisitor {
     this.ruleProvider = ruleProvider;
   }
 
-  @Override
-  public void visit(ProgramNode node) {
-    for (StatementNode statement : node.getBody()) {
-      statement.accept(this);
+  public void analyze(StatementNode node) {
+    switch (node) {
+      case AssignmentNode assignmentNode:
+        analyze(assignmentNode);
+        break;
+      case VariableDeclarationNode variableDeclarationNode:
+        analyze(variableDeclarationNode);
+        break;
+      case ExpressionStatementNode expressionStatementNode:
+        analyze(expressionStatementNode);
+        break;
+      default:
+        throw new IllegalArgumentException("Unexpected statement node: " + node);
     }
   }
 
-  @Override
-  public void visit(AssignmentNode node) {
-    node.id().accept(this);
-    node.value().accept(this);
+  private void analyze(ExpressionStatementNode node) {
+    analyze(node.expression());
   }
 
-  @Override
-  public void visit(ExpressionStatementNode node) {
-    node.expression().accept(this);
+  private void analyze(ExpressionNode node) {
+    switch (node) {
+      case BinaryExpressionNode binaryExpressionNode:
+        analyze(binaryExpressionNode);
+        break;
+      case CallExpressionNode callExpressionNode:
+        analyze(callExpressionNode);
+        break;
+      case IdentifierNode identifierNode:
+        analyze(identifierNode);
+        break;
+      case LiteralNumberNode literalNumberNode:
+        break;
+      case LiteralStringNode literalStringNode:
+        break;
+      default:
+        throw new IllegalArgumentException("Unexpected expression node: " + node);
+    }
   }
 
-  @Override
-  public void visit(VariableDeclarationNode node) {
-    node.id().accept(this);
+  private void analyze(AssignmentNode node) {
+    analyze(node.id());
+    analyze(node.value());
+  }
+
+  private void analyze(VariableDeclarationNode node) {
+    analyze(node.id());
     if (node.init() != null) {
-      node.init().accept(this);
+      analyze(node.init());
     }
   }
 
-  @Override
-  public void visit(BinaryExpressionNode node) {
-    node.left().accept(this);
-    node.right().accept(this);
+  private void analyze(BinaryExpressionNode node) {
+    analyze(node.left());
+    analyze(node.right());
   }
 
-  @Override
-  public void visit(CallExpressionNode node) {
+  private void analyze(CallExpressionNode node) {
     if (!ruleProvider.getFunctionRules().matches(node)) {
       report.addMessage(ruleProvider.getFunctionRules().getErrorMessage(node));
     }
-    node.callee().accept(this);
+    analyze(node.callee());
     for (ExpressionNode arg : node.args()) {
-      arg.accept(this);
+      analyze(arg);
     }
   }
 
-  @Override
-  public void visit(IdentifierNode node) {
+  private void analyze(IdentifierNode node) {
     String variableName = node.name();
     if (!ruleProvider.getPossibleIdentifiers().matches(variableName)) {
       report.addMessage(
           "Invalid identifier name: " + variableName + " at position " + node.start().toString());
     }
-  }
-
-  @Override
-  public void visit(LiteralNumberNode node) {
-    /* do nothing */
-  }
-
-  @Override
-  public void visit(LiteralStringNode node) {
-    /* do nothing */
   }
 }

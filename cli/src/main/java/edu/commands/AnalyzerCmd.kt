@@ -2,12 +2,14 @@ package edu.commands
 
 import com.github.ajalt.clikt.core.CliktCommand
 import com.github.ajalt.clikt.parameters.options.option
+import edu.FileReader.openFile
+import edu.LexerFactory.createLexerV1
 import edu.Linter
 import edu.LinterFactory.createLinterV1
-import edu.ast.ProgramNode
+import edu.Parser
+import edu.ParserFactory.createParserV1
 import edu.utils.CommandContext
 import edu.utils.JsonConfigLoader
-import edu.utils.ProgramNodeUtils
 import java.io.IOException
 
 class AnalyzerCmd : CliktCommand(name = "analyze", help = "Analyze a source code file") {
@@ -18,11 +20,12 @@ class AnalyzerCmd : CliktCommand(name = "analyze", help = "Analyze a source code
         try {
             println("Starting analysis...")
             println("Reading file...")
-            val programNode: ProgramNode = ProgramNodeUtils.getProgramNode(sourceFile)
+            val lexer = createLexerV1(openFile(sourceFile))
+            val parser = createParserV1(lexer)
             println("Parsing completed...")
-            val linter = getLinter()
+            val linter = getLinter(parser)
             println("Analyzing program...")
-            val report = linter.analyze(programNode)
+            val report = linter.analyze()
             println("Analysis completed.")
             commandContext.linterReport = report
             println("Report: ${report.printReport()}")
@@ -32,9 +35,9 @@ class AnalyzerCmd : CliktCommand(name = "analyze", help = "Analyze a source code
     }
 
     @Throws(IOException::class)
-    private fun getLinter(): Linter {
+    private fun getLinter(parser: Parser): Linter {
         val config = JsonConfigLoader.loadFromFile(configFile)
-        return createLinterV1(config)
+        return createLinterV1(config, parser)
     }
 
     override fun run() {

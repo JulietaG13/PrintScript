@@ -10,7 +10,7 @@ import java.util.Map;
 
 public class LinterFactory {
 
-  public static Linter createLinterV1(JsonObject rules) {
+  public static Linter createLinterV1(JsonObject rules, Parser parser) {
     RuleParserLinter.addIdentifiers(
         Map.of(
             "snake_case",
@@ -22,10 +22,10 @@ public class LinterFactory {
     RuleParserLinter.addFunctionRules(
         Map.of("println_non_expressions", new NonExpression("println")));
 
-    return new Linter(RuleParserLinter.parseRules(rules));
+    return new Linter(RuleParserLinter.parseRules(rules), parser);
   }
 
-  public static Linter createLinterV2(JsonObject rules) {
+  public static Linter createLinterV2(JsonObject rules, Parser parser) {
     RuleParserLinter.addIdentifiers(
         Map.of(
             "snake_case", new SnakeCase(),
@@ -37,6 +37,6 @@ public class LinterFactory {
             "println_non_expressions", new NonExpression("println"),
             "read_input_non_expressions", new NonExpression("readInput")));
 
-    return new Linter(RuleParserLinter.parseRules(rules));
+    return new Linter(RuleParserLinter.parseRules(rules), parser);
   }
 }

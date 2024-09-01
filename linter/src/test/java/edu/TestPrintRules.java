@@ -2,12 +2,11 @@ package edu;
 
 import static edu.LexerFactory.createLexerV1;
 import static edu.LinterFactory.createLinterV1;
+import static edu.ParserFactory.createParserV1;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.google.gson.JsonObject;
-import edu.ast.ProgramNode;
-import edu.tokens.Token;
 import java.io.BufferedReader;
 import java.util.Iterator;
 import java.util.List;
@@ -31,52 +30,50 @@ public class TestPrintRules {
     return new BufferedReader(new java.io.StringReader(code)).lines().iterator();
   }
 
-  private Report processCode(String code, Linter linter) {
-    Lexer lexer = createLexerV1(createIteratorFromString(code));
-    lexer.tokenize();
-    List<Token> tokens = lexer.getTokens();
-    Parser parser = new Parser();
-    ProgramNode programNode = parser.parse(tokens, true);
-    return linter.analyze(programNode);
+  private Linter createLinter(String code, JsonObject rules) {
+    Iterator<String> codeIterator = createIteratorFromString(code);
+    Lexer lexer = createLexerV1(codeIterator);
+    Parser parser = createParserV1(lexer);
+    return createLinterV1(rules, parser);
   }
 
   @Test
   public void testNoRules() {
     String code = "println(10);";
-    Linter linter = createLinterV1(noRules);
-    Report report = processCode(code, linter);
+    Linter linter = createLinter(code, noRules);
+    Report report = linter.analyze();
     assertTrue(report.getReport().isEmpty());
   }
 
   @Test
   public void testLiteralNumberPrint() {
     String code = "println(10);";
-    Linter linter = createLinterV1(nonExpression);
-    Report report = processCode(code, linter);
+    Linter linter = createLinter(code, nonExpression);
+    Report report = linter.analyze();
     assertTrue(report.getReport().isEmpty());
   }
 
   @Test
   public void testIdentifierPrint() {
     String code = "println(hello);";
-    Linter linter = createLinterV1(nonExpression);
-    Report report = processCode(code, linter);
+    Linter linter = createLinter(code, nonExpression);
+    Report report = linter.analyze();
     assertTrue(report.getReport().isEmpty());
   }
 
   @Test
   public void testLiteralStringPrint() {
     String code = "println(\"Hello\");";
-    Linter linter = createLinterV1(nonExpression);
-    Report report = processCode(code, linter);
+    Linter linter = createLinter(code, nonExpression);
+    Report report = linter.analyze();
     assertTrue(report.getReport().isEmpty());
   }
 
   @Test
   public void testExpressionError() {
     String code = "println(\"Hello\" + \"World\");";
-    Linter linter = createLinterV1(nonExpression);
-    Report report = processCode(code, linter);
+    Linter linter = createLinter(code, nonExpression);
+    Report report = linter.analyze();
     assertTrue(report.getReport().isPresent());
     List<String> messages = report.getReport().get();
     String expectedOutput =
@@ -93,8 +90,8 @@ public class TestPrintRules {
   @Test
   public void testExpressionCallError() {
     String code = "println(hello());";
-    Linter linter = createLinterV1(nonExpression);
-    Report report = processCode(code, linter);
+    Linter linter = createLinter(code, nonExpression);
+    Report report = linter.analyze();
     assertTrue(report.getReport().isPresent());
     String expectedOutput =
         "Error in println function: The println function only "
