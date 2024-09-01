@@ -60,6 +60,28 @@ public class LexerVersion2Test {
   }
 
   @Test
+  public void testConstDecimal() {
+    String code = "const X: number = 2.5;";
+    Lexer lexer = createLexerV2(createIteratorFromString(code));
+    lexer.tokenize();
+    List<Token> tokens = lexer.getTokens();
+    assertEquals(tokens.get(0).getType(), TokenType.KEYWORD);
+    assertEquals(tokens.get(0).getEnd().getOffset(), 4);
+    assertEquals(tokens.get(1).getType(), TokenType.IDENTIFIER);
+    assertEquals(tokens.get(1).getEnd().getOffset(), 6);
+    assertEquals(tokens.get(2).getType(), TokenType.SYNTAX);
+    assertEquals(tokens.get(2).getEnd().getOffset(), 7);
+    assertEquals(tokens.get(3).getType(), TokenType.KEYWORD);
+    assertEquals(tokens.get(3).getEnd().getOffset(), 14);
+    assertEquals(tokens.get(4).getType(), TokenType.OPERATOR);
+    assertEquals(tokens.get(4).getEnd().getOffset(), 16);
+    assertEquals(tokens.get(5).getType(), TokenType.LITERAL);
+    assertEquals(tokens.get(5).getEnd().getOffset(), 20);
+    assertEquals(tokens.get(6).getType(), TokenType.SYNTAX);
+    assertEquals(tokens.get(6).getEnd().getOffset(), 21);
+  }
+
+  @Test
   public void testIf() {
     String code = "if (true) {\n  x = 1;\n}";
     Lexer lexer = createLexerV2(createIteratorFromString(code));
