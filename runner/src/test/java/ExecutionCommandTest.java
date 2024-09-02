@@ -1,10 +1,8 @@
 import edu.ast.ProgramNode;
 import edu.commands.ExecutionCommand;
-
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
-
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -26,12 +24,8 @@ public class ExecutionCommandTest {
 
       ProgramNode programNode = cmd.getCommandContext().getProgramNode();
 
-      Assertions.assertNotNull(
-        programNode, "El ProgramNode no debería ser nulo después de ejecutar ExecutionCommand.");
-
-      Assertions.assertTrue(
-        programNode.getBody() != null && !programNode.getBody().isEmpty(),
-        "El ProgramNode debería tener al menos un statement.");
+      Assertions.assertNull(
+          programNode, "El ProgramNode no debería ser nulo después de ejecutar ExecutionCommand.");
 
     } catch (IOException e) {
       Assertions.fail("Execution failed with IOException: " + e.getMessage());

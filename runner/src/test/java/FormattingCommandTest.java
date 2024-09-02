@@ -1,9 +1,7 @@
 import edu.FormatterResult;
 import edu.commands.FormattingCommand;
 import edu.utils.CommandContext;
-
 import java.io.IOException;
-
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -27,11 +25,11 @@ public class FormattingCommandTest {
 
     FormatterResult formatterResult = commandContext.getFormatterResult();
     Assertions.assertNotNull(
-      formatterResult,
-      "El FormatterResult no debería ser nulo después de ejecutar FormattingCommand.");
+        formatterResult,
+        "El FormatterResult no debería ser nulo después de ejecutar FormattingCommand.");
     Assertions.assertEquals(
-      expectedOutput,
-      formatterResult.getResult(),
-      "La salida del formatter debería coincidir con el resultado esperado.");
+        expectedOutput,
+        formatterResult.getResult(),
+        "La salida del formatter debería coincidir con el resultado esperado.");
   }
 }

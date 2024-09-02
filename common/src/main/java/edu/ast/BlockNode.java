@@ -10,6 +10,6 @@ public record BlockNode(LexicalRange start, LexicalRange end, List<StatementNode
 
   @Override
   public void accept(AstVisitor visitor) { // TODO
-    // visitor.visit(this);
+    visitor.visit(this);
   }
 }

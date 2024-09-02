@@ -7,7 +7,6 @@ import edu.commands.FormattingCommand;
 import edu.commands.ValidatorCommand;
 import edu.utils.CommandContext;
 import edu.utils.VersionFactory;
-
 import java.io.IOException;
 
 public class Runner {

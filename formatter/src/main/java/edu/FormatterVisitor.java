@@ -1,16 +1,19 @@
 package edu;
 
 import edu.ast.AstVisitor;
+import edu.ast.BlockNode;
 import edu.ast.ProgramNode;
 import edu.ast.expressions.BinaryExpressionNode;
 import edu.ast.expressions.CallExpressionNode;
 import edu.ast.expressions.IdentifierNode;
+import edu.ast.expressions.LiteralBooleanNode;
 import edu.ast.expressions.LiteralNumberNode;
 import edu.ast.expressions.LiteralStringNode;
 import edu.ast.interfaces.ExpressionNode;
 import edu.ast.interfaces.StatementNode;
 import edu.ast.statements.AssignmentNode;
 import edu.ast.statements.ExpressionStatementNode;
+import edu.ast.statements.IfStatementNode;
 import edu.ast.statements.VariableDeclarationNode;
 import edu.rules.FormatterRuleProvider;
 import edu.utils.TypeProvider;
@@ -154,6 +157,15 @@ public class FormatterVisitor implements AstVisitor {
     result.write(node.value());
     result.write(quotes);
   }
+
+  @Override
+  public void visit(IfStatementNode node) {}
+
+  @Override
+  public void visit(BlockNode node) {}
+
+  @Override
+  public void visit(LiteralBooleanNode node) {}
 
   private void writeSymbol(String symbol) {
     if (ruleProvider.hasSpaceBefore(symbol)) {

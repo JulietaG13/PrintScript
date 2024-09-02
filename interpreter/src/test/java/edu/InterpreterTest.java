@@ -1,73 +1,53 @@
 package edu;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static edu.InterpreterFactory.createInterpreterV1;
+import static edu.LexerFactory.createLexerV1;
+import static edu.ParserFactory.createParserV1;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import edu.ast.ProgramNode;
-import edu.ast.expressions.CallExpressionNode;
-import edu.ast.expressions.IdentifierNode;
-import edu.ast.expressions.LiteralStringNode;
-import edu.ast.interfaces.ExpressionNode;
-import edu.ast.statements.ExpressionStatementNode;
-import edu.ast.statements.Kind;
-import edu.ast.statements.Type;
-import edu.ast.statements.VariableDeclarationNode;
-import edu.visitor.ExecutionVisitor;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+import java.util.Iterator;
 import org.junit.jupiter.api.Test;
 
 public class InterpreterTest {
-  public static void main(String[] args) {
-    IdentifierNode varName =
-        new IdentifierNode(
-            new LexicalRange(0, 0, 0), new LexicalRange(0, 0, 0), "my_cool_variable");
-    LiteralStringNode varValue =
-        new LiteralStringNode(new LexicalRange(0, 0, 0), new LexicalRange(0, 0, 0), "ciclon");
-    VariableDeclarationNode declarationNode =
-        new VariableDeclarationNode(
-            new LexicalRange(0, 0, 0),
-            new LexicalRange(0, 0, 0),
-            varName,
-            Type.STRING,
-            Kind.LET,
-            varValue);
+  private Iterator<String> createIteratorFromString(String code) {
+    return new BufferedReader(new java.io.StringReader(code)).lines().iterator();
+  }
 
-    List<ExpressionNode> argsList = new ArrayList<>();
-    argsList.add(varName);
-    CallExpressionNode callExpression =
-        new CallExpressionNode(
-            new LexicalRange(0, 0, 0),
-            new LexicalRange(0, 0, 0),
-            new IdentifierNode(new LexicalRange(0, 0, 0), new LexicalRange(0, 0, 0), "println"),
-            argsList);
-
-    ExpressionStatementNode printNode =
-        new ExpressionStatementNode(
-            new LexicalRange(0, 0, 0), new LexicalRange(0, 0, 0), callExpression);
-
-    ProgramNode programNode = new ProgramNode();
-    programNode.addStatement(declarationNode);
-    programNode.addStatement(printNode);
-
-    Interpreter interpreter = new Interpreter();
-    interpreter.interpret(programNode);
+  private Interpreter createInterpreter(String code) {
+    Iterator<String> codeIterator = createIteratorFromString(code);
+    Lexer lexer = createLexerV1(codeIterator);
+    Parser parser = createParserV1(lexer);
+    return createInterpreterV1(parser);
   }
 
   @Test
-  public void testInterpreterInitializesExecutionVisitor() {
-    // Crear un intérprete
-    Interpreter interpreter = new Interpreter();
+  public void testInterpretWithPrintln() {
+    String code = "println(\"Hello, world!\");";
 
-    // Verificar que el ExecutionVisitor está correctamente inicializado
-    assertNotNull(interpreter.getVisitor());
+    // Create interpreter for version 1
+    Interpreter interpreter = createInterpreter(code);
 
-    // Verificar que el Reader del ExecutionVisitor también está inicializado
-    ExecutionVisitor visitor = interpreter.getVisitor();
-    assertNotNull(visitor.getReader());
+    // Capture output
+    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+    PrintStream originalOut = System.out;
+    System.setOut(new PrintStream(outputStream));
 
-    // Verificar que el VariableContext del Reader está vacío al principio
-    assertTrue(visitor.getReader().getVariables().getNumberVariables().isEmpty());
-    assertTrue(visitor.getReader().getVariables().getStringVariables().isEmpty());
+    // Run the interpreter
+    interpreter.interpret();
+
+    // Restore original System.out
+    System.setOut(originalOut);
+
+    // Get the captured output
+    String output = outputStream.toString().trim();
+
+    // Expected output
+    String expectedOutput = "Hello, world!";
+
+    // Assertions
+    assertEquals(expectedOutput, output);
   }
 }

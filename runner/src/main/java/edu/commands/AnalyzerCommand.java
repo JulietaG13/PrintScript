@@ -10,7 +10,6 @@ import edu.Report;
 import edu.utils.CommandContext;
 import edu.utils.JsonConfigLoader;
 import edu.utils.VersionFactory;
-
 import java.io.IOException;
 
 public class AnalyzerCommand implements Command {

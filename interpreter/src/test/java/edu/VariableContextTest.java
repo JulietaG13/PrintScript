@@ -4,118 +4,135 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.util.Map;
-import java.util.Set;
+import edu.context.VariableContext;
+import java.util.HashMap;
 import org.junit.jupiter.api.Test;
 
 public class VariableContextTest {
 
   @Test
   public void testSetAndGetNumberVariable() {
-    VariableContext context = new VariableContext(Map.of(), Map.of(), Map.of(), Set.of());
-    context = context.setNumberVariable("x", 10);
+    VariableContext context =
+        new VariableContext(new HashMap<>(), new HashMap<>(), new HashMap<>());
+
+    context = context.setNumberVariable("x", 42);
 
     assertTrue(context.hasNumberVariable("x"));
-    assertEquals(10, context.getNumberVariable("x"));
+    assertEquals(42, context.getNumberVariable("x"));
   }
 
   @Test
   public void testSetAndGetStringVariable() {
-    VariableContext context = new VariableContext(Map.of(), Map.of(), Map.of(), Set.of());
-    context = context.setStringVariable("y", "Hello");
-
-    assertTrue(context.hasStringVariable("y"));
-    assertEquals("Hello", context.getStringVariable("y"));
-  }
-
-  @Test
-  public void testGetNonExistentNumberVariableThrowsException() {
-    VariableContext context = new VariableContext(Map.of(), Map.of(), Map.of(), Set.of());
-
-    Exception exception =
-        assertThrows(
-            RuntimeException.class,
-            () -> {
-              context.getNumberVariable("z");
-            });
-
-    assertEquals("Number type variable not found: z", exception.getMessage());
-  }
-
-  @Test
-  public void testGetNonExistentStringVariableThrowsException() {
-    VariableContext context = new VariableContext(Map.of(), Map.of(), Map.of(), Set.of());
-
-    Exception exception =
-        assertThrows(
-            RuntimeException.class,
-            () -> {
-              context.getStringVariable("w");
-            });
-
-    assertEquals("Number type variable not found: w", exception.getMessage());
-  }
-
-  @Test
-  public void testImmutabilityOfContext() {
     VariableContext context =
-        new VariableContext(Map.of("x", 5), Map.of("y", "Test"), Map.of(), Set.of());
-    context = context.setNumberVariable("x", 10);
-    context = context.setStringVariable("y", "Updated");
+        new VariableContext(new HashMap<>(), new HashMap<>(), new HashMap<>());
 
-    assertEquals(10, context.getNumberVariable("x"));
-    assertEquals("Updated", context.getStringVariable("y"));
-    assertEquals(1, context.getNumberVariables().size());
-    assertEquals(1, context.getStringVariables().size());
+    context = context.setStringVariable("str", "Hello, World!");
+
+    assertTrue(context.hasStringVariable("str"));
+    assertEquals("Hello, World!", context.getStringVariable("str"));
   }
 
   @Test
   public void testSetAndGetBooleanVariable() {
-    VariableContext context = new VariableContext(Map.of(), Map.of(), Map.of(), Set.of());
-    context = context.setBooleanVariable("isTrue", true);
+    VariableContext context =
+        new VariableContext(new HashMap<>(), new HashMap<>(), new HashMap<>());
 
-    assertTrue(context.hasBooleanVariable("isTrue"));
-    assertEquals(true, context.getBooleanVariable("isTrue"));
+    context = context.setBooleanVariable("flag", true);
+
+    assertTrue(context.hasBooleanVariable("flag"));
+    assertEquals(true, context.getBooleanVariable("flag"));
   }
 
   @Test
-  public void testSetConstantAndCheckImmutability() {
-    VariableContext context = new VariableContext(Map.of(), Map.of(), Map.of(), Set.of());
-    context = context.setStringVariable("y", "Hello").setConstant("y");
-
-    assertTrue(context.isConstant("y"));
-  }
-
-  @Test
-  public void testGetNonExistentBooleanVariableThrowsException() {
-    VariableContext context = new VariableContext(Map.of(), Map.of(), Map.of(), Set.of());
+  public void testGetNonExistentNumberVariable() {
+    VariableContext context =
+        new VariableContext(new HashMap<>(), new HashMap<>(), new HashMap<>());
 
     Exception exception =
         assertThrows(
             RuntimeException.class,
             () -> {
-              context.getBooleanVariable("boolVar");
+              context.getNumberVariable("nonExistent");
             });
 
-    assertEquals("Boolean type variable not found: boolVar", exception.getMessage());
+    assertEquals("Number type variable not found: nonExistent", exception.getMessage());
   }
 
   @Test
-  public void testSetAndCheckConstants() {
-    VariableContext context = new VariableContext(Map.of(), Map.of(), Map.of(), Set.of());
-    context = context.setStringVariable("constantVar", "ConstValue").setConstant("constantVar");
+  public void testGetNonExistentStringVariable() {
+    VariableContext context =
+        new VariableContext(new HashMap<>(), new HashMap<>(), new HashMap<>());
 
-    assertTrue(context.isConstant("constantVar"));
+    Exception exception =
+        assertThrows(
+            RuntimeException.class,
+            () -> {
+              context.getStringVariable("nonExistent");
+            });
+
+    assertEquals("Number type variable not found: nonExistent", exception.getMessage());
   }
 
   @Test
-  public void testConstantDoesNotAffectOtherVariables() {
-    VariableContext context = new VariableContext(Map.of("x", 1), Map.of(), Map.of(), Set.of());
-    context = context.setNumberVariable("x", 10).setConstant("x");
+  public void testGetNonExistentBooleanVariable() {
+    VariableContext context =
+        new VariableContext(new HashMap<>(), new HashMap<>(), new HashMap<>());
 
-    assertEquals(10, context.getNumberVariable("x"));
-    // Verify that setting a new variable does not affect the constant
-    context = context.setStringVariable("y", "Test");
-    assertEquals("Test", context.getStringVariable("y"));
+    Exception exception =
+        assertThrows(
+            RuntimeException.class,
+            () -> {
+              context.getBooleanVariable("nonExistent");
+            });
+
+    assertEquals("Boolean type variable not found: nonExistent", exception.getMessage());
+  }
+
+  @Test
+  public void testWriteNumberVariable() {
+    VariableContext context =
+        new VariableContext(new HashMap<>(), new HashMap<>(), new HashMap<>());
+
+    context = context.write("numVar", 99);
+
+    assertTrue(context.hasNumberVariable("numVar"));
+    assertEquals(99, context.getNumberVariable("numVar"));
+  }
+
+  @Test
+  public void testWriteStringVariable() {
+    VariableContext context =
+        new VariableContext(new HashMap<>(), new HashMap<>(), new HashMap<>());
+
+    context = context.write("strVar", "Test String");
+
+    assertTrue(context.hasStringVariable("strVar"));
+    assertEquals("Test String", context.getStringVariable("strVar"));
+  }
+
+  @Test
+  public void testWriteBooleanVariable() {
+    VariableContext context =
+        new VariableContext(new HashMap<>(), new HashMap<>(), new HashMap<>());
+
+    context = context.write("boolVar", false);
+
+    assertTrue(context.hasBooleanVariable("boolVar"));
+    assertEquals(false, context.getBooleanVariable("boolVar"));
+  }
+
+  @Test
+  public void testWriteUnsupportedType() {
+    VariableContext context =
+        new VariableContext(new HashMap<>(), new HashMap<>(), new HashMap<>());
+
+    Exception exception =
+        assertThrows(
+            RuntimeException.class,
+            () -> {
+              context.write("unsupportedVar", new Object());
+            });
+
+    assertEquals("Unsupported variable type: class java.lang.Object", exception.getMessage());
   }
 }

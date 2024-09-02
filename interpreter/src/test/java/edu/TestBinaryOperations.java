@@ -5,12 +5,18 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import edu.ast.ProgramNode;
+import edu.context.VariableContext;
+import edu.handlers.HandlerRegistryV1;
+import edu.inventory.Inventory;
 import edu.reader.InterpreterReader;
+import edu.rules.RuleProviderV1;
 import edu.visitor.ExecutionVisitor;
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import org.junit.jupiter.api.Test;
 
 public class TestBinaryOperations {
@@ -22,15 +28,16 @@ public class TestBinaryOperations {
   public VariableContext interpret(ProgramNode node) {
     VariableContext variableContext =
         new VariableContext(
-            new java.util.HashMap<>(),
-            new java.util.HashMap<>(),
-            new java.util.HashMap<>(),
-            new java.util.HashSet<>());
+            new java.util.HashMap<>(), new java.util.HashMap<>(), new java.util.HashMap<>());
     InterpreterReader reader =
-        new InterpreterReader(variableContext, new java.util.Stack<>(), new java.util.Stack<>());
-    ExecutionVisitor visitor = new ExecutionVisitor(reader);
+        new InterpreterReader(new java.util.Stack<>(), new java.util.Stack<>());
+    List context = new ArrayList();
+    context.add(variableContext);
+    Inventory inventory = new Inventory(context);
+    ExecutionVisitor visitor =
+        new ExecutionVisitor(reader, inventory, new HandlerRegistryV1(new RuleProviderV1()));
     visitor.visit(node);
-    return visitor.getReader().getVariables();
+    return visitor.getInventory().getVariableContext();
   }
 
   public String getPrintedInfo(ProgramNode node) {

@@ -16,6 +16,6 @@ public record IfStatementNode(
 
   @Override
   public void accept(AstVisitor visitor) { // TODO
-    // visitor.visit(this);
+    visitor.visit(this);
   }
 }

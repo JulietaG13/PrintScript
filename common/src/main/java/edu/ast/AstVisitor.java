@@ -3,10 +3,12 @@ package edu.ast;
 import edu.ast.expressions.BinaryExpressionNode;
 import edu.ast.expressions.CallExpressionNode;
 import edu.ast.expressions.IdentifierNode;
+import edu.ast.expressions.LiteralBooleanNode;
 import edu.ast.expressions.LiteralNumberNode;
 import edu.ast.expressions.LiteralStringNode;
 import edu.ast.statements.AssignmentNode;
 import edu.ast.statements.ExpressionStatementNode;
+import edu.ast.statements.IfStatementNode;
 import edu.ast.statements.VariableDeclarationNode;
 
 public interface AstVisitor {
@@ -27,4 +29,10 @@ public interface AstVisitor {
   void visit(LiteralNumberNode node);
 
   void visit(LiteralStringNode node);
+
+  void visit(IfStatementNode node);
+
+  void visit(BlockNode node);
+
+  void visit(LiteralBooleanNode node);
 }

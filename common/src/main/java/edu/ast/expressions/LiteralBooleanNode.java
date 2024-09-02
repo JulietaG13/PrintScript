@@ -14,6 +14,6 @@ public record LiteralBooleanNode(LexicalRange start, LexicalRange end, boolean v
 
   @Override
   public void accept(AstVisitor visitor) { // TODO
-    // visitor.visit(this);
+    visitor.visit(this);
   }
 }

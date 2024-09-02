@@ -1,16 +1,19 @@
 package edu.check;
 
 import edu.ast.AstVisitor;
+import edu.ast.BlockNode;
 import edu.ast.ProgramNode;
 import edu.ast.expressions.BinaryExpressionNode;
 import edu.ast.expressions.CallExpressionNode;
 import edu.ast.expressions.IdentifierNode;
+import edu.ast.expressions.LiteralBooleanNode;
 import edu.ast.expressions.LiteralNumberNode;
 import edu.ast.expressions.LiteralStringNode;
 import edu.ast.interfaces.ExpressionNode;
 import edu.ast.interfaces.StatementNode;
 import edu.ast.statements.AssignmentNode;
 import edu.ast.statements.ExpressionStatementNode;
+import edu.ast.statements.IfStatementNode;
 import edu.ast.statements.Type;
 import edu.ast.statements.VariableDeclarationNode;
 import java.util.HashMap;
@@ -113,4 +116,13 @@ public class ParserVisitor implements AstVisitor {
   public void visit(LiteralStringNode node) {
     lastType = Type.STRING;
   }
+
+  @Override
+  public void visit(IfStatementNode node) {}
+
+  @Override
+  public void visit(BlockNode node) {}
+
+  @Override
+  public void visit(LiteralBooleanNode node) {}
 }

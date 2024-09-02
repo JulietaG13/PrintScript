@@ -1,109 +1,116 @@
 package edu;
 
-import static edu.LexerFactory.createLexerV1;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import edu.ast.BlockNode;
 import edu.ast.ProgramNode;
+import edu.ast.expressions.IdentifierNode;
+import edu.ast.expressions.LiteralBooleanNode;
+import edu.ast.expressions.LiteralNumberNode;
+import edu.ast.statements.AssignmentNode;
+import edu.ast.statements.IfStatementNode;
+import edu.ast.statements.Kind;
+import edu.ast.statements.Type;
+import edu.ast.statements.VariableDeclarationNode;
+import edu.context.ConstantContext;
+import edu.context.VariableContext;
+import edu.handlers.HandlerRegistryV2;
+import edu.inventory.Inventory;
 import edu.reader.InterpreterReader;
-import edu.tokens.Token;
+import edu.rules.RuleProviderV2;
 import edu.visitor.ExecutionVisitor;
-import java.io.BufferedReader;
-import java.util.Iterator;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 
 public class VisitorTest {
 
-  private final String lineSeparator = System.lineSeparator();
-
-  private Iterator<String> createIteratorFromString(String code) {
-    return new BufferedReader(new java.io.StringReader(code)).lines().iterator();
-  }
-
-  @Test
-  public void testVariableAssignment() {
-    String code = "let my_cool_variable: string = \"ciclon\";";
-    VariableContext variableContext = process(code);
-    assertTrue(variableContext.hasStringVariable("my_cool_variable"));
-    assertEquals("ciclon", variableContext.getStringVariable("my_cool_variable"));
-  }
-
-  @Test
-  public void testPrintln() {
-    String code = "let my_cool_variable: string = \"ciclon\";\nprintln(my_cool_variable);";
-    String expectedOutput = "ciclon" + lineSeparator;
-    assertEquals(expectedOutput, getOutput(code));
-  }
-
-  private String getOutputFromInterpreter(Runnable interpreterExecution) {
-    java.io.ByteArrayOutputStream outContent = new java.io.ByteArrayOutputStream();
-    java.io.PrintStream originalOut = System.out;
-    System.setOut(new java.io.PrintStream(outContent));
-    try {
-      interpreterExecution.run();
-    } finally {
-      System.setOut(originalOut);
-    }
-    return outContent.toString();
-  }
-
-  @Test
-  public void testPrintlnLiteralString() {
-    String code = "println(\"Hello World\");";
-    String expectedOutput = "Hello World" + lineSeparator;
-    assertEquals(expectedOutput, getOutput(code));
-  }
-
-  @Test
-  public void testPrintlnLiteralNumber() {
-    String code = "println(15);";
-    double expectedOutput = 15.0;
-    assertEquals(expectedOutput, Double.parseDouble(getOutput(code)), 0.0);
-  }
-
-  public VariableContext process(String code) {
-    Lexer lexer = createLexerV1(createIteratorFromString(code));
-    lexer.tokenize();
-    List<Token> tokens = lexer.getTokens();
-
-    Parser parser = new Parser();
-    ProgramNode program = parser.parse(tokens);
-
+  private ExecutionVisitor createVisitor() {
     VariableContext variableContext =
-        new VariableContext(
-            new java.util.HashMap<>(),
-            new java.util.HashMap<>(),
-            new java.util.HashMap<>(),
-            new java.util.HashSet<>());
+        new VariableContext(new HashMap<>(), new HashMap<>(), new HashMap<>());
+    Inventory inventory =
+        new Inventory(List.of(variableContext, new ConstantContext(new HashSet<>())));
     InterpreterReader reader =
-        new InterpreterReader(variableContext, new java.util.Stack<>(), new java.util.Stack<>());
-    ExecutionVisitor visitor = new ExecutionVisitor(reader);
+        new InterpreterReader(new java.util.Stack<>(), new java.util.Stack<>());
+    return new ExecutionVisitor(reader, inventory, new HandlerRegistryV2(new RuleProviderV2()));
+  }
+
+  @Test
+  public void testVariableDeclaration() {
+    ExecutionVisitor visitor = createVisitor();
+    ProgramNode program = new ProgramNode();
+
+    // Create variable declaration: let x = 5;
+    LexicalRange range = new LexicalRange(0, 0, 0);
+    IdentifierNode id = new IdentifierNode(range, range, "x");
+    LiteralNumberNode init = new LiteralNumberNode(range, range, 5.0);
+    VariableDeclarationNode varDecl =
+        new VariableDeclarationNode(range, range, id, Type.NUMBER, Kind.LET, init);
+    program.addStatement(varDecl);
 
     visitor.visit(program);
 
-    return visitor.getReader().getVariables();
+    VariableContext variableContext = visitor.getInventory().getVariableContext();
+    assertTrue(variableContext.hasNumberVariable("x"));
+    assertEquals(5.0, variableContext.getNumberVariable("x"));
   }
 
-  public String getOutput(String code) {
-    Lexer lexer = createLexerV1(createIteratorFromString(code));
-    lexer.tokenize();
-    List<Token> tokens = lexer.getTokens();
+  @Test
+  public void testAssignment() {
+    ExecutionVisitor visitor = createVisitor();
+    ProgramNode program = new ProgramNode();
 
-    Parser parser = new Parser();
-    ProgramNode program = parser.parse(tokens);
+    // Declare and assign: let x = 5;
+    LexicalRange range = new LexicalRange(0, 0, 0);
+    IdentifierNode id = new IdentifierNode(range, range, "x");
+    LiteralNumberNode init = new LiteralNumberNode(range, range, 5.0);
+    VariableDeclarationNode varDecl =
+        new VariableDeclarationNode(range, range, id, Type.NUMBER, Kind.LET, init);
+    program.addStatement(varDecl);
 
-    VariableContext variableContext =
-        new VariableContext(
-            new java.util.HashMap<>(),
-            new java.util.HashMap<>(),
-            new java.util.HashMap<>(),
-            new java.util.HashSet<>());
-    InterpreterReader reader =
-        new InterpreterReader(variableContext, new java.util.Stack<>(), new java.util.Stack<>());
-    ExecutionVisitor visitor = new ExecutionVisitor(reader);
+    // Update x = 10;
+    AssignmentNode assignment =
+        new AssignmentNode(range, range, "=", id, new LiteralNumberNode(range, range, 10.0));
+    program.addStatement(assignment);
 
-    String actualOutput = getOutputFromInterpreter(() -> visitor.visit(program));
-    return actualOutput;
+    visitor.visit(program);
+
+    VariableContext variableContext = visitor.getInventory().getVariableContext();
+    assertTrue(variableContext.hasNumberVariable("x"));
+    assertEquals(10.0, variableContext.getNumberVariable("x"));
+  }
+
+  @Test
+  public void testIfStatementTrueBranch() {
+    ExecutionVisitor visitor = createVisitor();
+    ProgramNode program = new ProgramNode();
+
+    // Declare let condition = true;
+    LexicalRange range = new LexicalRange(0, 0, 0);
+    IdentifierNode idCondition = new IdentifierNode(range, range, "condition");
+    LiteralBooleanNode initCondition = new LiteralBooleanNode(range, range, true);
+    VariableDeclarationNode varDeclCondition =
+        new VariableDeclarationNode(
+            range, range, idCondition, Type.BOOLEAN, Kind.LET, initCondition);
+    program.addStatement(varDeclCondition);
+
+    // If condition is true, execute then branch (let x = 5;)
+    IdentifierNode id = new IdentifierNode(range, range, "x");
+    LiteralNumberNode init = new LiteralNumberNode(range, range, 5.0);
+    VariableDeclarationNode thenDecl =
+        new VariableDeclarationNode(range, range, id, Type.NUMBER, Kind.LET, init);
+    BlockNode thenBlock = new BlockNode(range, range, List.of(thenDecl));
+    BlockNode elseBlock = null; // No else block
+    IfStatementNode ifStatement =
+        new IfStatementNode(range, range, idCondition, thenBlock, elseBlock);
+    program.addStatement(ifStatement);
+
+    visitor.visit(program);
+
+    VariableContext variableContext = visitor.getInventory().getVariableContext();
+    assertTrue(!variableContext.hasNumberVariable("x"));
+    assertEquals(null, visitor.getInventory().getTemporaryContext());
   }
 }

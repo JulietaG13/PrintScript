@@ -1,5 +1,7 @@
 package edu.utils;
 
+import static edu.InterpreterFactory.createInterpreterV1;
+import static edu.InterpreterFactory.createInterpreterV2;
 import static edu.LexerFactory.createLexerV1;
 import static edu.LexerFactory.createLexerV2;
 import static edu.LinterFactory.createLinterV1;
@@ -14,7 +16,6 @@ import edu.Lexer;
 import edu.Linter;
 import edu.Parser;
 import edu.rules.FormatterRuleProvider;
-
 import java.util.Iterator;
 
 public class VersionFactory {
@@ -46,8 +47,15 @@ public class VersionFactory {
     }
   }
 
-  public Interpreter createInterpreter() {
-    return new Interpreter();
+  public Interpreter createInterpreter(Parser parser) {
+    switch (version) {
+      case "1.0":
+        return createInterpreterV1(parser);
+      case "1.1":
+        return createInterpreterV2(parser);
+      default:
+        return null;
+    }
   }
 
   public Linter createLinter(JsonObject rules, Parser parser) {

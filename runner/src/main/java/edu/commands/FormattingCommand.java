@@ -10,7 +10,6 @@ import edu.utils.CommandContext;
 import edu.utils.JsonConfigLoader;
 import edu.utils.ProgramNodeUtil;
 import edu.utils.VersionFactory;
-
 import java.io.IOException;
 
 public class FormattingCommand implements Command {

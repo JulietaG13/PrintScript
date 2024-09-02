@@ -1,11 +1,10 @@
 package edu.commands;
 
 import edu.Interpreter;
-import edu.ast.ProgramNode;
+import edu.Parser;
 import edu.utils.CommandContext;
 import edu.utils.ProgramNodeUtil;
 import edu.utils.VersionFactory;
-
 import java.io.IOException;
 
 public class ExecutionCommand implements Command {
@@ -21,10 +20,9 @@ public class ExecutionCommand implements Command {
   }
 
   public void run() throws IOException {
-    ProgramNode programNode = ProgramNodeUtil.getProgramNode(sourceFile, version);
-    Interpreter interpreter = versionFactory.createInterpreter();
-    interpreter.interpret(programNode);
-    commandContext.setProgramNode(programNode);
+    Parser parser = ProgramNodeUtil.getParser(sourceFile, version);
+    Interpreter interpreter = versionFactory.createInterpreter(parser);
+    interpreter.interpret();
   }
 
   public CommandContext getCommandContext() {
