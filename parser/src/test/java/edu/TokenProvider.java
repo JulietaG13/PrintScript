@@ -2,6 +2,7 @@ package edu;
 
 import edu.tokens.Token;
 import edu.tokens.TokenType;
+import java.math.BigDecimal;
 
 public class TokenProvider {
 
@@ -29,11 +30,7 @@ public class TokenProvider {
     return new Token(TokenType.OPERATOR, operator, null, null);
   }
 
-  public static Token getLiteral(Double literal) {
-    return new Token(TokenType.LITERAL, literal.toString(), null, null);
-  }
-
-  public static Token getLiteral(Integer literal) {
+  public static Token getLiteral(BigDecimal literal) {
     return new Token(TokenType.LITERAL, literal.toString(), null, null);
   }
 

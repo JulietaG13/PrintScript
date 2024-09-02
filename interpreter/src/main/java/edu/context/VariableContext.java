@@ -1,16 +1,17 @@
 package edu.context;
 
+import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
 public class VariableContext implements Context {
-  private final Map<String, Number> numberVariables;
+  private final Map<String, BigDecimal> numberVariables;
   private final Map<String, String> stringVariables;
   private final Map<String, Boolean> booleanVariables;
 
   public VariableContext(
-      Map<String, Number> numberVariables,
+      Map<String, BigDecimal> numberVariables,
       Map<String, String> stringVariables,
       Map<String, Boolean> booleanVariables) {
     this.numberVariables = Collections.unmodifiableMap(new HashMap<>(numberVariables));
@@ -18,16 +19,16 @@ public class VariableContext implements Context {
     this.booleanVariables = Collections.unmodifiableMap(new HashMap<>(booleanVariables));
   }
 
-  public VariableContext setNumberVariable(String name, Number value) {
-    Map<String, Number> newNumberVars = new HashMap<>(numberVariables);
+  public VariableContext setNumberVariable(String name, BigDecimal value) {
+    Map<String, BigDecimal> newNumberVars = new HashMap<>(numberVariables);
     Map<String, String> newStringVars = new HashMap<>(stringVariables);
     Map<String, Boolean> newBooleanVars = new HashMap<>(booleanVariables);
-    newNumberVars.put(name, (Number) value);
+    newNumberVars.put(name, value);
     return new VariableContext(newNumberVars, newStringVars, newBooleanVars);
   }
 
   public VariableContext setStringVariable(String name, String value) {
-    Map<String, Number> newNumberVars = new HashMap<>(numberVariables);
+    Map<String, BigDecimal> newNumberVars = new HashMap<>(numberVariables);
     Map<String, String> newStringVars = new HashMap<>(stringVariables);
     Map<String, Boolean> newBooleanVars = new HashMap<>(booleanVariables);
     newStringVars.put(name, (String) value);
@@ -35,14 +36,14 @@ public class VariableContext implements Context {
   }
 
   public VariableContext setBooleanVariable(String name, Boolean value) {
-    Map<String, Number> newNumberVars = new HashMap<>(numberVariables);
+    Map<String, BigDecimal> newNumberVars = new HashMap<>(numberVariables);
     Map<String, String> newStringVars = new HashMap<>(stringVariables);
     Map<String, Boolean> newBooleanVars = new HashMap<>(booleanVariables);
     newBooleanVars.put(name, (Boolean) value);
     return new VariableContext(newNumberVars, newStringVars, newBooleanVars);
   }
 
-  public Number getNumberVariable(String name) {
+  public BigDecimal getNumberVariable(String name) {
     if (!hasNumberVariable(name)) {
       throw new RuntimeException("Number type variable not found: " + name);
     }
@@ -75,7 +76,7 @@ public class VariableContext implements Context {
     return booleanVariables.containsKey(id);
   }
 
-  public Map<String, Number> getNumberVariables() {
+  public Map<String, BigDecimal> getNumberVariables() {
     return numberVariables;
   }
 
@@ -88,8 +89,8 @@ public class VariableContext implements Context {
   }
 
   public VariableContext write(String name, Object value) {
-    if (value instanceof Number) {
-      return setNumberVariable(name, (Number) value);
+    if (value instanceof BigDecimal) {
+      return setNumberVariable(name, (BigDecimal) value);
     } else if (value instanceof String) {
       return setStringVariable(name, (String) value);
     } else if (value instanceof Boolean) {

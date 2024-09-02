@@ -16,6 +16,7 @@ import edu.ast.expressions.LiteralStringNode;
 import edu.ast.interfaces.StatementNode;
 import edu.ast.statements.ExpressionStatementNode;
 import edu.tokens.Token;
+import java.math.BigDecimal;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 
@@ -73,7 +74,7 @@ public class FunctionTest {
   public void twoArgs() {
     String func = "println";
     String arg1 = "hola";
-    Double arg2 = 123.0;
+    BigDecimal arg2 = new BigDecimal(123.0);
 
     List<Token> input =
         List.of(

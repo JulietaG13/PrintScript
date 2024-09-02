@@ -7,6 +7,7 @@ import edu.inventory.Inventory;
 import edu.reader.InterpreterReader;
 import edu.rules.Rule;
 import edu.rules.RuleResult;
+import java.math.BigDecimal;
 
 public class VerifyCorrectTypeAssignmentRule implements Rule {
 
@@ -29,7 +30,7 @@ public class VerifyCorrectTypeAssignmentRule implements Rule {
     boolean result = true;
     switch (varNode.type()) {
       case NUMBER:
-        result = value instanceof Number;
+        result = value instanceof BigDecimal;
         break;
       case STRING:
         result = value instanceof String;

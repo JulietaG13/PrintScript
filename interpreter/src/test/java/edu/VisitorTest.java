@@ -20,6 +20,7 @@ import edu.inventory.Inventory;
 import edu.reader.InterpreterReader;
 import edu.rules.RuleProviderV2;
 import edu.visitor.ExecutionVisitor;
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -45,7 +46,7 @@ public class VisitorTest {
     // Create variable declaration: let x = 5;
     LexicalRange range = new LexicalRange(0, 0, 0);
     IdentifierNode id = new IdentifierNode(range, range, "x");
-    LiteralNumberNode init = new LiteralNumberNode(range, range, 5.0);
+    LiteralNumberNode init = new LiteralNumberNode(range, range, new BigDecimal(5.0));
     VariableDeclarationNode varDecl =
         new VariableDeclarationNode(range, range, id, Type.NUMBER, Kind.LET, init);
     program.addStatement(varDecl);
@@ -54,7 +55,7 @@ public class VisitorTest {
 
     VariableContext variableContext = visitor.getInventory().getVariableContext();
     assertTrue(variableContext.hasNumberVariable("x"));
-    assertEquals(5.0, variableContext.getNumberVariable("x"));
+    assertEquals(new BigDecimal(5.0), variableContext.getNumberVariable("x"));
   }
 
   @Test
@@ -65,21 +66,22 @@ public class VisitorTest {
     // Declare and assign: let x = 5;
     LexicalRange range = new LexicalRange(0, 0, 0);
     IdentifierNode id = new IdentifierNode(range, range, "x");
-    LiteralNumberNode init = new LiteralNumberNode(range, range, 5.0);
+    LiteralNumberNode init = new LiteralNumberNode(range, range, new BigDecimal(5.0));
     VariableDeclarationNode varDecl =
         new VariableDeclarationNode(range, range, id, Type.NUMBER, Kind.LET, init);
     program.addStatement(varDecl);
 
     // Update x = 10;
     AssignmentNode assignment =
-        new AssignmentNode(range, range, "=", id, new LiteralNumberNode(range, range, 10.0));
+        new AssignmentNode(
+            range, range, "=", id, new LiteralNumberNode(range, range, new BigDecimal(10.0)));
     program.addStatement(assignment);
 
     visitor.visit(program);
 
     VariableContext variableContext = visitor.getInventory().getVariableContext();
     assertTrue(variableContext.hasNumberVariable("x"));
-    assertEquals(10.0, variableContext.getNumberVariable("x"));
+    assertEquals(new BigDecimal(10), variableContext.getNumberVariable("x"));
   }
 
   @Test
@@ -98,7 +100,7 @@ public class VisitorTest {
 
     // If condition is true, execute then branch (let x = 5;)
     IdentifierNode id = new IdentifierNode(range, range, "x");
-    LiteralNumberNode init = new LiteralNumberNode(range, range, 5.0);
+    LiteralNumberNode init = new LiteralNumberNode(range, range, new BigDecimal(5.0));
     VariableDeclarationNode thenDecl =
         new VariableDeclarationNode(range, range, id, Type.NUMBER, Kind.LET, init);
     BlockNode thenBlock = new BlockNode(range, range, List.of(thenDecl));

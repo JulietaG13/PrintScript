@@ -13,6 +13,7 @@ import edu.ast.interfaces.StatementNode;
 import edu.ast.statements.Kind;
 import edu.ast.statements.Type;
 import edu.ast.statements.VariableDeclarationNode;
+import java.math.BigDecimal;
 import org.junit.jupiter.api.Test;
 
 public class ConstTest {
@@ -21,7 +22,7 @@ public class ConstTest {
   public void initialNumberValue() {
     String input = "const var : number = 123;";
     String var = "var";
-    double value = 123;
+    BigDecimal value = new BigDecimal(123);
 
     Lexer lexer = LexerFactory.createLexerV2(createIteratorFromString(input));
     Parser parser = ParserFactory.createParserV2(lexer);

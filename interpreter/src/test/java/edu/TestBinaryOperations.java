@@ -14,6 +14,7 @@ import edu.visitor.ExecutionVisitor;
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -66,7 +67,7 @@ public class TestBinaryOperations {
     String code = "let age: string = \"I am \" + 20 + \" years old\";";
     ProgramNode program = compile(code);
     VariableContext variableContext = interpret(program);
-    assertEquals("I am 20.0 years old", variableContext.getStringVariable("age"));
+    assertEquals("I am 20 years old", variableContext.getStringVariable("age"));
   }
 
   @Test
@@ -75,7 +76,7 @@ public class TestBinaryOperations {
     ProgramNode program = compile(code);
     VariableContext variableContext = interpret(program);
     assertTrue(variableContext.hasNumberVariable("age"));
-    assertEquals(15.0, variableContext.getNumberVariable("age"));
+    assertEquals(new BigDecimal(15), variableContext.getNumberVariable("age"));
   }
 
   @Test
@@ -83,7 +84,7 @@ public class TestBinaryOperations {
     String code = "println(10 + 5);";
     ProgramNode program = compile(code);
     String output = getPrintedInfo(program);
-    assertEquals(15.0, Double.parseDouble(output));
+    assertEquals("15", output);
   }
 
   @Test
@@ -91,7 +92,7 @@ public class TestBinaryOperations {
     String code = "let age: number = 10; println(age + 5);";
     ProgramNode program = compile(code);
     String output = getPrintedInfo(program);
-    assertEquals(15.0, Double.parseDouble(output));
+    assertEquals("15", output);
   }
 
   @Test
@@ -107,7 +108,7 @@ public class TestBinaryOperations {
     String code = "println(\"I am \" + 20 + \" years old\");";
     ProgramNode program = compile(code);
     String printedInfo = getPrintedInfo(program);
-    assertEquals("I am 20.0 years old", printedInfo);
+    assertEquals("I am 20 years old", printedInfo);
   }
 
   private ProgramNode compile(String code) {
@@ -123,7 +124,7 @@ public class TestBinaryOperations {
     String code = "let age: number = 20; println(\"I am \" + age + \" years old\");";
     ProgramNode program = compile(code);
     String printedInfo = getPrintedInfo(program);
-    assertEquals("I am 20.0 years old", printedInfo);
+    assertEquals("I am 20 years old", printedInfo);
   }
 
   @Test
@@ -133,7 +134,7 @@ public class TestBinaryOperations {
             + "string =\" years old\"; println(intro + age + measures);";
     ProgramNode program = compile(code);
     String printedInfo = getPrintedInfo(program);
-    assertEquals("I am 20.0 years old", printedInfo);
+    assertEquals("I am 20 years old", printedInfo);
   }
 
   @Test
@@ -149,7 +150,7 @@ public class TestBinaryOperations {
     String code = "let age: number = 5 + 2 * 5;";
     ProgramNode program = compile(code);
     VariableContext info = interpret(program);
-    assertEquals(15.0, info.getNumberVariable("age"));
+    assertEquals(new BigDecimal(15), info.getNumberVariable("age"));
   }
 
   @Test
@@ -157,6 +158,6 @@ public class TestBinaryOperations {
     String code = "let age: number = 5 * 2 + 5;";
     ProgramNode program = compile(code);
     VariableContext info = interpret(program);
-    assertEquals(15.0, info.getNumberVariable("age"));
+    assertEquals(new BigDecimal(15), info.getNumberVariable("age"));
   }
 }

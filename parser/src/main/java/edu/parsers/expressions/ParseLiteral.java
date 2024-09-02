@@ -12,6 +12,7 @@ import edu.ast.statements.Type;
 import edu.parsers.ExpressionParser;
 import edu.tokens.Token;
 import edu.utils.TypeProvider;
+import java.math.BigDecimal;
 import java.util.List;
 
 public class ParseLiteral implements ExpressionParser {
@@ -32,7 +33,7 @@ public class ParseLiteral implements ExpressionParser {
     Type type = TypeProvider.getTypeFromContent(content);
 
     return switch (type) {
-      case NUMBER -> new LiteralNumberNode(start, end, Double.parseDouble(content));
+      case NUMBER -> new LiteralNumberNode(start, end, new BigDecimal(content));
       case STRING -> new LiteralStringNode(start, end, stripQuotes(content));
       case BOOLEAN -> new LiteralBooleanNode(start, end, Boolean.parseBoolean(content));
       default -> throw new RuntimeException();

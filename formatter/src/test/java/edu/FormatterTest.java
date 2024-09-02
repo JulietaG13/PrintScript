@@ -102,10 +102,10 @@ public class FormatterTest {
   public void defaultBinaryOperation() {
     String input = "let age: number = 10; println(age+5);";
     String expected =
-        "let age : number = 10.0;"
+        "let age : number = 10;"
             + lineSeparator
             + lineSeparator
-            + "println(age + 5.0);"
+            + "println(age + 5);"
             + lineSeparator;
 
     ProgramNode program = getAst(input);
@@ -171,8 +171,7 @@ public class FormatterTest {
   @Test
   public void noExtraSpacesBinaryOperation() {
     String input = "let age: number = 10; println(age+5);";
-    String expected =
-        "let age:number=10.0;" + lineSeparator + "println(age + 5.0);" + lineSeparator;
+    String expected = "let age:number=10;" + lineSeparator + "println(age + 5);" + lineSeparator;
 
     ProgramNode program = getAst(input);
     Formatter defaultFormatter = new Formatter(FormatterRuleParser.parseRules(noExtraSpaceRules));

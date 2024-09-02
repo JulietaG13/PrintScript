@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import edu.context.VariableContext;
+import java.math.BigDecimal;
 import java.util.HashMap;
 import org.junit.jupiter.api.Test;
 
@@ -15,10 +16,10 @@ public class VariableContextTest {
     VariableContext context =
         new VariableContext(new HashMap<>(), new HashMap<>(), new HashMap<>());
 
-    context = context.setNumberVariable("x", 42);
+    context = context.setNumberVariable("x", new BigDecimal(42));
 
     assertTrue(context.hasNumberVariable("x"));
-    assertEquals(42, context.getNumberVariable("x"));
+    assertEquals(new BigDecimal(42), context.getNumberVariable("x"));
   }
 
   @Test
@@ -93,10 +94,10 @@ public class VariableContextTest {
     VariableContext context =
         new VariableContext(new HashMap<>(), new HashMap<>(), new HashMap<>());
 
-    context = context.write("numVar", 99);
+    context = context.write("numVar", new BigDecimal(99));
 
     assertTrue(context.hasNumberVariable("numVar"));
-    assertEquals(99, context.getNumberVariable("numVar"));
+    assertEquals(new BigDecimal(99), context.getNumberVariable("numVar"));
   }
 
   @Test

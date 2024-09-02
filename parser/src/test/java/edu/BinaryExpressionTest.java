@@ -14,6 +14,7 @@ import edu.ast.expressions.IdentifierNode;
 import edu.ast.expressions.LiteralNumberNode;
 import edu.ast.interfaces.ExpressionNode;
 import edu.tokens.Token;
+import java.math.BigDecimal;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 
@@ -22,8 +23,8 @@ public class BinaryExpressionTest {
   @Test
   public void simpleLiterals() { // 3 + 44
     String op = "+";
-    int left = 3;
-    int right = 44;
+    BigDecimal left = new BigDecimal(3);
+    BigDecimal right = new BigDecimal(44);
     List<Token> input = List.of(getLiteral(left), getOperator(op), getLiteral(right));
 
     ExpressionNode exp = new Parser().parseExpression(input);
@@ -39,15 +40,15 @@ public class BinaryExpressionTest {
     LiteralNumberNode leftExp = (LiteralNumberNode) binaryExp.left();
     LiteralNumberNode rightExp = (LiteralNumberNode) binaryExp.right();
 
-    assertEquals(left, leftExp.value());
-    assertEquals(right, rightExp.value());
+    assertEquals(0, left.compareTo(leftExp.value()));
+    assertEquals(0, right.compareTo(rightExp.value()));
   }
 
   @Test
   public void simpleLiteralsExtraParens() { // (3 + 44)
     String op = "+";
-    int left = 3;
-    int right = 44;
+    BigDecimal left = new BigDecimal(3);
+    BigDecimal right = new BigDecimal(44);
     List<Token> input =
         List.of(
             getOpenParen(), getLiteral(left), getOperator(op), getLiteral(right), getCloseParen());
@@ -72,9 +73,9 @@ public class BinaryExpressionTest {
   @Test
   public void sumThreeLiterals() { // 3 + 44 + 4.5
     String op = "+";
-    int fst = 3;
-    int sec = 44;
-    double thr = 4.5;
+    BigDecimal fst = new BigDecimal(3);
+    BigDecimal sec = new BigDecimal(44);
+    BigDecimal thr = new BigDecimal(4.5);
     List<Token> input =
         List.of(
             getLiteral(fst), getOperator(op), getLiteral(sec), getOperator(op), getLiteral(thr));
@@ -109,11 +110,11 @@ public class BinaryExpressionTest {
   public void manyLiterals() { // a * (b + c) + d * e
     String sum = "+";
     String prod = "*";
-    int a = 1;
-    int b = 2;
-    int c = 3;
-    int d = 4;
-    int e = 5;
+    BigDecimal a = new BigDecimal(1);
+    BigDecimal b = new BigDecimal(2);
+    BigDecimal c = new BigDecimal(3);
+    BigDecimal d = new BigDecimal(4);
+    BigDecimal e = new BigDecimal(5);
 
     List<Token> input =
         List.of(
@@ -180,8 +181,8 @@ public class BinaryExpressionTest {
     String op = "-";
     String f1 = "func1";
     String arg1 = "var1";
-    int n1 = 321;
-    int n2 = 256;
+    BigDecimal n1 = new BigDecimal(321);
+    BigDecimal n2 = new BigDecimal(256);
     String f2 = "func2";
 
     List<Token> input =

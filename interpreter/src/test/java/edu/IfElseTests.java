@@ -124,7 +124,7 @@ public class IfElseTests {
 
     String output = outputStream.toString().trim();
 
-    assertEquals("4.0", output, "Expected output to be 4.");
+    assertEquals("4", output, "Expected output to be 4.");
   }
 
   @Test

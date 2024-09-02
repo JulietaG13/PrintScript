@@ -10,6 +10,7 @@ import edu.reader.ReaderResult;
 import edu.rules.Rule;
 import edu.rules.RuleResult;
 import edu.utils.DeclarationHelperResult;
+import java.math.BigDecimal;
 import java.util.List;
 
 public class DeclarationHelper {
@@ -59,7 +60,7 @@ public class DeclarationHelper {
   private Object getDefaultForType(Type type) {
     switch (type) {
       case NUMBER:
-        return 0;
+        return new BigDecimal(0);
       case STRING:
         return "";
       case BOOLEAN:

@@ -8,6 +8,7 @@ import edu.handlers.StatementHandler;
 import edu.inventory.Inventory;
 import edu.reader.InterpreterReader;
 import edu.utils.HandlerResult;
+import java.math.BigDecimal;
 
 public class IfStatementHandler implements StatementHandler {
 
@@ -41,8 +42,8 @@ public class IfStatementHandler implements StatementHandler {
       Object value = entry.getValue();
 
       if (variableContext.hasNumberVariable(key)) {
-        if (value instanceof Number) {
-          variableContext = variableContext.setNumberVariable(key, (Number) value);
+        if (value instanceof BigDecimal) {
+          variableContext = variableContext.setNumberVariable(key, (BigDecimal) value);
         } else {
           throw new RuntimeException(
               "Type mismatch: Expected a Number for variable '"

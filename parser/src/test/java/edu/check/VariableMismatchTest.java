@@ -14,6 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import edu.Parser;
 import edu.tokens.Token;
+import java.math.BigDecimal;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 
@@ -22,7 +23,7 @@ class VariableMismatchTest {
   @Test
   public void mismatchSimpleExpectedString() { // let a : String = 123.45
     String var = "var";
-    double value = 123.45;
+    BigDecimal value = new BigDecimal(123.45);
 
     List<Token> input =
         List.of(
@@ -74,13 +75,13 @@ class VariableMismatchTest {
             getColon(),
             getString(),
             getEquals(),
-            getLiteral(123.45),
+            getLiteral(new BigDecimal(123.45)),
             getOperator("+"),
-            getLiteral(1),
+            getLiteral(new BigDecimal(1)),
             getOperator("+"),
-            getLiteral(45),
+            getLiteral(new BigDecimal(45)),
             getOperator("*"),
-            getLiteral(2),
+            getLiteral(new BigDecimal(2)),
             getSemicolon());
 
     assertThrows(
@@ -101,13 +102,13 @@ class VariableMismatchTest {
             getColon(),
             getNumber(),
             getEquals(),
-            getLiteral(123.45),
+            getLiteral(new BigDecimal(123.45)),
             getOperator("*"),
-            getLiteral(1),
+            getLiteral(new BigDecimal(123.45)),
             getOperator("+"),
             getLiteral("hola"),
             getOperator("+"),
-            getLiteral(2),
+            getLiteral(new BigDecimal(2)),
             getSemicolon());
 
     assertThrows(
@@ -128,13 +129,13 @@ class VariableMismatchTest {
             getColon(),
             getString(),
             getEquals(),
-            getLiteral(123.45),
+            getLiteral(new BigDecimal(123.45)),
             getOperator("*"),
-            getLiteral(1),
+            getLiteral(new BigDecimal(1)),
             getOperator("+"),
             getLiteral("hola"),
             getOperator("+"),
-            getLiteral(2),
+            getLiteral(new BigDecimal(2)),
             getSemicolon());
 
     assertDoesNotThrow(

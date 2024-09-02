@@ -14,6 +14,7 @@ import edu.ast.expressions.LiteralStringNode;
 import edu.ast.interfaces.StatementNode;
 import edu.ast.statements.AssignmentNode;
 import edu.tokens.Token;
+import java.math.BigDecimal;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 
@@ -22,7 +23,7 @@ public class AssignationTest {
   @Test
   public void simpleAssign() { // var = 4
     String var = "var";
-    int value = 4;
+    BigDecimal value = new BigDecimal(4);
     List<Token> input = List.of(getIdentifier(var), getEquals(), getLiteral(value), getSemicolon());
 
     ProgramNode root = new Parser().parse(input, true);
@@ -42,7 +43,7 @@ public class AssignationTest {
   public void expressionAssign() { // var = "hola" + 5
     String var = "var";
     String str = "hola";
-    int number = 5;
+    BigDecimal number = new BigDecimal(5);
     String op = "+";
     List<Token> input =
         List.of(

@@ -15,6 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import edu.Parser;
 import edu.tokens.Token;
+import java.math.BigDecimal;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 
@@ -23,7 +24,7 @@ class VariableNotDeclaredTest {
   @Test
   public void simpleNotDeclared() { // var = 123.45
     String var = "var";
-    double value = 123.45;
+    BigDecimal value = new BigDecimal(123.45);
 
     List<Token> input = List.of(getIdentifier(var), getEquals(), getLiteral(value), getSemicolon());
 
@@ -36,7 +37,7 @@ class VariableNotDeclaredTest {
 
   @Test
   public void similarNames() { // let Var : Number; var = 123.45;
-    double value = 123.45;
+    BigDecimal value = new BigDecimal(123.45);
 
     List<Token> input =
         List.of(
@@ -60,7 +61,7 @@ class VariableNotDeclaredTest {
   @Test
   public void notDeclaredInExpression() { // let var : Number; var = 123.45 + 2 * other;
     String var = "var";
-    double value = 123.45;
+    BigDecimal value = new BigDecimal(123.45);
 
     List<Token> input =
         List.of(
@@ -73,7 +74,7 @@ class VariableNotDeclaredTest {
             getEquals(),
             getLiteral(value),
             getOperator("+"),
-            getLiteral(2),
+            getLiteral(new BigDecimal(2)),
             getOperator("*"),
             getIdentifier("other"),
             getSemicolon());

@@ -12,6 +12,7 @@ import edu.inventory.Inventory;
 import edu.reader.InterpreterReader;
 import edu.rules.RuleResult;
 import edu.rules.assignments.VerifyTypeCompatibilityRule;
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,11 +25,12 @@ public class VerifyTypeCompatibilityRuleTest {
     // Setup
     LexicalRange range = new LexicalRange(0, 0, 0);
     IdentifierNode id = new IdentifierNode(range, range, "myVar");
-    LiteralNumberNode value = new LiteralNumberNode(range, range, 42.0);
+    LiteralNumberNode value = new LiteralNumberNode(range, range, new BigDecimal(42.0));
     AssignmentNode assignmentNode = new AssignmentNode(range, range, "=", id, value);
 
     VariableContext variableContext =
-        new VariableContext(new HashMap<>(Map.of("myVar", 10)), new HashMap<>(), new HashMap<>());
+        new VariableContext(
+            new HashMap<>(Map.of("myVar", new BigDecimal(10))), new HashMap<>(), new HashMap<>());
     Inventory inventory = new Inventory(List.of(variableContext));
     InterpreterReader reader =
         new InterpreterReader(new java.util.Stack<>(), new java.util.Stack<>());
@@ -52,7 +54,8 @@ public class VerifyTypeCompatibilityRuleTest {
     AssignmentNode assignmentNode = new AssignmentNode(range, range, "=", id, value);
 
     VariableContext variableContext =
-        new VariableContext(new HashMap<>(Map.of("myVar", 10)), new HashMap<>(), new HashMap<>());
+        new VariableContext(
+            new HashMap<>(Map.of("myVar", new BigDecimal(10))), new HashMap<>(), new HashMap<>());
     Inventory inventory = new Inventory(List.of(variableContext));
     InterpreterReader reader =
         new InterpreterReader(new java.util.Stack<>(), new java.util.Stack<>());

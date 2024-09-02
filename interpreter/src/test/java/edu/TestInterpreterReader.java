@@ -7,6 +7,7 @@ import edu.context.VariableContext;
 import edu.inventory.Inventory;
 import edu.reader.InterpreterReader;
 import edu.reader.ReaderResult;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -55,11 +56,12 @@ public class TestInterpreterReader {
     identifiers.push("x");
 
     Stack<Object> literals = new Stack<>();
-    VariableContext variables = new VariableContext(Map.of("x", 10), Map.of(), Map.of());
+    VariableContext variables =
+        new VariableContext(Map.of("x", new BigDecimal(10)), Map.of(), Map.of());
     Inventory inventory = new Inventory(new ArrayList<>(List.of(variables)));
     InterpreterReader interpreterReader = new InterpreterReader(identifiers, literals);
     ReaderResult result = interpreterReader.read(inventory);
 
-    assertEquals(10, result.getValue());
+    assertEquals(new BigDecimal(10), result.getValue());
   }
 }

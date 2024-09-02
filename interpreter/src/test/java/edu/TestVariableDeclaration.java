@@ -10,6 +10,7 @@ import edu.context.VariableContext;
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.math.BigDecimal;
 import java.util.Iterator;
 import org.junit.jupiter.api.Test;
 
@@ -32,7 +33,7 @@ public class TestVariableDeclaration {
     interpreter.interpret();
     VariableContext variableContext = interpreter.getVisitor().getInventory().getVariableContext();
     assertTrue(variableContext.hasNumberVariable("result"));
-    assertEquals(5.0, variableContext.getNumberVariable("result"));
+    assertEquals(new BigDecimal(5), variableContext.getNumberVariable("result"));
   }
 
   @Test
@@ -57,13 +58,13 @@ public class TestVariableDeclaration {
     String output = outputStream.toString().trim();
 
     // Expected output
-    String expectedOutput = "I am 20.0 years old";
+    String expectedOutput = "I am 20 years old";
 
     // Assertions
     assertEquals(expectedOutput, output);
 
     VariableContext variableContext = interpreter.getVisitor().getInventory().getVariableContext();
     assertTrue(variableContext.hasNumberVariable("age"));
-    assertEquals(20.0, variableContext.getNumberVariable("age"));
+    assertEquals(new BigDecimal(20), variableContext.getNumberVariable("age"));
   }
 }

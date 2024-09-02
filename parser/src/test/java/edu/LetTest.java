@@ -19,6 +19,7 @@ import edu.ast.interfaces.StatementNode;
 import edu.ast.statements.Type;
 import edu.ast.statements.VariableDeclarationNode;
 import edu.tokens.Token;
+import java.math.BigDecimal;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 
@@ -47,7 +48,7 @@ public class LetTest {
   @Test
   public void initialNumberValue() {
     String var = "var";
-    double value = 123.45;
+    BigDecimal value = new BigDecimal(123.45);
 
     List<Token> input =
         List.of(

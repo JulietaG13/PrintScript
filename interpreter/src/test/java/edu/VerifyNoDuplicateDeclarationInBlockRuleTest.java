@@ -10,6 +10,7 @@ import edu.inventory.Inventory;
 import edu.reader.InterpreterReader;
 import edu.rules.RuleResult;
 import edu.rules.declarations.VerifyNoDuplicateDeclarationInBlockRule;
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import org.junit.jupiter.api.Assertions;
@@ -75,7 +76,8 @@ public class VerifyNoDuplicateDeclarationInBlockRuleTest {
   @Test
   public void testDuplicateDeclarationInContextThrowsException() {
     // Setup a variable context with "myVar" already defined
-    VariableContext variableContext = inventory.getVariableContext().setNumberVariable("myVar", 42);
+    VariableContext variableContext =
+        inventory.getVariableContext().setNumberVariable("myVar", new BigDecimal(42));
     inventory = new Inventory(List.of(variableContext, inventory.getTemporaryContext()));
 
     // Act & Assert
