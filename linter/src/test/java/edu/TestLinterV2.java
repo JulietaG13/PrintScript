@@ -24,24 +24,21 @@ public class TestLinterV2 {
 
   static {
     nonExpression = new JsonObject();
-    nonExpression.addProperty("lower_camel_case", true);
-    nonExpression.addProperty("read_input_non_expressions", true);
+    nonExpression.addProperty("identifier_format", "camel case");
+    nonExpression.addProperty("mandatory-variable-or-literal-in-readInput", true);
 
     empty = new JsonObject();
 
     snakeCase = new JsonObject();
-    snakeCase.addProperty("snake_case", true);
+    snakeCase.addProperty("identifier_format", "snake case");
 
     upperCamelCase = new JsonObject();
-    upperCamelCase.addProperty("upper_camel_case", true);
+    upperCamelCase.addProperty("identifier_format", "camel case");
 
     lowerCamelCase = new JsonObject();
-    lowerCamelCase.addProperty("lower_camel_case", true);
+    lowerCamelCase.addProperty("identifier_format", "camel case");
 
     allCases = new JsonObject();
-    allCases.addProperty("upper_camel_case", true);
-    allCases.addProperty("lower_camel_case", true);
-    allCases.addProperty("snake_case", true);
   }
 
   private Iterator<String> createIteratorFromString(String code) {
@@ -81,20 +78,6 @@ public class TestLinterV2 {
   }
 
   @Test
-  public void testSnakeCaseVariableDeclarationError() {
-    String code = "const snake_case_variable : string;";
-    Linter linter = createLinter(code, empty);
-    Report report = linter.analyze();
-    assertFalse(report.getReport().isEmpty());
-    List<String> messages = report.getMessages();
-    assertEquals(1, messages.size());
-    assertEquals(
-        "Invalid identifier name: snake_case_variable at"
-            + " position LexicalRange(offset=6, line=0, column=6)",
-        messages.get(0));
-  }
-
-  @Test
   public void testUpperCamelCaseVariableDeclaration() {
     String code = "const UpperCamelCase : string;";
     Linter linter = createLinter(code, upperCamelCase);
@@ -103,17 +86,11 @@ public class TestLinterV2 {
   }
 
   @Test
-  public void testUpperCamelCaseVariableDeclarationError() {
+  public void testUpperCamelCaseVariableDeclarationEmpty() {
     String code = "const UpperCamelCase : string;";
     Linter linter = createLinter(code, empty);
     Report report = linter.analyze();
-    assertFalse(report.getReport().isEmpty());
-    List<String> messages = report.getMessages();
-    assertEquals(1, messages.size());
-    assertEquals(
-        "Invalid identifier name: UpperCamelCase "
-            + "at position LexicalRange(offset=6, line=0, column=6)",
-        messages.get(0));
+    assertTrue(report.getReport().isEmpty());
   }
 
   @Test
@@ -125,17 +102,11 @@ public class TestLinterV2 {
   }
 
   @Test
-  public void testLowerCaseVariableDeclarationError() {
+  public void testLowerCaseVariableDeclarationEmpty() {
     String code = "const lowerCamelCase : string;";
     Linter linter = createLinter(code, empty);
     Report report = linter.analyze();
-    assertFalse(report.getReport().isEmpty());
-    List<String> messages = report.getMessages();
-    assertEquals(1, messages.size());
-    assertEquals(
-        "Invalid identifier name: lowerCamelCase "
-            + "at position LexicalRange(offset=6, line=0, column=6)",
-        messages.get(0));
+    assertTrue(report.getReport().isEmpty());
   }
 
   @Test

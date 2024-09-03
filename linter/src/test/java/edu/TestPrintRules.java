@@ -19,11 +19,10 @@ public class TestPrintRules {
 
   static {
     noRules = new JsonObject();
-    noRules.addProperty("lower_camel_case", true);
 
     nonExpression = new JsonObject();
-    nonExpression.addProperty("lower_camel_case", true);
-    nonExpression.addProperty("println_non_expressions", true);
+    nonExpression.addProperty("identifier_format", "camel case");
+    nonExpression.addProperty("mandatory-variable-or-literal-in-println", true);
   }
 
   private Iterator<String> createIteratorFromString(String code) {

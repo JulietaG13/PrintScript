@@ -23,12 +23,23 @@ public class RuleParserLinter {
   public static RuleProviderLinter parseRules(JsonObject rules) {
     Set<IdentifierType> possibleIdentifiers = new HashSet<>();
     Set<FunctionRule> functionRules = new HashSet<>();
+    if (rules.keySet().contains("identifier_format")) {
+      String value = rules.get("identifier_format").getAsString();
+      if (rulesPossibleIdentifiers.containsKey(value)) {
+        possibleIdentifiers.add(rulesPossibleIdentifiers.get(value));
+      } else {
+        throw new RuntimeException("Invalid identifier format: " + value);
+      }
+    } else {
+      possibleIdentifiers.addAll(rulesPossibleIdentifiers.values());
+    }
+
     for (String key : rules.keySet()) {
-      if (rules.has(key) && rules.get(key).getAsBoolean()) {
-        if (rulesPossibleIdentifiers.containsKey(key)) {
-          possibleIdentifiers.add(rulesPossibleIdentifiers.get(key));
-        } else if (rulesFunctionCalls.containsKey(key)) {
+      if (!key.equals("identifier_format")) {
+        if (rulesFunctionCalls.containsKey(key) && rules.get(key).getAsBoolean()) {
           functionRules.add(rulesFunctionCalls.get(key));
+        } else {
+          throw new RuntimeException("Invalid function rule: " + key);
         }
       }
     }
