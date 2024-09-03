@@ -3,6 +3,7 @@ package edu.commands
 import com.github.ajalt.clikt.core.CliktCommand
 import com.github.ajalt.clikt.parameters.options.option
 import com.github.ajalt.clikt.parameters.options.required
+import edu.FileReader.openFile
 import edu.Runner
 import java.io.IOException
 
@@ -14,7 +15,7 @@ class AnalyzeCommand : CliktCommand(name = "analyze", help = "Analyze the source
     override fun run() {
         val runner = Runner(version)
         try {
-            runner.analyze(sourceFile, configFile)
+            runner.analyze(openFile(sourceFile), configFile)
         } catch (e: IOException) {
             println("Error during analysis: ${e.message}")
         }

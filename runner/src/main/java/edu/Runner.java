@@ -8,6 +8,7 @@ import edu.commands.ValidatorCommand;
 import edu.utils.CommandContext;
 import edu.utils.VersionFactory;
 import java.io.IOException;
+import java.util.Iterator;
 
 public class Runner {
   public final VersionFactory versionFactory;
@@ -20,23 +21,23 @@ public class Runner {
     this.commandContext = new CommandContext();
   }
 
-  public void validate(String sourceFile) throws IOException {
-    Command validatorCommand = new ValidatorCommand(sourceFile, version);
+  public void validate(Iterator<String> fileReader) throws IOException {
+    Command validatorCommand = new ValidatorCommand(fileReader, version);
     validatorCommand.run();
   }
 
-  public void execute(String sourceFile) throws IOException {
-    Command executionCommand = new ExecutionCommand(sourceFile, version);
+  public void execute(Iterator<String> fileReader) throws IOException {
+    Command executionCommand = new ExecutionCommand(fileReader, version);
     executionCommand.run();
   }
 
-  public void format(String sourceFile, String configFile) throws IOException {
-    Command formattingCommand = new FormattingCommand(sourceFile, version, configFile);
+  public void format(Iterator<String> fileReader, String configFile) throws IOException {
+    Command formattingCommand = new FormattingCommand(fileReader, version, configFile);
     formattingCommand.run();
   }
 
-  public void analyze(String sourceFile, String configFile) throws IOException {
-    Command analyzerCommand = new AnalyzerCommand(sourceFile, version, configFile);
+  public void analyze(Iterator<String> fileReader, String configFile) throws IOException {
+    Command analyzerCommand = new AnalyzerCommand(fileReader, version, configFile);
     analyzerCommand.run();
   }
 }

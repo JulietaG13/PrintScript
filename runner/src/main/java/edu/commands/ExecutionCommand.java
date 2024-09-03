@@ -6,21 +6,22 @@ import edu.utils.CommandContext;
 import edu.utils.ProgramNodeUtil;
 import edu.utils.VersionFactory;
 import java.io.IOException;
+import java.util.Iterator;
 
 public class ExecutionCommand implements Command {
   private final CommandContext commandContext = new CommandContext();
-  private final String sourceFile;
+  private final Iterator<String> fileReader;
   private final String version;
   private final VersionFactory versionFactory;
 
-  public ExecutionCommand(String sourceFile, String version) {
-    this.sourceFile = sourceFile;
+  public ExecutionCommand(Iterator<String> fileReader, String version) {
+    this.fileReader = fileReader;
     this.version = version;
     this.versionFactory = new VersionFactory(version);
   }
 
   public void run() throws IOException {
-    Parser parser = ProgramNodeUtil.getParser(sourceFile, version);
+    Parser parser = ProgramNodeUtil.getParser(fileReader, version);
     Interpreter interpreter = versionFactory.createInterpreter(parser);
     interpreter.interpret();
   }

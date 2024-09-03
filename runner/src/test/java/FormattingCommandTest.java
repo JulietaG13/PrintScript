@@ -1,3 +1,5 @@
+import static edu.FileReader.openFile;
+
 import edu.FormatterResult;
 import edu.commands.FormattingCommand;
 import edu.utils.CommandContext;
@@ -9,12 +11,12 @@ public class FormattingCommandTest {
   private final String lineSeparator = System.lineSeparator();
 
   @Test
-  public void testFormattingCommandWithFile() {
+  public void testFormattingCommandWithFile() throws IOException {
     String filePath = "src/test/java/resources/input.txt";
     String rulesPath = "src/test/java/resources/rules.txt";
     String expectedOutput = "let my_cool_variable : string = \"ciclon\";" + lineSeparator;
 
-    FormattingCommand cmd = new FormattingCommand(filePath, "1.0", rulesPath);
+    FormattingCommand cmd = new FormattingCommand(openFile(filePath), "1.0", rulesPath);
     try {
       cmd.run();
     } catch (IOException e) {

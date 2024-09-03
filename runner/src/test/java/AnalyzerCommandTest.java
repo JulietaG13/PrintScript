@@ -1,3 +1,5 @@
+import static edu.FileReader.openFile;
+
 import edu.commands.AnalyzerCommand;
 import edu.utils.CommandContext;
 import java.io.IOException;
@@ -7,7 +9,7 @@ import org.junit.jupiter.api.Test;
 public class AnalyzerCommandTest {
 
   @Test
-  void testAnalyzeCommandWithFile() {
+  void testAnalyzeCommandWithFile() throws IOException {
     String rulesPath = "src/test/java/resources/analysis_rules.txt";
     String filePath = "src/test/java/resources/analysis_input.txt";
 
@@ -19,7 +21,7 @@ public class AnalyzerCommandTest {
             + " - Position: LexicalRange(offset=8, line=0, column=8)\n"
             + " - Content: \"Hello\" + \"World\"";
 
-    AnalyzerCommand analyzerCommand = new AnalyzerCommand(filePath, "1.0", rulesPath);
+    AnalyzerCommand analyzerCommand = new AnalyzerCommand(openFile(filePath), "1.0", rulesPath);
 
     try {
       analyzerCommand.run();

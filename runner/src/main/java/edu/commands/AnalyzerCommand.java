@@ -1,7 +1,5 @@
 package edu.commands;
 
-import static edu.FileReader.openFile;
-
 import com.google.gson.JsonObject;
 import edu.Lexer;
 import edu.Linter;
@@ -11,16 +9,17 @@ import edu.utils.CommandContext;
 import edu.utils.JsonConfigLoader;
 import edu.utils.VersionFactory;
 import java.io.IOException;
+import java.util.Iterator;
 
 public class AnalyzerCommand implements Command {
   private final CommandContext commandContext = new CommandContext();
-  private final String sourceFile;
+  private final Iterator<String> fileReader;
   private final String version;
   private final String configFile;
   private final VersionFactory versionFactory;
 
-  public AnalyzerCommand(String sourceFile, String version, String configFile) {
-    this.sourceFile = sourceFile;
+  public AnalyzerCommand(Iterator<String> fileReader, String version, String configFile) {
+    this.fileReader = fileReader;
     this.version = version;
     this.configFile = configFile;
     this.versionFactory = new VersionFactory(version);
@@ -28,7 +27,7 @@ public class AnalyzerCommand implements Command {
 
   public void run() throws IOException {
     System.out.println("Reading file");
-    Lexer lexer = versionFactory.createLexer(openFile(sourceFile));
+    Lexer lexer = versionFactory.createLexer(fileReader);
     Parser parser = versionFactory.createParser(lexer);
     System.out.println("Parsing completed");
     Linter linter = getLinter(parser);

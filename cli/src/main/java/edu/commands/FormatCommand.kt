@@ -3,6 +3,7 @@ package edu.commands
 import com.github.ajalt.clikt.core.CliktCommand
 import com.github.ajalt.clikt.parameters.options.option
 import com.github.ajalt.clikt.parameters.options.required
+import edu.FileReader.openFile
 import edu.Runner
 import java.io.IOException
 
@@ -14,7 +15,7 @@ class FormatCommand : CliktCommand(name = "format", help = "Format the source fi
     override fun run() {
         val runner = Runner(version)
         try {
-            runner.format(sourceFile, configFile)
+            runner.format(openFile(sourceFile), configFile)
         } catch (e: IOException) {
             println("Error during formatting: ${e.message}")
         }

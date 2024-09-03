@@ -11,16 +11,17 @@ import edu.utils.JsonConfigLoader;
 import edu.utils.ProgramNodeUtil;
 import edu.utils.VersionFactory;
 import java.io.IOException;
+import java.util.Iterator;
 
 public class FormattingCommand implements Command {
   private final CommandContext commandContext = new CommandContext();
-  private final String sourceFile;
+  private final Iterator<String> fileReader;
   private final String version;
   private final String configFile;
   private final VersionFactory versionFactory;
 
-  public FormattingCommand(String sourceFile, String version, String configFile) {
-    this.sourceFile = sourceFile;
+  public FormattingCommand(Iterator<String> fileReader, String version, String configFile) {
+    this.fileReader = fileReader;
     this.version = version;
     this.configFile = configFile;
     this.versionFactory = new VersionFactory(version);
@@ -28,7 +29,7 @@ public class FormattingCommand implements Command {
 
   public void run() throws IOException {
     System.out.println("Reading file");
-    ProgramNode programNode = ProgramNodeUtil.getProgramNode(sourceFile, version);
+    ProgramNode programNode = ProgramNodeUtil.getProgramNode(fileReader, version);
     System.out.println("Parsing completed");
     FormatterRuleProvider rules = getRules(configFile);
     Formatter formatter = versionFactory.createFormatter(rules);

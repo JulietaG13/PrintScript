@@ -1,3 +1,5 @@
+import static edu.FileReader.openFile;
+
 import edu.ast.ProgramNode;
 import edu.commands.ValidatorCommand;
 import edu.utils.CommandContext;
@@ -8,9 +10,9 @@ import org.junit.jupiter.api.Test;
 public class ValidatorCommandTest {
 
   @Test
-  public void testValidatorCommandWithValidInput() {
+  public void testValidatorCommandWithValidInput() throws IOException {
     String testFilePath = "src/test/java/resources/input.txt";
-    ValidatorCommand cmd = new ValidatorCommand(testFilePath, "1.0");
+    ValidatorCommand cmd = new ValidatorCommand(openFile(testFilePath), "1.0");
     try {
       cmd.run();
     } catch (IOException e) {

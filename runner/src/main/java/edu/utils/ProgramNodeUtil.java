@@ -1,25 +1,23 @@
 package edu.utils;
 
-import static edu.FileReader.openFile;
-
 import edu.Lexer;
 import edu.Parser;
 import edu.ast.ProgramNode;
-import java.io.IOException;
+import java.util.Iterator;
 
 public class ProgramNodeUtil {
 
-  public static ProgramNode getProgramNode(String sourceFile, String version) throws IOException {
+  public static ProgramNode getProgramNode(Iterator<String> fileReader, String version) {
     VersionFactory versionFactory = new VersionFactory(version);
-    Lexer lexer = versionFactory.createLexer(openFile(sourceFile));
+    Lexer lexer = versionFactory.createLexer(fileReader);
     lexer.tokenize();
     Parser parser = versionFactory.createParser(lexer);
     return parser.parse(lexer.getTokens());
   }
 
-  public static Parser getParser(String sourceFile, String version) throws IOException {
+  public static Parser getParser(Iterator<String> fileReader, String version) {
     VersionFactory versionFactory = new VersionFactory(version);
-    Lexer lexer = versionFactory.createLexer(openFile(sourceFile));
+    Lexer lexer = versionFactory.createLexer(fileReader);
     lexer.tokenize();
     Parser parser = versionFactory.createParser(lexer);
     return parser;

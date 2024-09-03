@@ -3,6 +3,7 @@ package edu.commands
 import com.github.ajalt.clikt.core.CliktCommand
 import com.github.ajalt.clikt.parameters.options.option
 import com.github.ajalt.clikt.parameters.options.required
+import edu.FileReader.openFile
 import edu.Runner
 import java.io.IOException
 
@@ -13,7 +14,7 @@ class ExecuteCommand : CliktCommand(help = "Execute the source file") {
     override fun run() {
         try {
             val runner = Runner(version)
-            runner.execute(sourceFile)
+            runner.execute(openFile(sourceFile))
         } catch (e: IOException) {
             println("Error during execution: ${e.message}")
         }
