@@ -7,7 +7,7 @@ import edu.commands.ExecutionCommand;
 import edu.commands.FormattingCommand;
 import edu.commands.ValidatorCommand;
 import edu.utils.VersionFactory;
-import java.util.Iterator;
+import java.io.InputStream;
 
 public class Runner {
   public final VersionFactory versionFactory;
@@ -18,23 +18,23 @@ public class Runner {
     this.versionFactory = new VersionFactory(version);
   }
 
-  public void validate(Iterator<String> fileReader) {
-    Command validatorCommand = new ValidatorCommand(fileReader, version);
+  public void validate(InputStream inputStream) {
+    Command validatorCommand = new ValidatorCommand(inputStream, version);
     validatorCommand.run();
   }
 
-  public void execute(Iterator<String> fileReader) {
-    Command executionCommand = new ExecutionCommand(fileReader, version);
+  public void execute(InputStream inputStream) {
+    Command executionCommand = new ExecutionCommand(inputStream, version);
     executionCommand.run();
   }
 
-  public void format(Iterator<String> fileReader, JsonObject rules) {
-    Command formattingCommand = new FormattingCommand(fileReader, version, rules);
+  public void format(InputStream inputStream, JsonObject rules) {
+    Command formattingCommand = new FormattingCommand(inputStream, version, rules);
     formattingCommand.run();
   }
 
-  public Report analyze(Iterator<String> fileReader, JsonObject config) {
-    Command analyzerCommand = new AnalyzerCommand(fileReader, version, config);
+  public Report analyze(InputStream inputStream, JsonObject config) {
+    Command analyzerCommand = new AnalyzerCommand(inputStream, version, config);
     analyzerCommand.run();
     return analyzerCommand.getCommandContext().getLinterReport();
   }

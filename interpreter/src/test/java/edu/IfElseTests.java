@@ -23,23 +23,23 @@ import edu.inventory.Inventory;
 import edu.reader.InterpreterReader;
 import edu.rules.RuleProviderV2;
 import edu.visitor.ExecutionVisitor;
-import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 
 public class IfElseTests {
 
-  private Iterator<String> createIteratorFromString(String code) {
-    return new BufferedReader(new java.io.StringReader(code)).lines().iterator();
+  private InputStream createInputStreamFromString(String code) {
+    return new ByteArrayInputStream(code.getBytes());
   }
 
   private Interpreter createInterpreter(String code) {
-    Iterator<String> codeIterator = createIteratorFromString(code);
+    InputStream codeIterator = createInputStreamFromString(code);
     Lexer lexer = createLexerV2(codeIterator);
     Parser parser = createParserV2(lexer);
     return createInterpreterV2(parser);
@@ -140,7 +140,7 @@ public class IfElseTests {
             + System.lineSeparator()
             + "}";
 
-    Lexer lexer = createLexerV2(createIteratorFromString(input));
+    Lexer lexer = createLexerV2(createInputStreamFromString(input));
     Parser parser = createParserV2(lexer);
 
     assertTrue(parser.hasNext());

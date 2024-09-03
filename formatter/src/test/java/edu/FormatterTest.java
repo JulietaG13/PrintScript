@@ -6,8 +6,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import com.google.gson.JsonObject;
 import edu.ast.ProgramNode;
 import edu.rules.FormatterRuleParser;
-import java.io.BufferedReader;
-import java.util.Iterator;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import org.junit.jupiter.api.Test;
 
 public class FormatterTest {
@@ -24,8 +24,8 @@ public class FormatterTest {
    * println_new_lines_before_call
    */
 
-  private Iterator<String> createIteratorFromString(String code) {
-    return new BufferedReader(new java.io.StringReader(code)).lines().iterator();
+  private InputStream createInputStreamFromString(String code) {
+    return new ByteArrayInputStream(code.getBytes());
   }
 
   static {
@@ -181,7 +181,7 @@ public class FormatterTest {
   }
 
   public ProgramNode getAst(String input) {
-    Lexer lexer = createLexerV1(createIteratorFromString(input));
+    Lexer lexer = createLexerV1(createInputStreamFromString(input));
     lexer.tokenize();
     Parser parser = new Parser();
     return parser.parse(lexer.getTokens());

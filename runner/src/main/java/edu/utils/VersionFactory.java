@@ -16,7 +16,7 @@ import edu.Lexer;
 import edu.Linter;
 import edu.Parser;
 import edu.rules.FormatterRuleProvider;
-import java.util.Iterator;
+import java.io.InputStream;
 
 public class VersionFactory {
   String version;
@@ -25,7 +25,7 @@ public class VersionFactory {
     this.version = version;
   }
 
-  public Lexer createLexer(Iterator<String> text) {
+  public Lexer createLexer(InputStream text) {
     switch (version) {
       case "1.0":
         return createLexerV1(text);

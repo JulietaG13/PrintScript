@@ -13,15 +13,15 @@ public class Lexer implements Iterator<Token> {
   private LexicalRange position;
   private final PatternManager patterns;
   private final List<Token> tokens = new ArrayList<>();
-  private final Iterator<String> fileIterator;
+  private final Reader reader;
   private String currentLine;
   private int positionInLine;
 
-  public Lexer(Iterator<String> fileIterator, List<TokenPattern> patterns) {
-    this.fileIterator = fileIterator;
+  public Lexer(Reader reader, List<TokenPattern> patterns) {
+    this.reader = reader;
     this.position = new LexicalRange(0, 0, 0);
     this.patterns = new PatternManager(patterns);
-    this.currentLine = fileIterator.hasNext() ? fileIterator.next() : null;
+    this.currentLine = reader.hasNext() ? reader.next() : null;
     this.positionInLine = 0;
   }
 
@@ -67,7 +67,7 @@ public class Lexer implements Iterator<Token> {
   }
 
   private void skipToNextLine() {
-    if (fileIterator.hasNext()) {
+    if (reader.hasNext()) {
       moveToNextLine();
     } else {
       currentLine = null;
@@ -75,7 +75,7 @@ public class Lexer implements Iterator<Token> {
   }
 
   private void moveToNextLine() {
-    currentLine = fileIterator.next();
+    currentLine = reader.next();
     positionInLine = 0;
     position = new LexicalRange(position.getOffset(), position.getLine() + 1, 0);
   }

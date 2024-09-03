@@ -1,6 +1,6 @@
 package edu;
 
-import static edu.ParserTestUtil.createIteratorFromString;
+import static edu.ParserTestUtil.createInputStreamFromString;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -24,7 +24,7 @@ public class ConstTest {
     String var = "var";
     BigDecimal value = new BigDecimal(123);
 
-    Lexer lexer = LexerFactory.createLexerV2(createIteratorFromString(input));
+    Lexer lexer = LexerFactory.createLexerV2(createInputStreamFromString(input));
     Parser parser = ParserFactory.createParserV2(lexer);
 
     assertTrue(parser.hasNext());
@@ -50,7 +50,7 @@ public class ConstTest {
     String var = "var";
     String value = "aaabbbccc";
 
-    Lexer lexer = LexerFactory.createLexerV2(createIteratorFromString(input));
+    Lexer lexer = LexerFactory.createLexerV2(createInputStreamFromString(input));
     Parser parser = ParserFactory.createParserV2(lexer);
 
     assertTrue(parser.hasNext());
@@ -76,7 +76,7 @@ public class ConstTest {
     String var = "var";
     boolean value = true;
 
-    Lexer lexer = LexerFactory.createLexerV2(createIteratorFromString(input));
+    Lexer lexer = LexerFactory.createLexerV2(createInputStreamFromString(input));
     Parser parser = ParserFactory.createParserV2(lexer);
 
     assertTrue(parser.hasNext());

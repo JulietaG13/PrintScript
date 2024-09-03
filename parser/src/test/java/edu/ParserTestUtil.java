@@ -1,19 +1,20 @@
 package edu;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.util.Iterator;
+import java.io.ByteArrayInputStream;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 public class ParserTestUtil {
 
-  public static Iterator<String> createIteratorFromString(String code) {
-    return new BufferedReader(new java.io.StringReader(code)).lines().iterator();
+  public static InputStream createInputStreamFromString(String code) {
+    return new ByteArrayInputStream(code.getBytes());
   }
 
-  public static Iterator<String> createIteratorFromFile(String filename) {
+  public static InputStream createInputStreamFromFile(String filename) {
     try {
-      return new BufferedReader(new java.io.FileReader(filename)).lines().iterator();
-    } catch (FileNotFoundException e) {
+      return new FileInputStream(filename);
+    } catch (IOException e) {
       throw new RuntimeException(e);
     }
   }

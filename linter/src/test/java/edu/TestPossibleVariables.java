@@ -8,8 +8,8 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.google.gson.JsonObject;
-import java.io.BufferedReader;
-import java.util.Iterator;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 
@@ -33,12 +33,12 @@ public class TestPossibleVariables {
     allCases = new JsonObject();
   }
 
-  private Iterator<String> createIteratorFromString(String code) {
-    return new BufferedReader(new java.io.StringReader(code)).lines().iterator();
+  private InputStream createInputStreamFromString(String code) {
+    return new ByteArrayInputStream(code.getBytes());
   }
 
   private Linter createLinter(String code, JsonObject rules) {
-    Iterator<String> codeIterator = createIteratorFromString(code);
+    InputStream codeIterator = createInputStreamFromString(code);
     Lexer lexer = createLexerV1(codeIterator);
     Parser parser = createParserV1(lexer);
     return createLinterV1(rules, parser);

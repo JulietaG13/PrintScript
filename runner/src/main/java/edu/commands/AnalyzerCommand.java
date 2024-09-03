@@ -7,17 +7,17 @@ import edu.Parser;
 import edu.Report;
 import edu.utils.CommandContext;
 import edu.utils.VersionFactory;
-import java.util.Iterator;
+import java.io.InputStream;
 
 public class AnalyzerCommand implements Command {
   private final CommandContext commandContext = new CommandContext();
-  private final Iterator<String> fileReader;
+  private final InputStream inputStream;
   private final String version;
   private final JsonObject config;
   private final VersionFactory versionFactory;
 
-  public AnalyzerCommand(Iterator<String> fileReader, String version, JsonObject config) {
-    this.fileReader = fileReader;
+  public AnalyzerCommand(InputStream inputStream, String version, JsonObject config) {
+    this.inputStream = inputStream;
     this.version = version;
     this.config = config;
     this.versionFactory = new VersionFactory(version);
@@ -25,7 +25,7 @@ public class AnalyzerCommand implements Command {
 
   public void run() {
     System.out.println("Reading file");
-    Lexer lexer = versionFactory.createLexer(fileReader);
+    Lexer lexer = versionFactory.createLexer(inputStream);
     Parser parser = versionFactory.createParser(lexer);
     System.out.println("Parsing completed");
     Linter linter = versionFactory.createLinter(config, parser);

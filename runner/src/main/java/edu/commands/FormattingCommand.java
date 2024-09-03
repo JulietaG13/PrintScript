@@ -8,17 +8,17 @@ import edu.rules.FormatterRuleParser;
 import edu.utils.CommandContext;
 import edu.utils.ProgramNodeUtil;
 import edu.utils.VersionFactory;
-import java.util.Iterator;
+import java.io.InputStream;
 
 public class FormattingCommand implements Command {
   private final CommandContext commandContext = new CommandContext();
-  private final Iterator<String> fileReader;
+  private final InputStream inputStream;
   private final String version;
   private final JsonObject config;
   private final VersionFactory versionFactory;
 
-  public FormattingCommand(Iterator<String> fileReader, String version, JsonObject config) {
-    this.fileReader = fileReader;
+  public FormattingCommand(InputStream inputStream, String version, JsonObject config) {
+    this.inputStream = inputStream;
     this.version = version;
     this.config = config;
     this.versionFactory = new VersionFactory(version);
@@ -26,7 +26,7 @@ public class FormattingCommand implements Command {
 
   public void run() {
     System.out.println("Reading file");
-    ProgramNode programNode = ProgramNodeUtil.getProgramNode(fileReader, version);
+    ProgramNode programNode = ProgramNodeUtil.getProgramNode(inputStream, version);
     System.out.println("Parsing completed");
     Formatter formatter = versionFactory.createFormatter(FormatterRuleParser.parseRules(config));
     System.out.println("Formatting program");

@@ -5,19 +5,19 @@ import static edu.LexerFactory.createLexerV1;
 import static edu.ParserFactory.createParserV1;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import java.io.PrintStream;
-import java.util.Iterator;
 import org.junit.jupiter.api.Test;
 
 public class InterpreterTest {
-  private Iterator<String> createIteratorFromString(String code) {
-    return new BufferedReader(new java.io.StringReader(code)).lines().iterator();
+  private InputStream createInputStreamFromString(String code) {
+    return new ByteArrayInputStream(code.getBytes());
   }
 
   private Interpreter createInterpreter(String code) {
-    Iterator<String> codeIterator = createIteratorFromString(code);
+    InputStream codeIterator = createInputStreamFromString(code);
     Lexer lexer = createLexerV1(codeIterator);
     Parser parser = createParserV1(lexer);
     return createInterpreterV1(parser);

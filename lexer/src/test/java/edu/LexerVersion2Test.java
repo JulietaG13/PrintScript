@@ -5,20 +5,20 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import edu.tokens.Token;
 import edu.tokens.TokenType;
-import java.io.BufferedReader;
-import java.util.Iterator;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 
 public class LexerVersion2Test {
-  private Iterator<String> createIteratorFromString(String code) {
-    return new BufferedReader(new java.io.StringReader(code)).lines().iterator();
+  private InputStream createInputStreamFromString(String code) {
+    return new ByteArrayInputStream(code.getBytes());
   }
 
   @Test
   public void testBoolean() {
     String code = "let X: boolean = true;";
-    Lexer lexer = createLexerV2(createIteratorFromString(code));
+    Lexer lexer = createLexerV2(createInputStreamFromString(code));
     lexer.tokenize();
     List<Token> tokens = lexer.getTokens();
     assertEquals(tokens.get(0).getType(), TokenType.KEYWORD);
@@ -40,7 +40,7 @@ public class LexerVersion2Test {
   @Test
   public void testConst() {
     String code = "const X: boolean = true;";
-    Lexer lexer = createLexerV2(createIteratorFromString(code));
+    Lexer lexer = createLexerV2(createInputStreamFromString(code));
     lexer.tokenize();
     List<Token> tokens = lexer.getTokens();
     assertEquals(tokens.get(0).getType(), TokenType.KEYWORD);
@@ -62,7 +62,7 @@ public class LexerVersion2Test {
   @Test
   public void testConstDecimal() {
     String code = "const X: number = 2.5;";
-    Lexer lexer = createLexerV2(createIteratorFromString(code));
+    Lexer lexer = createLexerV2(createInputStreamFromString(code));
     lexer.tokenize();
     List<Token> tokens = lexer.getTokens();
     assertEquals(tokens.get(0).getType(), TokenType.KEYWORD);
@@ -84,7 +84,7 @@ public class LexerVersion2Test {
   @Test
   public void testIf() {
     String code = "if (true) {\n  x = 1;\n}";
-    Lexer lexer = createLexerV2(createIteratorFromString(code));
+    Lexer lexer = createLexerV2(createInputStreamFromString(code));
     lexer.tokenize();
     List<Token> tokens = lexer.getTokens();
     assertEquals(tokens.get(0).getType(), TokenType.KEYWORD);
@@ -114,7 +114,7 @@ public class LexerVersion2Test {
   @Test
   public void testElse() {
     String code = "if (true) {\n  x = 1;\n}else{\n  x = 2;\n}";
-    Lexer lexer = createLexerV2(createIteratorFromString(code));
+    Lexer lexer = createLexerV2(createInputStreamFromString(code));
     lexer.tokenize();
     List<Token> tokens = lexer.getTokens();
     assertEquals(tokens.get(0).getType(), TokenType.KEYWORD);
@@ -161,7 +161,7 @@ public class LexerVersion2Test {
   @Test
   public void testIfInsideIf() {
     String code = "if (true) {\n  if (false) {\n    x = 1;\n  }\n}";
-    Lexer lexer = createLexerV2(createIteratorFromString(code));
+    Lexer lexer = createLexerV2(createInputStreamFromString(code));
     lexer.tokenize();
     List<Token> tokens = lexer.getTokens();
     assertEquals(tokens.get(0).getType(), TokenType.KEYWORD);

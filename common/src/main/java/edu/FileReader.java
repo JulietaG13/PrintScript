@@ -1,13 +1,14 @@
 package edu;
 
 import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.Iterator;
+import java.io.InputStream;
 
 public class FileReader {
 
-  public static Iterator<String> openFile(String filePath) throws IOException {
-    return new BufferedReader(new java.io.FileReader(filePath)).lines().iterator();
+  public static InputStream openFile(String filePath) throws IOException {
+    return new FileInputStream(filePath);
   }
 
   public static String readFileToString(String filePath) throws IOException {

@@ -11,19 +11,19 @@ import edu.inventory.Inventory;
 import edu.reader.InterpreterReader;
 import edu.rules.RuleProviderV1;
 import edu.visitor.ExecutionVisitor;
-import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import java.io.PrintStream;
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 
 public class TestBinaryOperations {
 
-  private Iterator<String> createIteratorFromString(String code) {
-    return new BufferedReader(new java.io.StringReader(code)).lines().iterator();
+  private InputStream createInputStreamFromString(String code) {
+    return new ByteArrayInputStream(code.getBytes());
   }
 
   public VariableContext interpret(ProgramNode node) {
@@ -112,7 +112,7 @@ public class TestBinaryOperations {
   }
 
   private ProgramNode compile(String code) {
-    Lexer lexer = createLexerV1(createIteratorFromString(code));
+    Lexer lexer = createLexerV1(createInputStreamFromString(code));
     lexer.tokenize();
     Parser parser = new Parser();
     ProgramNode program = parser.parse(lexer.getTokens());

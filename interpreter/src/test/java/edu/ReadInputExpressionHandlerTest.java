@@ -13,12 +13,11 @@ import edu.handlers.expressions.ReadInputExpressionHandler;
 import edu.inventory.Inventory;
 import edu.reader.InterpreterReader;
 import edu.utils.HandlerResult;
-import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Stack;
 import org.junit.jupiter.api.BeforeEach;
@@ -108,12 +107,12 @@ class ReadInputExpressionHandlerTest {
     assertEquals("Unsupported function call: unsupportedFunction", exception.getMessage());
   }
 
-  private Iterator<String> createIteratorFromString(String code) {
-    return new BufferedReader(new java.io.StringReader(code)).lines().iterator();
+  private InputStream createInputStreamFromString(String code) {
+    return new ByteArrayInputStream(code.getBytes());
   }
 
   private Interpreter createInterpreterV(String code) {
-    Iterator<String> codeIterator = createIteratorFromString(code);
+    InputStream codeIterator = createInputStreamFromString(code);
     Lexer lexer = createLexerV1(codeIterator);
     Parser parser = createParserV1(lexer);
     return createInterpreterV2(parser);

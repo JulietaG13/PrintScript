@@ -1,6 +1,6 @@
 package edu.common;
 
-import static edu.ParserTestUtil.createIteratorFromString;
+import static edu.ParserTestUtil.createInputStreamFromString;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -23,7 +23,7 @@ public class IfTest {
   public void emptyTrueIf() {
     String input = "if (true) { }";
 
-    Lexer lexer = LexerFactory.createLexerV2(createIteratorFromString(input));
+    Lexer lexer = LexerFactory.createLexerV2(createInputStreamFromString(input));
     Parser parser = ParserFactory.createParserV2(lexer);
 
     assertTrue(parser.hasNext());
@@ -44,7 +44,7 @@ public class IfTest {
   public void emptyTrueIfElse() {
     String input = "if (true) { } " + lineSeparator + "else { }";
 
-    Lexer lexer = LexerFactory.createLexerV2(createIteratorFromString(input));
+    Lexer lexer = LexerFactory.createLexerV2(createInputStreamFromString(input));
     Parser parser = ParserFactory.createParserV2(lexer);
 
     assertTrue(parser.hasNext());
@@ -74,7 +74,7 @@ public class IfTest {
             + lineSeparator
             + "}";
 
-    Lexer lexer = LexerFactory.createLexerV2(createIteratorFromString(input));
+    Lexer lexer = LexerFactory.createLexerV2(createInputStreamFromString(input));
     Parser parser = ParserFactory.createParserV2(lexer);
 
     assertTrue(parser.hasNext());
@@ -103,7 +103,7 @@ public class IfTest {
             + lineSeparator
             + "}";
 
-    Lexer lexer = LexerFactory.createLexerV2(createIteratorFromString(input));
+    Lexer lexer = LexerFactory.createLexerV2(createInputStreamFromString(input));
     Parser parser = ParserFactory.createParserV2(lexer);
 
     assertTrue(parser.hasNext());

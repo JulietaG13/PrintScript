@@ -1,6 +1,6 @@
 package edu;
 
-import static edu.ParserTestUtil.createIteratorFromFile;
+import static edu.ParserTestUtil.createInputStreamFromFile;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import edu.ast.interfaces.StatementNode;
@@ -16,7 +16,7 @@ public class ParserTest {
   @Test
   public void test() {
     String filePath = "src/test/java/resources/input.txt";
-    Lexer lexer = LexerFactory.createLexerV2(createIteratorFromFile(filePath));
+    Lexer lexer = LexerFactory.createLexerV2(createInputStreamFromFile(filePath));
     Parser parser = ParserFactory.createParserV2(lexer);
 
     int numberOfStatements = 10;
