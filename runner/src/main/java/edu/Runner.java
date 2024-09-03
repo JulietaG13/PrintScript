@@ -12,13 +12,11 @@ import java.util.Iterator;
 
 public class Runner {
   public final VersionFactory versionFactory;
-  public final CommandContext commandContext;
   public final String version;
 
   public Runner(String version) {
     this.version = version;
     this.versionFactory = new VersionFactory(version);
-    this.commandContext = new CommandContext();
   }
 
   public void validate(Iterator<String> fileReader) {
@@ -36,8 +34,9 @@ public class Runner {
     formattingCommand.run();
   }
 
-  public void analyze(Iterator<String> fileReader, JsonObject config) {
+  public Report analyze(Iterator<String> fileReader, JsonObject config) {
     Command analyzerCommand = new AnalyzerCommand(fileReader, version, config);
     analyzerCommand.run();
+    return analyzerCommand.getCommandContext().getLinterReport();
   }
 }

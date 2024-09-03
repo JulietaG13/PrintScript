@@ -17,6 +17,5 @@ class RunnerTest {
     configFilePath = "src/test/java/resources/config.txt";
     runner = new Runner(version);
     assertNotNull(runner.versionFactory, "VersionFactory no debería ser nulo.");
-    assertNotNull(runner.commandContext, "CommandContext no debería ser nulo.");
   }
 }
