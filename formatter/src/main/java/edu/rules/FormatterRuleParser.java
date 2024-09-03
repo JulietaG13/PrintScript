@@ -42,6 +42,11 @@ public class FormatterRuleParser {
       }
     }
 
+    if (rules.keySet().contains("indent")) {
+      int indent = rules.get("indent").getAsInt();
+      return new FormatterRuleProvider(spaceBefore, spaceAfter, newLinesBefore, indent);
+    }
+
     return new FormatterRuleProvider(spaceBefore, spaceAfter, newLinesBefore);
   }
 

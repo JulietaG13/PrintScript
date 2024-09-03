@@ -3,10 +3,10 @@ package edu.commands;
 import com.google.gson.JsonObject;
 import edu.Formatter;
 import edu.FormatterResult;
-import edu.ast.ProgramNode;
+import edu.Lexer;
+import edu.Parser;
 import edu.rules.FormatterRuleParser;
 import edu.utils.CommandContext;
-import edu.utils.ProgramNodeUtil;
 import edu.utils.VersionFactory;
 import java.io.InputStream;
 
@@ -26,11 +26,13 @@ public class FormattingCommand implements Command {
 
   public void run() {
     System.out.println("Reading file");
-    ProgramNode programNode = ProgramNodeUtil.getProgramNode(inputStream, version);
+    Lexer lexer = versionFactory.createLexer(inputStream);
+    Parser parser = versionFactory.createParser(lexer);
     System.out.println("Parsing completed");
-    Formatter formatter = versionFactory.createFormatter(FormatterRuleParser.parseRules(config));
+    Formatter formatter =
+        versionFactory.createFormatter(FormatterRuleParser.parseRules(config), parser);
     System.out.println("Formatting program");
-    FormatterResult result = formatter.format(programNode);
+    FormatterResult result = formatter.format();
     System.out.println("Formatting completed");
     commandContext.setFormatterResult(result);
     System.out.println("Formatted code" + result.getResult());

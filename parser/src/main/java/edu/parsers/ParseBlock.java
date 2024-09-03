@@ -26,12 +26,19 @@ public class ParseBlock {
     Iterator<Token> tokenIterator = tokens.subList(1, tokens.size() - 1).iterator();
     List<StatementNode> result = new ArrayList<>();
 
+    if (!tokenIterator.hasNext()) {
+      return new BlockNode(start, end, result);
+    }
+
     List<Token> statement = new ArrayList<>();
     Token current = null;
+    Token next = tokenIterator.next();
     int bracketBalance = 0;
 
     while (tokenIterator.hasNext()) {
-      current = tokenIterator.next();
+      current = next;
+      next = tokenIterator.next();
+
       statement.add(current);
 
       if (isOpenBracket(current)) {
@@ -41,17 +48,34 @@ public class ParseBlock {
         bracketBalance--;
       }
 
-      if (bracketBalance == 0 && isEndOfStatement(current)) {
+      if (bracketBalance == 0 && isEndOfStatement(current) && isFinished(current, next)) {
         result.add(parser.parseStatement(statement));
         statement.clear();
       }
     }
 
+    statement.add(next);
+    if (isOpenBracket(next)) {
+      bracketBalance++;
+    }
+    if (isCloseBracket(next)) {
+      bracketBalance--;
+    }
+
+    if (bracketBalance == 0 && isEndOfStatement(next)) {
+      result.add(parser.parseStatement(statement));
+      statement.clear();
+    }
+
     if (!statement.isEmpty()) {
-      throw new UnexpectedTokenException(current, ";");
+      throw new UnexpectedTokenException(next, ";");
     }
 
     return new BlockNode(start, end, result);
+  }
+
+  private static boolean isFinished(Token current, Token next) {
+    return isEndOfStatement(current) && !next.getContent().equals("else"); // TODO
   }
 
   public static BlockNode getEmpty(LexicalRange start, LexicalRange end) {

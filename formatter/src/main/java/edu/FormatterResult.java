@@ -13,8 +13,15 @@ public class FormatterResult {
     stringBuilder.append(" ");
   }
 
-  public void writeLineSeparator(int times) {
+  public void lineSeparator(int times, int indent) {
     stringBuilder.append(lineSeparator.repeat(times));
+    if (times > 0) {
+      stringBuilder.append(" ".repeat(indent));
+    }
+  }
+
+  public void lineSeparator(int indent) {
+    lineSeparator(1, indent);
   }
 
   public void endLine() {

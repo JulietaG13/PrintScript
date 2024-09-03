@@ -26,15 +26,19 @@ public class FormatterVisitor implements AstVisitor {
   private static final String closeParen = ")";
   private static final String comma = ",";
   private static final String quotes = "\"";
+  private static final String openBracket = "{";
+  private static final String closeBracket = "}";
 
   private final FormatterResult result;
   private final FormatterRuleProvider ruleProvider;
 
   private Operator lastOperator;
+  private int level;
 
   public FormatterVisitor(FormatterRuleProvider ruleProvider) {
     this.result = new FormatterResult();
     this.ruleProvider = ruleProvider;
+    this.level = 0;
   }
 
   public FormatterResult getResult() {
@@ -51,6 +55,7 @@ public class FormatterVisitor implements AstVisitor {
 
   @Override
   public void visit(AssignmentNode node) {
+    indent();
     node.id().accept(this);
     writeSymbol(equals);
     node.value().accept(this);
@@ -65,7 +70,10 @@ public class FormatterVisitor implements AstVisitor {
 
   @Override
   public void visit(VariableDeclarationNode node) {
-    result.write("let ");
+    indent();
+
+    result.write(node.kind().toString().toLowerCase());
+    result.writeSpace();
 
     node.id().accept(this);
 
@@ -121,7 +129,9 @@ public class FormatterVisitor implements AstVisitor {
   @Override
   public void visit(CallExpressionNode node) {
     String name = node.callee().name();
-    result.writeLineSeparator(ruleProvider.newLineBefore(name));
+
+    result.lineSeparator(ruleProvider.newLineBefore(name), getIndent());
+
     node.callee().accept(this);
 
     result.write(openParen);
@@ -159,13 +169,57 @@ public class FormatterVisitor implements AstVisitor {
   }
 
   @Override
-  public void visit(IfStatementNode node) {}
+  public void visit(IfStatementNode node) {
+    indent();
+
+    result.write("if ");
+    result.write(openParen);
+    node.condition().accept(this);
+    result.write(closeParen);
+
+    result.writeSpace();
+    result.write(openBracket);
+    result.lineSeparator(0);
+
+    node.thenDo().accept(this);
+
+    indent();
+    result.write(closeBracket);
+
+    if (isElseEmpty(node.elseDo())) {
+      result.lineSeparator(0);
+      return;
+    }
+
+    result.write(" else ");
+    result.write(openBracket);
+    result.lineSeparator(0);
+
+    node.elseDo().accept(this);
+
+    indent();
+    result.write(closeBracket);
+    result.lineSeparator(0);
+  }
+
+  private boolean isElseEmpty(BlockNode block) {
+    return block.start().getOffset() == block.end().getOffset();
+  }
 
   @Override
-  public void visit(BlockNode node) {}
+  public void visit(BlockNode node) {
+    List<StatementNode> statements = node.statements();
+    level++;
+    for (StatementNode statement : statements) {
+      statement.accept(this);
+    }
+    level--;
+  }
 
   @Override
-  public void visit(LiteralBooleanNode node) {}
+  public void visit(LiteralBooleanNode node) {
+    result.write(String.valueOf(node.value()));
+  }
 
   private void writeSymbol(String symbol) {
     if (ruleProvider.hasSpaceBefore(symbol)) {
@@ -175,5 +229,13 @@ public class FormatterVisitor implements AstVisitor {
     if (ruleProvider.hasSpaceAfter(symbol)) {
       result.writeSpace();
     }
+  }
+
+  private void indent() {
+    result.write(" ".repeat(getIndent()));
+  }
+
+  private int getIndent() {
+    return ruleProvider.getIndentLevel() * level;
   }
 }

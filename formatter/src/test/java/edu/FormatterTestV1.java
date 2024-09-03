@@ -1,20 +1,24 @@
 package edu;
 
 import static edu.LexerFactory.createLexerV1;
+import static edu.ParserFactory.createParserV1;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.google.gson.JsonObject;
-import edu.ast.ProgramNode;
 import edu.rules.FormatterRuleParser;
+import edu.rules.FormatterRuleProvider;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import org.junit.jupiter.api.Test;
 
-public class FormatterTest {
+public class FormatterTestV1 {
   private static final String lineSeparator = System.lineSeparator();
 
-  private static final JsonObject defaultRules;
-  private static final JsonObject noExtraSpaceRules;
+  private static final JsonObject jsonDefaultRules;
+  private static final JsonObject jsonNoExtraSpaceRules;
+
+  private static final FormatterRuleProvider defaultRules;
+  private static final FormatterRuleProvider noExtraSpaceRules;
 
   /* Configurable
    * declaration_space_before_colon
@@ -24,24 +28,22 @@ public class FormatterTest {
    * println_new_lines_before_call
    */
 
-  private InputStream createInputStreamFromString(String code) {
-    return new ByteArrayInputStream(code.getBytes());
-  }
-
   static {
-    defaultRules = new JsonObject();
-    defaultRules.addProperty("declaration_space_before_colon", true);
-    defaultRules.addProperty("declaration_space_after_colon", true);
-    defaultRules.addProperty("assignment_space_before_equals", true);
-    defaultRules.addProperty("assignment_space_after_equals", true);
-    defaultRules.addProperty("println_new_lines_before_call", 1);
+    jsonDefaultRules = new JsonObject();
+    jsonDefaultRules.addProperty("declaration_space_before_colon", true);
+    jsonDefaultRules.addProperty("declaration_space_after_colon", true);
+    jsonDefaultRules.addProperty("assignment_space_before_equals", true);
+    jsonDefaultRules.addProperty("assignment_space_after_equals", true);
+    jsonDefaultRules.addProperty("println_new_lines_before_call", 1);
+    defaultRules = FormatterRuleParser.parseRules(jsonDefaultRules);
 
-    noExtraSpaceRules = new JsonObject();
-    noExtraSpaceRules.addProperty("declaration_space_before_colon", false);
-    noExtraSpaceRules.addProperty("declaration_space_after_colon", false);
-    noExtraSpaceRules.addProperty("assignment_space_before_equals", false);
-    noExtraSpaceRules.addProperty("assignment_space_after_equals", false);
-    noExtraSpaceRules.addProperty("println_new_lines_before_call", 0);
+    jsonNoExtraSpaceRules = new JsonObject();
+    jsonNoExtraSpaceRules.addProperty("declaration_space_before_colon", false);
+    jsonNoExtraSpaceRules.addProperty("declaration_space_after_colon", false);
+    jsonNoExtraSpaceRules.addProperty("assignment_space_before_equals", false);
+    jsonNoExtraSpaceRules.addProperty("assignment_space_after_equals", false);
+    jsonNoExtraSpaceRules.addProperty("println_new_lines_before_call", 0);
+    noExtraSpaceRules = FormatterRuleParser.parseRules(jsonNoExtraSpaceRules);
   }
 
   @Test
@@ -50,9 +52,8 @@ public class FormatterTest {
         lineSeparator + "let     my_cool_variable:string    = \"ciclon\";" + lineSeparator;
     String expected = "let my_cool_variable : string = \"ciclon\";" + lineSeparator;
 
-    ProgramNode program = getAst(input);
-    Formatter defaultFormatter = new Formatter(FormatterRuleParser.parseRules(defaultRules));
-    FormatterResult res = defaultFormatter.format(program);
+    Formatter defaultFormatter = new Formatter(defaultRules, getParser(input));
+    FormatterResult res = defaultFormatter.format();
 
     assertEquals(expected, res.getResult());
   }
@@ -75,9 +76,8 @@ public class FormatterTest {
             + "println(my_cool_variable);"
             + lineSeparator;
 
-    ProgramNode program = getAst(input);
-    Formatter defaultFormatter = new Formatter(FormatterRuleParser.parseRules(defaultRules));
-    FormatterResult res = defaultFormatter.format(program);
+    Formatter defaultFormatter = new Formatter(defaultRules, getParser(input));
+    FormatterResult res = defaultFormatter.format();
 
     assertEquals(expected, res.getResult());
   }
@@ -91,9 +91,8 @@ public class FormatterTest {
             + "my_cool_variable = \"hurricane\";"
             + lineSeparator;
 
-    ProgramNode program = getAst(input);
-    Formatter defaultFormatter = new Formatter(FormatterRuleParser.parseRules(defaultRules));
-    FormatterResult res = defaultFormatter.format(program);
+    Formatter defaultFormatter = new Formatter(defaultRules, getParser(input));
+    FormatterResult res = defaultFormatter.format();
 
     assertEquals(expected, res.getResult());
   }
@@ -108,9 +107,8 @@ public class FormatterTest {
             + "println(age + 5);"
             + lineSeparator;
 
-    ProgramNode program = getAst(input);
-    Formatter defaultFormatter = new Formatter(FormatterRuleParser.parseRules(defaultRules));
-    FormatterResult res = defaultFormatter.format(program);
+    Formatter defaultFormatter = new Formatter(defaultRules, getParser(input));
+    FormatterResult res = defaultFormatter.format();
 
     assertEquals(expected, res.getResult());
   }
@@ -121,9 +119,8 @@ public class FormatterTest {
         lineSeparator + "let     my_cool_variable:string    = \"ciclon\";" + lineSeparator;
     String expected = "let my_cool_variable:string=\"ciclon\";" + lineSeparator;
 
-    ProgramNode program = getAst(input);
-    Formatter defaultFormatter = new Formatter(FormatterRuleParser.parseRules(noExtraSpaceRules));
-    FormatterResult res = defaultFormatter.format(program);
+    Formatter defaultFormatter = new Formatter(noExtraSpaceRules, getParser(input));
+    FormatterResult res = defaultFormatter.format();
 
     assertEquals(expected, res.getResult());
   }
@@ -145,9 +142,8 @@ public class FormatterTest {
             + "println(my_cool_variable);"
             + lineSeparator;
 
-    ProgramNode program = getAst(input);
-    Formatter defaultFormatter = new Formatter(FormatterRuleParser.parseRules(noExtraSpaceRules));
-    FormatterResult res = defaultFormatter.format(program);
+    Formatter defaultFormatter = new Formatter(noExtraSpaceRules, getParser(input));
+    FormatterResult res = defaultFormatter.format();
 
     assertEquals(expected, res.getResult());
   }
@@ -161,9 +157,8 @@ public class FormatterTest {
             + "my_cool_variable=\"hurricane\";"
             + lineSeparator;
 
-    ProgramNode program = getAst(input);
-    Formatter defaultFormatter = new Formatter(FormatterRuleParser.parseRules(noExtraSpaceRules));
-    FormatterResult res = defaultFormatter.format(program);
+    Formatter defaultFormatter = new Formatter(noExtraSpaceRules, getParser(input));
+    FormatterResult res = defaultFormatter.format();
 
     assertEquals(expected, res.getResult());
   }
@@ -173,17 +168,18 @@ public class FormatterTest {
     String input = "let age: number = 10; println(age+5);";
     String expected = "let age:number=10;" + lineSeparator + "println(age + 5);" + lineSeparator;
 
-    ProgramNode program = getAst(input);
-    Formatter defaultFormatter = new Formatter(FormatterRuleParser.parseRules(noExtraSpaceRules));
-    FormatterResult res = defaultFormatter.format(program);
+    Formatter defaultFormatter = new Formatter(noExtraSpaceRules, getParser(input));
+    FormatterResult res = defaultFormatter.format();
 
     assertEquals(expected, res.getResult());
   }
 
-  public ProgramNode getAst(String input) {
+  public Parser getParser(String input) {
     Lexer lexer = createLexerV1(createInputStreamFromString(input));
-    lexer.tokenize();
-    Parser parser = new Parser();
-    return parser.parse(lexer.getTokens());
+    return createParserV1(lexer);
+  }
+
+  private InputStream createInputStreamFromString(String code) {
+    return new ByteArrayInputStream(code.getBytes());
   }
 }

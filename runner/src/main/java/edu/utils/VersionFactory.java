@@ -69,7 +69,7 @@ public class VersionFactory {
     }
   }
 
-  public Formatter createFormatter(FormatterRuleProvider rules) {
-    return new Formatter(rules);
+  public Formatter createFormatter(FormatterRuleProvider rules, Parser parser) {
+    return new Formatter(rules, parser);
   }
 }

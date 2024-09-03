@@ -1,11 +1,12 @@
 package edu;
 
 import static edu.LexerFactory.createLexerV1;
+import static edu.ParserFactory.createParserV1;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.google.gson.JsonObject;
-import edu.ast.ProgramNode;
 import edu.rules.FormatterRuleParser;
+import edu.rules.FormatterRuleProvider;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import org.junit.jupiter.api.Test;
@@ -13,15 +14,17 @@ import org.junit.jupiter.api.Test;
 public class FormatterExpressionTest {
   private static final String lineSeparator = System.lineSeparator();
 
-  private static final JsonObject defaultRules;
+  private static final JsonObject jsonDefaultRules;
+  private static final FormatterRuleProvider defaultRules;
 
   static {
-    defaultRules = new JsonObject();
-    defaultRules.addProperty("declaration_space_before_colon", true);
-    defaultRules.addProperty("declaration_space_after_colon", true);
-    defaultRules.addProperty("assignment_space_before_equals", true);
-    defaultRules.addProperty("assignment_space_after_equals", true);
-    defaultRules.addProperty("println_new_lines_before_call", 1);
+    jsonDefaultRules = new JsonObject();
+    jsonDefaultRules.addProperty("declaration_space_before_colon", true);
+    jsonDefaultRules.addProperty("declaration_space_after_colon", true);
+    jsonDefaultRules.addProperty("assignment_space_before_equals", true);
+    jsonDefaultRules.addProperty("assignment_space_after_equals", true);
+    jsonDefaultRules.addProperty("println_new_lines_before_call", 1);
+    defaultRules = FormatterRuleParser.parseRules(jsonDefaultRules);
   }
 
   @Test
@@ -29,9 +32,8 @@ public class FormatterExpressionTest {
     String input = lineSeparator + "let a : number = 1 + 2 + 3 * 5;" + lineSeparator;
     String expected = "let a : number = 1 + 2 + 3 * 5;" + lineSeparator;
 
-    ProgramNode program = getAst(input);
-    Formatter defaultFormatter = new Formatter(FormatterRuleParser.parseRules(defaultRules));
-    FormatterResult res = defaultFormatter.format(program);
+    Formatter defaultFormatter = new Formatter(defaultRules, getParser(input));
+    FormatterResult res = defaultFormatter.format();
 
     assertEquals(expected, res.getResult());
   }
@@ -41,9 +43,8 @@ public class FormatterExpressionTest {
     String input = lineSeparator + "let a : number = 1 + (2 + 3) * 5;" + lineSeparator;
     String expected = "let a : number = 1 + (2 + 3) * 5;" + lineSeparator;
 
-    ProgramNode program = getAst(input);
-    Formatter defaultFormatter = new Formatter(FormatterRuleParser.parseRules(defaultRules));
-    FormatterResult res = defaultFormatter.format(program);
+    Formatter defaultFormatter = new Formatter(defaultRules, getParser(input));
+    FormatterResult res = defaultFormatter.format();
 
     assertEquals(expected, res.getResult());
   }
@@ -53,9 +54,8 @@ public class FormatterExpressionTest {
     String input = lineSeparator + "let a : number = (1 + (2 + 3) * 5);" + lineSeparator;
     String expected = "let a : number = 1 + (2 + 3) * 5;" + lineSeparator;
 
-    ProgramNode program = getAst(input);
-    Formatter defaultFormatter = new Formatter(FormatterRuleParser.parseRules(defaultRules));
-    FormatterResult res = defaultFormatter.format(program);
+    Formatter defaultFormatter = new Formatter(defaultRules, getParser(input));
+    FormatterResult res = defaultFormatter.format();
 
     assertEquals(expected, res.getResult());
   }
@@ -68,9 +68,8 @@ public class FormatterExpressionTest {
             + lineSeparator;
     String expected = "let a : number = 1 + (10 * (9 + 2) + 8 * 6 + 7 + 3) * 5;" + lineSeparator;
 
-    ProgramNode program = getAst(input);
-    Formatter defaultFormatter = new Formatter(FormatterRuleParser.parseRules(defaultRules));
-    FormatterResult res = defaultFormatter.format(program);
+    Formatter defaultFormatter = new Formatter(defaultRules, getParser(input));
+    FormatterResult res = defaultFormatter.format();
 
     assertEquals(expected, res.getResult());
   }
@@ -81,9 +80,8 @@ public class FormatterExpressionTest {
         lineSeparator + "let a : number = ((3 + 4) * ((1 + 2) * 5) + 6) * 7;" + lineSeparator;
     String expected = "let a : number = ((3 + 4) * (1 + 2) * 5 + 6) * 7;" + lineSeparator;
 
-    ProgramNode program = getAst(input);
-    Formatter defaultFormatter = new Formatter(FormatterRuleParser.parseRules(defaultRules));
-    FormatterResult res = defaultFormatter.format(program);
+    Formatter defaultFormatter = new Formatter(defaultRules, getParser(input));
+    FormatterResult res = defaultFormatter.format();
 
     assertEquals(expected, res.getResult());
   }
@@ -92,10 +90,8 @@ public class FormatterExpressionTest {
     return new ByteArrayInputStream(code.getBytes());
   }
 
-  public ProgramNode getAst(String input) {
+  public Parser getParser(String input) {
     Lexer lexer = createLexerV1(createInputStreamFromString(input));
-    lexer.tokenize();
-    Parser parser = new Parser();
-    return parser.parse(lexer.getTokens());
+    return createParserV1(lexer);
   }
 }

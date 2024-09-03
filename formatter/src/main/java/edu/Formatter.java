@@ -1,18 +1,23 @@
 package edu;
 
-import edu.ast.ProgramNode;
+import edu.ast.interfaces.Node;
 import edu.rules.FormatterRuleProvider;
 
 public class Formatter {
   private final FormatterRuleProvider ruleProvider;
+  private final Parser parser;
 
-  public Formatter(FormatterRuleProvider ruleProvider) {
+  public Formatter(FormatterRuleProvider ruleProvider, Parser parser) {
     this.ruleProvider = ruleProvider;
+    this.parser = parser;
   }
 
-  public FormatterResult format(ProgramNode programNode) {
+  public FormatterResult format() {
     FormatterVisitor visitor = new FormatterVisitor(ruleProvider);
-    programNode.accept(visitor);
+    while (parser.hasNext()) {
+      Node node = parser.next();
+      node.accept(visitor);
+    }
     return visitor.getResult();
   }
 }

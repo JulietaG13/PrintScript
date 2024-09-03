@@ -30,4 +30,9 @@ public class Token {
   public LexicalRange getEnd() {
     return end;
   }
+
+  @Override
+  public String toString() {
+    return content;
+  }
 }
