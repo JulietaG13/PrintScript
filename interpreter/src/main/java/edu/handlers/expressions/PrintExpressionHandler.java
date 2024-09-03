@@ -13,11 +13,9 @@ public class PrintExpressionHandler implements ExpressionHandler {
   public HandlerResult handle(ExpressionNode node, InterpreterReader reader, Inventory inventory) {
     CallExpressionNode callNode = (CallExpressionNode) node;
     verifyPrint(callNode);
-    ReaderResult result = reader.getLiteral();
+    ReaderResult result = reader.read(inventory);
     Object value = result.getValue();
     reader = result.getReader();
-    ReaderResult result1 = reader.getIdentifier();
-    reader = result1.getReader();
 
     System.out.println(value);
 
