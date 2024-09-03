@@ -1,24 +1,25 @@
 import static edu.FileReader.openFile;
 
+import com.google.gson.JsonObject;
 import edu.ast.ProgramNode;
 import edu.commands.ValidatorCommand;
 import edu.utils.CommandContext;
+import edu.utils.JsonConfigLoader;
 import java.io.IOException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 public class ValidatorCommandTest {
 
+  private JsonObject getRules(String configFile) throws IOException {
+    return JsonConfigLoader.loadFromFile(configFile);
+  }
+
   @Test
   public void testValidatorCommandWithValidInput() throws IOException {
     String testFilePath = "src/test/java/resources/input.txt";
     ValidatorCommand cmd = new ValidatorCommand(openFile(testFilePath), "1.0");
-    try {
-      cmd.run();
-    } catch (IOException e) {
-      Assertions.fail("Execution failed with IOException: " + e.getMessage());
-    }
-
+    cmd.run();
     CommandContext commandContext = cmd.getCommandContext();
     ProgramNode programNode = commandContext.getProgramNode();
 

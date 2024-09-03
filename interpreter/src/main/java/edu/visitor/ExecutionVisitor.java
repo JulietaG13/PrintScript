@@ -30,7 +30,6 @@ import edu.utils.OperatorExecutor;
 public class ExecutionVisitor implements AstVisitor {
   private InterpreterReader interpreterReader;
   private Inventory inventory;
-
   private HandlerRegistry handlerRegistry;
 
   public ExecutionVisitor(

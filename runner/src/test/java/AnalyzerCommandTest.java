@@ -1,12 +1,18 @@
 import static edu.FileReader.openFile;
 
+import com.google.gson.JsonObject;
 import edu.commands.AnalyzerCommand;
 import edu.utils.CommandContext;
+import edu.utils.JsonConfigLoader;
 import java.io.IOException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 public class AnalyzerCommandTest {
+
+  private JsonObject getRules(String configFile) throws IOException {
+    return JsonConfigLoader.loadFromFile(configFile);
+  }
 
   @Test
   void testAnalyzeCommandWithFile() throws IOException {
@@ -21,13 +27,10 @@ public class AnalyzerCommandTest {
             + " - Position: LexicalRange(offset=8, line=0, column=8)\n"
             + " - Content: \"Hello\" + \"World\"";
 
-    AnalyzerCommand analyzerCommand = new AnalyzerCommand(openFile(filePath), "1.0", rulesPath);
+    AnalyzerCommand analyzerCommand =
+        new AnalyzerCommand(openFile(filePath), "1.0", getRules(rulesPath));
 
-    try {
-      analyzerCommand.run();
-    } catch (IOException e) {
-      Assertions.fail("Execution failed with IOException: " + e.getMessage());
-    }
+    analyzerCommand.run();
 
     CommandContext commandContext = analyzerCommand.getCommandContext();
 

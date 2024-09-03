@@ -4,7 +4,6 @@ import edu.Lexer;
 import edu.Parser;
 import edu.utils.CommandContext;
 import edu.utils.VersionFactory;
-import java.io.IOException;
 import java.util.Iterator;
 
 public class ValidatorCommand implements Command {
@@ -18,7 +17,7 @@ public class ValidatorCommand implements Command {
     this.versionFactory = new VersionFactory(version);
   }
 
-  public void run() throws IOException {
+  public void run() {
     Lexer lexer = versionFactory.createLexer(fileReader);
     lexer.tokenize();
     var tokens = lexer.getTokens();

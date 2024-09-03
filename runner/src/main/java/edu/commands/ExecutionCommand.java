@@ -5,7 +5,6 @@ import edu.Parser;
 import edu.utils.CommandContext;
 import edu.utils.ProgramNodeUtil;
 import edu.utils.VersionFactory;
-import java.io.IOException;
 import java.util.Iterator;
 
 public class ExecutionCommand implements Command {
@@ -20,7 +19,7 @@ public class ExecutionCommand implements Command {
     this.versionFactory = new VersionFactory(version);
   }
 
-  public void run() throws IOException {
+  public void run() {
     Parser parser = ProgramNodeUtil.getParser(fileReader, version);
     Interpreter interpreter = versionFactory.createInterpreter(parser);
     interpreter.interpret();
