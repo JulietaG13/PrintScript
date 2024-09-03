@@ -18,7 +18,6 @@ public class ProgramNodeUtil {
   public static Parser getParser(Iterator<String> fileReader, String version) {
     VersionFactory versionFactory = new VersionFactory(version);
     Lexer lexer = versionFactory.createLexer(fileReader);
-    lexer.tokenize();
     Parser parser = versionFactory.createParser(lexer);
     return parser;
   }
