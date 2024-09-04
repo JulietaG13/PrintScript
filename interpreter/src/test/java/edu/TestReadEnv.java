@@ -5,6 +5,7 @@ import static edu.LexerFactory.createLexerV2;
 import static edu.ParserFactory.createParserV2;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import edu.handlers.expressions.ConsoleInputProvider;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
@@ -20,7 +21,7 @@ public class TestReadEnv {
     InputStream codeIterator = createInputStreamFromString(code);
     Lexer lexer = createLexerV2(codeIterator);
     Parser parser = createParserV2(lexer);
-    return createInterpreterV2(parser);
+    return createInterpreterV2(parser, new ConsoleInputProvider());
   }
 
   @Test

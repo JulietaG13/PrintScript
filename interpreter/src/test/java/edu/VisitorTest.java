@@ -16,6 +16,7 @@ import edu.ast.statements.VariableDeclarationNode;
 import edu.context.ConstantContext;
 import edu.context.VariableContext;
 import edu.handlers.HandlerRegistryV2;
+import edu.handlers.expressions.ConsoleInputProvider;
 import edu.inventory.Inventory;
 import edu.reader.InterpreterReader;
 import edu.rules.RuleProviderV2;
@@ -35,7 +36,8 @@ public class VisitorTest {
         new Inventory(List.of(variableContext, new ConstantContext(new HashSet<>())));
     InterpreterReader reader =
         new InterpreterReader(new java.util.Stack<>(), new java.util.Stack<>());
-    return new ExecutionVisitor(reader, inventory, new HandlerRegistryV2(new RuleProviderV2()));
+    return new ExecutionVisitor(
+        reader, inventory, new HandlerRegistryV2(new RuleProviderV2(), new ConsoleInputProvider()));
   }
 
   @Test

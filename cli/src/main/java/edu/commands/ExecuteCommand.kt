@@ -5,6 +5,7 @@ import com.github.ajalt.clikt.parameters.options.option
 import com.github.ajalt.clikt.parameters.options.required
 import edu.FileReader.openFile
 import edu.Runner
+import edu.handlers.expressions.ConsoleInputProvider
 import java.io.IOException
 
 class ExecuteCommand : CliktCommand(help = "Execute the source file") {
@@ -14,7 +15,7 @@ class ExecuteCommand : CliktCommand(help = "Execute the source file") {
     override fun run() {
         try {
             val runner = Runner(version)
-            runner.execute(openFile(sourceFile))
+            runner.execute(openFile(sourceFile), ConsoleInputProvider())
         } catch (e: IOException) {
             println("Error during execution: ${e.message}")
         }

@@ -9,6 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import edu.ast.expressions.CallExpressionNode;
 import edu.ast.expressions.IdentifierNode;
 import edu.ast.expressions.LiteralStringNode;
+import edu.handlers.expressions.ConsoleInputProvider;
 import edu.handlers.expressions.ReadInputExpressionHandler;
 import edu.inventory.Inventory;
 import edu.reader.InterpreterReader;
@@ -31,7 +32,7 @@ class ReadInputExpressionHandlerTest {
 
   @BeforeEach
   void setUp() {
-    handler = new ReadInputExpressionHandler();
+    handler = new ReadInputExpressionHandler(new ConsoleInputProvider());
     inventory = new Inventory(Collections.emptyList());
     reader = new InterpreterReader(new Stack<>(), new Stack<>());
   }
@@ -115,7 +116,7 @@ class ReadInputExpressionHandlerTest {
     InputStream codeIterator = createInputStreamFromString(code);
     Lexer lexer = createLexerV1(codeIterator);
     Parser parser = createParserV1(lexer);
-    return createInterpreterV2(parser);
+    return createInterpreterV2(parser, new ConsoleInputProvider());
   }
 
   @Test

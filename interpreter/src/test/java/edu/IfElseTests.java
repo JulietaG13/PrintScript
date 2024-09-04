@@ -19,6 +19,7 @@ import edu.ast.statements.ExpressionStatementNode;
 import edu.ast.statements.IfStatementNode;
 import edu.context.VariableContext;
 import edu.handlers.HandlerRegistryV2;
+import edu.handlers.expressions.ConsoleInputProvider;
 import edu.inventory.Inventory;
 import edu.reader.InterpreterReader;
 import edu.rules.RuleProviderV2;
@@ -42,7 +43,7 @@ public class IfElseTests {
     InputStream codeIterator = createInputStreamFromString(code);
     Lexer lexer = createLexerV2(codeIterator);
     Parser parser = createParserV2(lexer);
-    return createInterpreterV2(parser);
+    return createInterpreterV2(parser, new ConsoleInputProvider());
   }
 
   public String getPrintedInfo(ProgramNode node) {
@@ -68,7 +69,10 @@ public class IfElseTests {
     context.add(variableContext);
     Inventory inventory = new Inventory(context);
     ExecutionVisitor visitor =
-        new ExecutionVisitor(reader, inventory, new HandlerRegistryV2(new RuleProviderV2()));
+        new ExecutionVisitor(
+            reader,
+            inventory,
+            new HandlerRegistryV2(new RuleProviderV2(), new ConsoleInputProvider()));
     visitor.visit(node);
     return visitor.getInventory().getVariableContext();
   }

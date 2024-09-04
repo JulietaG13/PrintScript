@@ -1,5 +1,6 @@
 package edu.handlers;
 
+import edu.handlers.expressions.InputProvider;
 import edu.handlers.expressions.PrintExpressionHandler;
 import edu.handlers.expressions.ReadEnvExpressionHandler;
 import edu.handlers.expressions.ReadInputExpressionHandler;
@@ -20,7 +21,7 @@ public class HandlerRegistryV2 implements HandlerRegistry {
   List<Rule> rulesDecl;
   List<Rule> rulesAss;
 
-  public HandlerRegistryV2(RuleProvider ruleProvider) {
+  public HandlerRegistryV2(RuleProvider ruleProvider, InputProvider inputProvider) {
     this.rulesDecl = ruleProvider.getDeclarationRules();
     this.rulesAss = ruleProvider.getAssignmentRules();
 
@@ -32,7 +33,7 @@ public class HandlerRegistryV2 implements HandlerRegistry {
         "const", new ConstantDeclarationHandler(ruleProvider.getDeclarationRules()));
 
     expressionHandlers.put("println", new PrintExpressionHandler());
-    expressionHandlers.put("readInput", new ReadInputExpressionHandler());
+    expressionHandlers.put("readInput", new ReadInputExpressionHandler(inputProvider));
     expressionHandlers.put("readEnv", new ReadEnvExpressionHandler());
   }
 

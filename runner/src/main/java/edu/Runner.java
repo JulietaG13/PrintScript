@@ -6,6 +6,7 @@ import edu.commands.Command;
 import edu.commands.ExecutionCommand;
 import edu.commands.FormattingCommand;
 import edu.commands.ValidatorCommand;
+import edu.handlers.expressions.InputProvider;
 import edu.utils.VersionFactory;
 import java.io.InputStream;
 
@@ -23,8 +24,8 @@ public class Runner {
     validatorCommand.run();
   }
 
-  public void execute(InputStream inputStream) {
-    Command executionCommand = new ExecutionCommand(inputStream, version);
+  public void execute(InputStream inputStream, InputProvider inputProvider) {
+    Command executionCommand = new ExecutionCommand(inputStream, version, inputProvider);
     executionCommand.run();
   }
 

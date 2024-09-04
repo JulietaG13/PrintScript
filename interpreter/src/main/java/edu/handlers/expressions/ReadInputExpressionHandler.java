@@ -6,10 +6,13 @@ import edu.handlers.ExpressionHandler;
 import edu.inventory.Inventory;
 import edu.reader.InterpreterReader;
 import edu.utils.HandlerResult;
-import java.util.Scanner;
 
 public class ReadInputExpressionHandler implements ExpressionHandler {
-  private final Scanner scanner = new Scanner(System.in);
+  private final InputProvider inputProvider;
+
+  public ReadInputExpressionHandler(InputProvider inputProvider) {
+    this.inputProvider = inputProvider;
+  }
 
   @Override
   public HandlerResult handle(ExpressionNode node, InterpreterReader reader, Inventory inventory) {
@@ -19,8 +22,7 @@ public class ReadInputExpressionHandler implements ExpressionHandler {
       throw new RuntimeException("Unsupported function call: " + callNode.callee().name());
     }
     String message = reader.getLiteral().getValue().toString();
-    System.out.print(message);
-    String input = scanner.nextLine();
+    String input = inputProvider.input(message);
     Object typedInput = determineInputType(input);
 
     reader = reader.addLiteral(typedInput);

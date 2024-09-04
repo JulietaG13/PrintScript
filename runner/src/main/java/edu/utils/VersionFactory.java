@@ -15,6 +15,7 @@ import edu.Interpreter;
 import edu.Lexer;
 import edu.Linter;
 import edu.Parser;
+import edu.handlers.expressions.InputProvider;
 import edu.rules.FormatterRuleProvider;
 import java.io.InputStream;
 
@@ -47,12 +48,12 @@ public class VersionFactory {
     }
   }
 
-  public Interpreter createInterpreter(Parser parser) {
+  public Interpreter createInterpreter(Parser parser, InputProvider inputProvider) {
     switch (version) {
       case "1.0":
         return createInterpreterV1(parser);
       case "1.1":
-        return createInterpreterV2(parser);
+        return createInterpreterV2(parser, inputProvider);
       default:
         return null;
     }

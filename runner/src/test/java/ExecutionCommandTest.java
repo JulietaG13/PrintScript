@@ -2,6 +2,7 @@ import static edu.FileReader.openFile;
 
 import edu.ast.ProgramNode;
 import edu.commands.ExecutionCommand;
+import edu.handlers.expressions.ConsoleInputProvider;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
@@ -20,7 +21,8 @@ public class ExecutionCommandTest {
       String testFilePath = "src/test/java/resources/input.txt";
       String version = "1.1";
 
-      ExecutionCommand cmd = new ExecutionCommand(openFile(testFilePath), version);
+      ExecutionCommand cmd =
+          new ExecutionCommand(openFile(testFilePath), version, new ConsoleInputProvider());
 
       cmd.run();
 
