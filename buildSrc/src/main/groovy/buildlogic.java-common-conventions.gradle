@@ -115,7 +115,7 @@ publishing {
         maven(MavenPublication) {
             groupId = 'com.ingsis.jcli'
             artifactId = "${project.name}"
-            version = '1.0.12'
+            version = '1.0.11'
             from components.java
         }
     }

@@ -20,8 +20,6 @@ public class ReadInputExpressionHandler implements ExpressionHandler {
     }
     String message = reader.getLiteral().getValue().toString();
     System.out.print(message);
-    // creo un nuevo scanner para cada input reading
-    Scanner scanner = new Scanner(System.in);
     String input = scanner.nextLine();
     Object typedInput = determineInputType(input);
 
