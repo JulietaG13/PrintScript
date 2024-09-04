@@ -1,12 +1,10 @@
 package edu;
 
 import static edu.InterpreterFactory.createInterpreterV1;
-import static edu.InterpreterFactory.createInterpreterV2;
 import static edu.LexerFactory.createLexerV1;
-import static edu.LexerFactory.createLexerV2;
 import static edu.ParserFactory.createParserV1;
-import static edu.ParserFactory.createParserV2;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import edu.context.VariableContext;
@@ -22,9 +20,9 @@ public class TestIne {
 
   private Interpreter createInterpreter(String code) {
     InputStream codeIterator = createInputStreamFromString(code);
-    Lexer lexer = createLexerV2(codeIterator);
-    Parser parser = createParserV2(lexer);
-    return createInterpreterV2(parser);
+    Lexer lexer = createLexerV1(codeIterator);
+    Parser parser = createParserV1(lexer);
+    return createInterpreterV1(parser);
   }
 
   @Test
@@ -38,5 +36,23 @@ public class TestIne {
     VariableContext variableContext = interpreter.getVisitor().getInventory().getVariableContext();
     assertTrue(variableContext.hasNumberVariable("numberResult"));
     assertEquals(new BigDecimal(17), variableContext.getNumberVariable("numberResult"));
+  }
+
+  @Test
+  public void testConstantDeclarationInVersion1_0() {
+    // Código fuente que debería fallar en la versión 1.0
+    String code =
+        "const a: string = \"constant declaration" + " should not be allowed in version 1.0\";";
+
+    // Crear el intérprete para la versión 1.0
+    Interpreter interpreter = createInterpreter(code);
+
+    // Asegurarse de que se lanza una excepción durante la interpretación
+    Exception exception = assertThrows(RuntimeException.class, interpreter::interpret);
+
+    String expectedMessage = "constant declaration is not allowed in version 1.0";
+    String actualMessage = exception.getMessage();
+
+    System.out.println(actualMessage);
   }
 }

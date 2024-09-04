@@ -20,11 +20,17 @@ public class HandlerRegistryV1 implements HandlerRegistry {
 
   @Override
   public StatementHandler getStatementHandler(String nodeClass) {
+    if (!statementHandlers.containsKey(nodeClass)) {
+      throw new RuntimeException("Unsupported statement: " + nodeClass);
+    }
     return statementHandlers.get(nodeClass);
   }
 
   @Override
   public ExpressionHandler getExpressionHandler(String callee) {
+    if (!expressionHandlers.containsKey(callee)) {
+      throw new RuntimeException("Unsupported function: " + callee);
+    }
     return expressionHandlers.get(callee);
   }
 }
