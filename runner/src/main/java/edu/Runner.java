@@ -28,9 +28,10 @@ public class Runner {
     executionCommand.run();
   }
 
-  public void format(InputStream inputStream, JsonObject rules) {
+  public FormatterResult format(InputStream inputStream, JsonObject rules) {
     Command formattingCommand = new FormattingCommand(inputStream, version, rules);
     formattingCommand.run();
+    return formattingCommand.getCommandContext().getFormatterResult();
   }
 
   public Report analyze(InputStream inputStream, JsonObject config) {
