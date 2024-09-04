@@ -48,7 +48,6 @@ public class ExecutionVisitor implements AstVisitor {
 
   @Override
   public void visit(VariableDeclarationNode node) {
-    // Todo manejar boolean solo en version 2 ver como hacerlo
     node.id().accept(this);
 
     if (node.init() != null) {
