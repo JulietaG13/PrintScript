@@ -62,8 +62,7 @@ public class FormatterTestV2 {
             + " ".repeat(4)
             + "println(2 + 2);"
             + lineSeparator
-            + "}"
-            + lineSeparator;
+            + "}";
 
     Formatter formatDefault = new Formatter(defaultRules, getParser(input));
     FormatterResult result = formatDefault.format();
@@ -81,8 +80,7 @@ public class FormatterTestV2 {
             + " ".repeat(8)
             + "println(2 + 2);"
             + lineSeparator
-            + "}"
-            + lineSeparator;
+            + "}";
 
     Formatter formatDefault = new Formatter(doubleIndent, getParser(input));
     FormatterResult result = formatDefault.format();
@@ -100,8 +98,7 @@ public class FormatterTestV2 {
             + " ".repeat(0)
             + "println(2 + 2);"
             + lineSeparator
-            + "}"
-            + lineSeparator;
+            + "}";
 
     Formatter formatDefault = new Formatter(noIndent, getParser(input));
     FormatterResult result = formatDefault.format();
@@ -134,8 +131,7 @@ public class FormatterTestV2 {
             + " ".repeat(4 * 1)
             + "}"
             + lineSeparator
-            + "}"
-            + lineSeparator;
+            + "}";
 
     Formatter formatDefault = new Formatter(defaultRules, getParser(input));
     FormatterResult result = formatDefault.format();
@@ -147,7 +143,7 @@ public class FormatterTestV2 {
   public void defaultConstDeclaration() {
     String input =
         lineSeparator + "const     my_cool_variable:string    = \"ciclon\";" + lineSeparator;
-    String expected = "const my_cool_variable : string = \"ciclon\";" + lineSeparator;
+    String expected = "const my_cool_variable : string = \"ciclon\";";
 
     Formatter defaultFormatter = new Formatter(defaultRules, getParser(input));
     FormatterResult res = defaultFormatter.format();

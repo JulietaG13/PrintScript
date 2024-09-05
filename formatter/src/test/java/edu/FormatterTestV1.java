@@ -50,7 +50,7 @@ public class FormatterTestV1 {
   public void defaultVariableDeclaration() {
     String input =
         lineSeparator + "let     my_cool_variable:string    = \"ciclon\";" + lineSeparator;
-    String expected = "let my_cool_variable : string = \"ciclon\";" + lineSeparator;
+    String expected = "let my_cool_variable : string = \"ciclon\";";
 
     Formatter defaultFormatter = new Formatter(defaultRules, getParser(input));
     FormatterResult res = defaultFormatter.format();
@@ -73,8 +73,7 @@ public class FormatterTestV1 {
         "let my_cool_variable : string = \"ciclon\";"
             + lineSeparator
             + lineSeparator
-            + "println(my_cool_variable);"
-            + lineSeparator;
+            + "println(my_cool_variable);";
 
     Formatter defaultFormatter = new Formatter(defaultRules, getParser(input));
     FormatterResult res = defaultFormatter.format();
@@ -88,8 +87,7 @@ public class FormatterTestV1 {
     String expected =
         "let my_cool_variable : string = \"ciclon\";"
             + lineSeparator
-            + "my_cool_variable = \"hurricane\";"
-            + lineSeparator;
+            + "my_cool_variable = \"hurricane\";";
 
     Formatter defaultFormatter = new Formatter(defaultRules, getParser(input));
     FormatterResult res = defaultFormatter.format();
@@ -101,11 +99,7 @@ public class FormatterTestV1 {
   public void defaultBinaryOperation() {
     String input = "let age: number = 10; println(age+5);";
     String expected =
-        "let age : number = 10;"
-            + lineSeparator
-            + lineSeparator
-            + "println(age + 5);"
-            + lineSeparator;
+        "let age : number = 10;" + lineSeparator + lineSeparator + "println(age + 5);";
 
     Formatter defaultFormatter = new Formatter(defaultRules, getParser(input));
     FormatterResult res = defaultFormatter.format();
@@ -117,7 +111,7 @@ public class FormatterTestV1 {
   public void noExtraSpacesVariableDeclaration() {
     String input =
         lineSeparator + "let     my_cool_variable:string    = \"ciclon\";" + lineSeparator;
-    String expected = "let my_cool_variable:string=\"ciclon\";" + lineSeparator;
+    String expected = "let my_cool_variable:string=\"ciclon\";";
 
     Formatter defaultFormatter = new Formatter(noExtraSpaceRules, getParser(input));
     FormatterResult res = defaultFormatter.format();
@@ -137,10 +131,7 @@ public class FormatterTestV1 {
             + "println  (       my_cool_variable)  ;  ";
 
     String expected =
-        "let my_cool_variable:string=\"ciclon\";"
-            + lineSeparator
-            + "println(my_cool_variable);"
-            + lineSeparator;
+        "let my_cool_variable:string=\"ciclon\";" + lineSeparator + "println(my_cool_variable);";
 
     Formatter defaultFormatter = new Formatter(noExtraSpaceRules, getParser(input));
     FormatterResult res = defaultFormatter.format();
@@ -154,8 +145,7 @@ public class FormatterTestV1 {
     String expected =
         "let my_cool_variable:string=\"ciclon\";"
             + lineSeparator
-            + "my_cool_variable=\"hurricane\";"
-            + lineSeparator;
+            + "my_cool_variable=\"hurricane\";";
 
     Formatter defaultFormatter = new Formatter(noExtraSpaceRules, getParser(input));
     FormatterResult res = defaultFormatter.format();
@@ -166,7 +156,7 @@ public class FormatterTestV1 {
   @Test
   public void noExtraSpacesBinaryOperation() {
     String input = "let age: number = 10; println(age+5);";
-    String expected = "let age:number=10;" + lineSeparator + "println(age + 5);" + lineSeparator;
+    String expected = "let age:number=10;" + lineSeparator + "println(age + 5);";
 
     Formatter defaultFormatter = new Formatter(noExtraSpaceRules, getParser(input));
     FormatterResult res = defaultFormatter.format();

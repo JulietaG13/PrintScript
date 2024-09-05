@@ -29,6 +29,6 @@ public class FormatterResult {
   }
 
   public String getResult() {
-    return stringBuilder.toString();
+    return stringBuilder.toString().trim();
   }
 }
