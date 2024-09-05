@@ -19,8 +19,6 @@ public class IfStatementHandler implements StatementHandler {
       throw new IllegalArgumentException("Invalid node type for IfStatementHandler");
     }
 
-    IfStatementNode ifNode = (IfStatementNode) node;
-
     VariableContext updatedVariableContext =
         mergeTemporaryContext(inventory.getTemporaryContext(), inventory.getVariableContext());
 

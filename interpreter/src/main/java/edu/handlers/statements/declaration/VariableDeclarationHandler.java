@@ -14,10 +14,6 @@ import java.util.List;
 public class VariableDeclarationHandler implements StatementHandler {
   private final DeclarationHelper declarationHelper;
 
-  public VariableDeclarationHandler() {
-    this.declarationHelper = new DeclarationHelper(null);
-  }
-
   public VariableDeclarationHandler(List<Rule> rules) {
     this.declarationHelper = new DeclarationHelper(rules);
   }

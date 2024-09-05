@@ -1,14 +1,17 @@
 package edu;
 
+import edu.ast.BlockNode;
 import edu.ast.expressions.BinaryExpressionNode;
 import edu.ast.expressions.CallExpressionNode;
 import edu.ast.expressions.IdentifierNode;
+import edu.ast.expressions.LiteralBooleanNode;
 import edu.ast.expressions.LiteralNumberNode;
 import edu.ast.expressions.LiteralStringNode;
 import edu.ast.interfaces.ExpressionNode;
 import edu.ast.interfaces.StatementNode;
 import edu.ast.statements.AssignmentNode;
 import edu.ast.statements.ExpressionStatementNode;
+import edu.ast.statements.IfStatementNode;
 import edu.ast.statements.VariableDeclarationNode;
 import edu.rules.RuleProviderLinter;
 
@@ -31,6 +34,9 @@ public class StaticCodeAnalyzer {
         break;
       case ExpressionStatementNode expressionStatementNode:
         analyze(expressionStatementNode);
+        break;
+      case IfStatementNode ifStatementNode:
+        analyze(ifStatementNode);
         break;
       default:
         throw new IllegalArgumentException("Unexpected statement node: " + node);
@@ -56,6 +62,8 @@ public class StaticCodeAnalyzer {
         break;
       case LiteralStringNode literalStringNode:
         break;
+      case LiteralBooleanNode literalBooleanNode:
+        break;
       default:
         throw new IllegalArgumentException("Unexpected expression node: " + node);
     }
@@ -64,6 +72,17 @@ public class StaticCodeAnalyzer {
   private void analyze(AssignmentNode node) {
     analyze(node.id());
     analyze(node.value());
+  }
+
+  private void analyze(IfStatementNode node) {
+    analyze(node.elseDo());
+    analyze(node.thenDo());
+  }
+
+  private void analyze(BlockNode node) {
+    for (StatementNode statement : node.statements()) {
+      analyze(statement);
+    }
   }
 
   private void analyze(VariableDeclarationNode node) {

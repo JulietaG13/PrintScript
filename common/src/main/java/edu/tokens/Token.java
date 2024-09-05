@@ -35,4 +35,8 @@ public class Token {
   public String toString() {
     return content;
   }
+
+  public String tokenString() {
+    return type + " " + content + " " + start.toString() + " " + end.toString();
+  }
 }

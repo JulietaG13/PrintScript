@@ -18,7 +18,6 @@ public class VerifyNoDuplicateDeclarationInBlockRule implements Rule {
       throw new IllegalArgumentException("Node is not of type VariableDeclarationNode");
     }
 
-    VariableDeclarationNode varNode = (VariableDeclarationNode) node;
     String varName = interpreterReader.getIdentifier().getValue().toString();
 
     TemporalContext temporalContext = inventory.getTemporaryContext();

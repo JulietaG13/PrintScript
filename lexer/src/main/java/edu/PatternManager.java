@@ -21,12 +21,9 @@ public class PatternManager {
 
   public Optional<Token> matches(String code, LexicalRange position) {
     for (PatternMatcher matcher : matchers) {
-
       Optional<MatchResult> matchResult = matcher.findMatch(code);
-
       if (matchResult.isPresent()) {
         String tokenValue = matchResult.get().getMatchedValue();
-
         if (matcher.getTokenType() == TokenType.KEYWORD) {
           if (!isWholeWordMatch(tokenValue, code)) {
             continue;

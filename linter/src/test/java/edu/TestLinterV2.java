@@ -146,4 +146,18 @@ public class TestLinterV2 {
     Report report = linter.analyze();
     assertTrue(report.getReport().isEmpty());
   }
+
+  @Test
+  public void testOrVariableDeclarationErrorInsideIf() {
+    String code = "if(true) { const Camel_SnakeCaseMIX : string; }";
+    Linter linter = createLinter(code, allCases);
+    Report report = linter.analyze();
+    assertFalse(report.getReport().isEmpty());
+    List<String> messages = report.getMessages();
+    assertEquals(1, messages.size());
+    assertEquals(
+        "Invalid identifier name: Camel_SnakeCaseMIX "
+            + "at position LexicalRange(offset=17, line=0, column=17)",
+        messages.get(0));
+  }
 }

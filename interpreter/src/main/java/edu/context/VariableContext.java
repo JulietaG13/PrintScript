@@ -76,18 +76,6 @@ public class VariableContext implements Context {
     return booleanVariables.containsKey(id);
   }
 
-  public Map<String, BigDecimal> getNumberVariables() {
-    return numberVariables;
-  }
-
-  public Map<String, String> getStringVariables() {
-    return stringVariables;
-  }
-
-  public Map<String, Boolean> getBooleanVariables() {
-    return booleanVariables;
-  }
-
   public VariableContext write(String name, Object value) {
     if (value instanceof BigDecimal) {
       return setNumberVariable(name, (BigDecimal) value);

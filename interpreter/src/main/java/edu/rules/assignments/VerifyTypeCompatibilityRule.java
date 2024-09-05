@@ -1,7 +1,6 @@
 package edu.rules.assignments;
 
 import edu.ast.interfaces.StatementNode;
-import edu.ast.statements.AssignmentNode;
 import edu.context.VariableContext;
 import edu.inventory.Inventory;
 import edu.reader.InterpreterReader;
@@ -13,8 +12,6 @@ public class VerifyTypeCompatibilityRule implements Rule {
   @Override
   public RuleResult apply(
       StatementNode node, InterpreterReader interpreterReader, Inventory inventory) {
-    AssignmentNode assignmentNode = (AssignmentNode) node;
-
     String varName = interpreterReader.getIdentifier().getValue().toString();
     Object value = interpreterReader.getLiteral().getValue();
 

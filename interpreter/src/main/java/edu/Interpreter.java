@@ -13,7 +13,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 
 public class Interpreter {
-  // Todo: apicar interpret a el parser iterator
   private final ExecutionVisitor visitor;
   Parser parser;
 

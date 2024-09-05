@@ -97,7 +97,7 @@ public class Lexer implements Iterator<Token> {
 
   @Override
   public Token next() {
-    if (currentLine == null) {
+    if (!hasNext()) {
       throw new NoSuchElementException("No more code to read.");
     }
     String sub = currentLine.substring(positionInLine);

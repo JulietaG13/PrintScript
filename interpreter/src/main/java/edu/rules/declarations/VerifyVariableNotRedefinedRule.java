@@ -17,7 +17,6 @@ public class VerifyVariableNotRedefinedRule implements Rule {
       throw new IllegalArgumentException("Node is not of type VariableDeclarationNode");
     }
 
-    VariableDeclarationNode varNode = (VariableDeclarationNode) node;
     String varName = interpreterReader.getIdentifier().getValue().toString();
     VariableContext variableContext = inventory.getVariableContext();
 

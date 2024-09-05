@@ -1,7 +1,6 @@
 package edu.rules.assignments;
 
 import edu.ast.interfaces.StatementNode;
-import edu.ast.statements.AssignmentNode;
 import edu.context.ConstantContext;
 import edu.inventory.Inventory;
 import edu.reader.InterpreterReader;
@@ -12,7 +11,6 @@ public class VerifyConstantAssignmentRule implements Rule {
   @Override
   public RuleResult apply(
       StatementNode node, InterpreterReader interpreterReader, Inventory inventory) {
-    AssignmentNode assignmentNode = (AssignmentNode) node;
 
     String varName = interpreterReader.getIdentifier().getValue().toString();
     ConstantContext constantContext = inventory.getConstantContext();

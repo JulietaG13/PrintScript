@@ -2,7 +2,6 @@ package edu.rules.declarations;
 
 import edu.ast.interfaces.StatementNode;
 import edu.ast.statements.VariableDeclarationNode;
-import edu.context.VariableContext;
 import edu.inventory.Inventory;
 import edu.reader.InterpreterReader;
 import edu.rules.Rule;
@@ -25,9 +24,7 @@ public class VerifyCorrectTypeAssignmentRule implements Rule {
     }
     Object value = interpreterReader.getLiteral().getValue();
 
-    VariableContext variableContext = inventory.getVariableContext();
-
-    boolean result = true;
+    boolean result;
     switch (varNode.type()) {
       case NUMBER:
         result = value instanceof BigDecimal;

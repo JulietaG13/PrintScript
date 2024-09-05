@@ -1,5 +1,6 @@
 package edu;
 
+import static edu.InterpreterFactory.createHandlerRegistryV2;
 import static edu.InterpreterFactory.createInterpreterV2;
 import static edu.LexerFactory.createLexerV2;
 import static edu.ParserFactory.createParserV2;
@@ -18,7 +19,6 @@ import edu.ast.interfaces.StatementNode;
 import edu.ast.statements.ExpressionStatementNode;
 import edu.ast.statements.IfStatementNode;
 import edu.context.VariableContext;
-import edu.handlers.HandlerRegistryV2;
 import edu.handlers.expressions.ConsoleInputProvider;
 import edu.inventory.Inventory;
 import edu.reader.InterpreterReader;
@@ -72,7 +72,7 @@ public class IfElseTests {
         new ExecutionVisitor(
             reader,
             inventory,
-            new HandlerRegistryV2(new RuleProviderV2(), new ConsoleInputProvider()));
+            createHandlerRegistryV2(new RuleProviderV2(), new ConsoleInputProvider()));
     visitor.visit(node);
     return visitor.getInventory().getVariableContext();
   }

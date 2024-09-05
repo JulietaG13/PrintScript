@@ -1,7 +1,5 @@
 package edu.visitor;
 
-import static edu.ast.statements.Kind.CONST;
-
 import edu.Operator;
 import edu.OperatorProvider;
 import edu.ast.AstVisitor;
@@ -53,12 +51,7 @@ public class ExecutionVisitor implements AstVisitor {
     if (node.init() != null) {
       node.init().accept(this);
     }
-    String type;
-    if (node.kind() == CONST) {
-      type = "const";
-    } else {
-      type = "let";
-    }
+    String type = node.kind().name;
 
     HandlerResult result =
         handlerRegistry.getStatementHandler(type).handle(node, interpreterReader, inventory);
@@ -70,9 +63,6 @@ public class ExecutionVisitor implements AstVisitor {
   public void visit(AssignmentNode node) {
     node.id().accept(this);
     node.value().accept(this);
-
-    String varName = interpreterReader.getIdentifier().getValue().toString();
-    Object value = interpreterReader.getLiteral().getValue();
 
     HandlerResult result =
         handlerRegistry
@@ -112,14 +102,6 @@ public class ExecutionVisitor implements AstVisitor {
     return (Boolean) value;
   }
 
-  private static boolean isString(Object value) {
-    return value instanceof String;
-  }
-
-  private static boolean isNumber(Object value) {
-    return value instanceof Number;
-  }
-
   @Override
   public void visit(ExpressionStatementNode node) {
     node.expression().accept(this);
@@ -130,7 +112,6 @@ public class ExecutionVisitor implements AstVisitor {
     for (ExpressionNode arg : node.args()) {
       arg.accept(this);
     }
-    // Todo: manejar que call es
     String callee = node.callee().name().toString();
     HandlerResult result1 =
         handlerRegistry.getExpressionHandler(callee).handle(node, interpreterReader, inventory);
@@ -177,7 +158,6 @@ public class ExecutionVisitor implements AstVisitor {
 
   @Override
   public void visit(BlockNode node) {
-    // todo: falta algo?
     for (StatementNode statement : node.statements()) {
       statement.accept(this);
     }
@@ -187,14 +167,6 @@ public class ExecutionVisitor implements AstVisitor {
   public void visit(LiteralBooleanNode node) {
     InterpreterReader newInterpreterReader = interpreterReader.addLiteral(node.value());
     interpreterReader = newInterpreterReader;
-  }
-
-  private boolean isPrint(ExpressionNode node) {
-    if (node instanceof CallExpressionNode) {
-      CallExpressionNode call = (CallExpressionNode) node;
-      return "println".equals(call.callee().name());
-    }
-    return false;
   }
 
   public InterpreterReader getReader() {

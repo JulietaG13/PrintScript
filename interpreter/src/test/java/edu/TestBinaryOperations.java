@@ -6,7 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import edu.ast.ProgramNode;
 import edu.context.VariableContext;
-import edu.handlers.HandlerRegistryV1;
 import edu.inventory.Inventory;
 import edu.reader.InterpreterReader;
 import edu.rules.RuleProviderV1;
@@ -36,7 +35,8 @@ public class TestBinaryOperations {
     context.add(variableContext);
     Inventory inventory = new Inventory(context);
     ExecutionVisitor visitor =
-        new ExecutionVisitor(reader, inventory, new HandlerRegistryV1(new RuleProviderV1()));
+        new ExecutionVisitor(
+            reader, inventory, InterpreterFactory.createHandlerRegistryV1(new RuleProviderV1()));
     visitor.visit(node);
     return visitor.getInventory().getVariableContext();
   }
