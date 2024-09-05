@@ -20,7 +20,7 @@ public class FormattingCommandTest {
   public void testFormattingCommandWithFile() throws IOException {
     String filePath = "src/test/java/resources/input.txt";
     String rulesPath = "src/test/java/resources/rules.txt";
-    String expectedOutput = "let my_cool_variable : string = \"ciclon\";" + lineSeparator;
+    String expectedOutput = "let my_cool_variable : string = \"ciclon\";";
 
     FormattingCommand cmd = new FormattingCommand(openFile(filePath), "1.0", getRules(rulesPath));
     cmd.run();

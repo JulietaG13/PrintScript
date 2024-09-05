@@ -13,6 +13,8 @@ import java.io.PrintStream;
 import org.junit.jupiter.api.Test;
 
 public class TestReadEnv {
+  private static final String lineSeparator = System.lineSeparator();
+
   private InputStream createInputStreamFromString(String code) {
     return new ByteArrayInputStream(code.getBytes());
   }
@@ -45,6 +47,6 @@ public class TestReadEnv {
     // Get the captured output
     String output = outputStream.toString().trim();
 
-    assertEquals("What is the best football club?\n" + "San Lorenzo", output);
+    assertEquals("What is the best football club?" + lineSeparator + "San Lorenzo", output);
   }
 }
