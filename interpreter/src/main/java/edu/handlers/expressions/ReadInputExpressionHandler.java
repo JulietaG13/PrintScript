@@ -25,6 +25,7 @@ public class ReadInputExpressionHandler implements ExpressionHandler {
     String input = inputProvider.input(message);
     Object typedInput = determineInputType(input);
 
+    reader = reader.getLiteral().getReader();
     reader = reader.addLiteral(typedInput);
     return new HandlerResult(reader, inventory);
   }
