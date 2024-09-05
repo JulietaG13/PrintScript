@@ -27,7 +27,6 @@ public class ReadEnvExpressionHandler implements ExpressionHandler {
 
     Object typedValue = determineInputType(envValue);
 
-    reader = reader.getIdentifier().getReader();
     reader = reader.addLiteral(typedValue);
 
     return new HandlerResult(reader, inventory);

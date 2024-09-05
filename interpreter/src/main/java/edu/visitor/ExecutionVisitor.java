@@ -127,7 +127,6 @@ public class ExecutionVisitor implements AstVisitor {
 
   @Override
   public void visit(CallExpressionNode node) {
-    node.callee().accept(this);
     for (ExpressionNode arg : node.args()) {
       arg.accept(this);
     }
