@@ -1,0 +1,7 @@
+IDENTIFIER add LexicalRange(offset=0, line=0, column=0) LexicalRange(offset=2, line=0, column=2)
+SYNTAX ( LexicalRange(offset=3, line=0, column=3) LexicalRange(offset=3, line=0, column=3)
+LITERAL 4 LexicalRange(offset=4, line=0, column=4) LexicalRange(offset=4, line=0, column=4)
+OPERATOR + LexicalRange(offset=5, line=0, column=5) LexicalRange(offset=5, line=0, column=5)
+LITERAL 1 LexicalRange(offset=6, line=0, column=6) LexicalRange(offset=6, line=0, column=6)
+SYNTAX ) LexicalRange(offset=7, line=0, column=7) LexicalRange(offset=7, line=0, column=7)
+SYNTAX ; LexicalRange(offset=8, line=0, column=8) LexicalRange(offset=8, line=0, column=8)

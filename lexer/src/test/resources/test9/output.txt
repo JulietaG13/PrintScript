@@ -1,0 +1,5 @@
+KEYWORD let LexicalRange(offset=0, line=0, column=0) LexicalRange(offset=2, line=0, column=2)
+IDENTIFIER x LexicalRange(offset=4, line=0, column=4) LexicalRange(offset=4, line=0, column=4)
+OPERATOR = LexicalRange(offset=6, line=0, column=6) LexicalRange(offset=6, line=0, column=6)
+LITERAL 10 LexicalRange(offset=8, line=0, column=8) LexicalRange(offset=9, line=0, column=9)
+SYNTAX ; LexicalRange(offset=10, line=0, column=10) LexicalRange(offset=10, line=0, column=10)

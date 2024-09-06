@@ -1,0 +1,4 @@
+IDENTIFIER println LexicalRange(offset=0, line=0, column=0) LexicalRange(offset=6, line=0, column=6)
+SYNTAX ( LexicalRange(offset=7, line=0, column=7) LexicalRange(offset=7, line=0, column=7)
+LITERAL 10 LexicalRange(offset=8, line=0, column=8) LexicalRange(offset=9, line=0, column=9)
+SYNTAX ) LexicalRange(offset=10, line=0, column=10) LexicalRange(offset=10, line=0, column=10)

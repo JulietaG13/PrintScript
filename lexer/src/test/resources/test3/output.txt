@@ -1,0 +1,7 @@
+KEYWORD const LexicalRange(offset=0, line=0, column=0) LexicalRange(offset=4, line=0, column=4)
+IDENTIFIER X LexicalRange(offset=6, line=0, column=6) LexicalRange(offset=6, line=0, column=6)
+SYNTAX : LexicalRange(offset=7, line=0, column=7) LexicalRange(offset=7, line=0, column=7)
+KEYWORD boolean LexicalRange(offset=9, line=0, column=9) LexicalRange(offset=15, line=0, column=15)
+OPERATOR = LexicalRange(offset=17, line=0, column=17) LexicalRange(offset=17, line=0, column=17)
+LITERAL true LexicalRange(offset=19, line=0, column=19) LexicalRange(offset=22, line=0, column=22)
+SYNTAX ; LexicalRange(offset=23, line=0, column=23) LexicalRange(offset=23, line=0, column=23)

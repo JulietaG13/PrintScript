@@ -1,0 +1,2 @@
+KEYWORD let LexicalRange(offset=0, line=0, column=0) LexicalRange(offset=2, line=0, column=2)
+IDENTIFIER letdown LexicalRange(offset=4, line=0, column=4) LexicalRange(offset=10, line=0, column=10)

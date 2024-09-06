@@ -1,0 +1,1 @@
+let age: number=sub(19,1); age+=1;
