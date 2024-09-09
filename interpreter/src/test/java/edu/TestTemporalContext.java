@@ -19,7 +19,6 @@ public class TestTemporalContext {
 
   @Test
   public void testStoreValueAndRetrieve() {
-    // Test storing and retrieving a value
     setUp();
     String key = "testKey";
     String value = "testValue";
@@ -32,7 +31,6 @@ public class TestTemporalContext {
   @Test
   public void testHasValue() {
     setUp();
-    // Test checking for a key's existence
     String key = "testKey";
     String value = "testValue";
     context = context.storeValue(key, value);
@@ -44,7 +42,6 @@ public class TestTemporalContext {
   @Test
   public void testImmutableContext() {
     setUp();
-    // Test that the context is immutable after storing values
     String key1 = "key1";
     String value1 = "value1";
 
@@ -55,11 +52,9 @@ public class TestTemporalContext {
 
     TemporalContext newContext = context.storeValue(key2, value2);
 
-    // Original context should not have the new value
     assertTrue(context.hasValue(key1));
     assertFalse(context.hasValue(key2));
 
-    // New context should have both values
     assertTrue(newContext.hasValue(key1));
     assertTrue(newContext.hasValue(key2));
   }
@@ -67,7 +62,6 @@ public class TestTemporalContext {
   @Test
   public void testGetAllValues() {
     setUp();
-    // Test retrieving all values from the context
     Map<String, Object> expectedValues = new HashMap<>();
     expectedValues.put("key1", "value1");
     expectedValues.put("key2", "value2");
@@ -82,7 +76,6 @@ public class TestTemporalContext {
 
   @Test
   public void testConstructorWithInitialValues() {
-    // Test initializing the context with predefined values
     Map<String, Object> initialValues = new HashMap<>();
     initialValues.put("key1", "value1");
     initialValues.put("key2", 123);

@@ -28,28 +28,23 @@ public class VerifyNoDuplicateDeclarationInBlockRuleTest {
   public void setUp() {
     rule = new VerifyNoDuplicateDeclarationInBlockRule();
 
-    // Setup an IdentifierNode and VariableDeclarationNode
     LexicalRange range = new LexicalRange(0, 0, 0);
     IdentifierNode idNode = new IdentifierNode(range, range, "myVar");
     varDeclNode = new VariableDeclarationNode(range, range, idNode, Type.STRING, Kind.LET, null);
 
-    // Setup basic inventory with empty contexts
     TemporalContext temporalContext = new TemporalContext();
     VariableContext variableContext =
         new VariableContext(new HashMap<>(), new HashMap<>(), new HashMap<>());
     inventory = new Inventory(List.of(variableContext, temporalContext));
 
-    // Setup the InterpreterReader
     reader = new InterpreterReader(new java.util.Stack<>(), new java.util.Stack<>());
     reader = reader.addIdentifier("myVar");
   }
 
   @Test
   public void testNoDuplicateDeclaration() {
-    // Act
     RuleResult result = rule.apply(varDeclNode, reader, inventory);
 
-    // Assert
     Assertions.assertTrue(result.result());
     Assertions.assertEquals(reader, result.reader());
     Assertions.assertEquals(inventory, result.inventory());
@@ -57,11 +52,9 @@ public class VerifyNoDuplicateDeclarationInBlockRuleTest {
 
   @Test
   public void testDuplicateDeclarationInBlockThrowsException() {
-    // Setup a temporal context with "myVar" already defined
     TemporalContext temporalContext = new TemporalContext().storeValue("myVar", 42);
     inventory = new Inventory(List.of(inventory.getVariableContext(), temporalContext));
 
-    // Act & Assert
     RuntimeException exception =
         Assertions.assertThrows(
             RuntimeException.class,
@@ -75,12 +68,10 @@ public class VerifyNoDuplicateDeclarationInBlockRuleTest {
 
   @Test
   public void testDuplicateDeclarationInContextThrowsException() {
-    // Setup a variable context with "myVar" already defined
     VariableContext variableContext =
         inventory.getVariableContext().setNumberVariable("myVar", new BigDecimal(42));
     inventory = new Inventory(List.of(variableContext, inventory.getTemporaryContext()));
 
-    // Act & Assert
     RuntimeException exception =
         Assertions.assertThrows(
             RuntimeException.class,

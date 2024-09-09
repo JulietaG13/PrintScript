@@ -22,7 +22,6 @@ public class VerifyTypeCompatibilityRuleTest {
 
   @Test
   public void testCompatibleAssignment() {
-    // Setup
     LexicalRange range = new LexicalRange(0, 0, 0);
     IdentifierNode id = new IdentifierNode(range, range, "myVar");
     LiteralNumberNode value = new LiteralNumberNode(range, range, new BigDecimal(42.0));
@@ -38,16 +37,13 @@ public class VerifyTypeCompatibilityRuleTest {
     reader = reader.addLiteral(42.0);
     VerifyTypeCompatibilityRule rule = new VerifyTypeCompatibilityRule();
 
-    // Act
     RuleResult result = rule.apply(assignmentNode, reader, inventory);
 
-    // Assert
     assertTrue(result.result());
   }
 
   @Test
   public void testIncompatibleAssignmentThrowsException() {
-    // Setup
     LexicalRange range = new LexicalRange(0, 0, 0);
     IdentifierNode id = new IdentifierNode(range, range, "myVar");
     LiteralStringNode value = new LiteralStringNode(range, range, "incompatible");
@@ -62,7 +58,6 @@ public class VerifyTypeCompatibilityRuleTest {
     VerifyTypeCompatibilityRule rule = new VerifyTypeCompatibilityRule();
     reader = reader.addIdentifier("myVar");
     reader = reader.addLiteral("incompatible");
-    // Act & Assert
     InterpreterReader finalReader = reader;
     assertThrows(
         RuntimeException.class,

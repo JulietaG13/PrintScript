@@ -1,41 +1,12 @@
-package edu.handlers.statements;
+package edu.helpers;
 
-import edu.ast.interfaces.StatementNode;
-import edu.ast.statements.IfStatementNode;
-import edu.context.TemporalContext;
 import edu.context.VariableContext;
-import edu.handlers.StatementHandler;
-import edu.inventory.Inventory;
-import edu.reader.InterpreterReader;
-import edu.utils.HandlerResult;
 import java.math.BigDecimal;
 
-public class IfStatementHandler implements StatementHandler {
-
-  @Override
-  public HandlerResult handle(
-      StatementNode node, InterpreterReader interpreterReader, Inventory inventory) {
-    if (!(node instanceof IfStatementNode)) {
-      throw new IllegalArgumentException("Invalid node type for IfStatementHandler");
-    }
-
-    VariableContext updatedVariableContext =
-        mergeTemporaryContext(inventory.getTemporaryContext(), inventory.getVariableContext());
-
-    inventory = inventory.setVariableContext(updatedVariableContext);
-    inventory = inventory.removeTemporaryContext();
-
-    return new HandlerResult(interpreterReader, inventory);
-  }
-
-  @Override
-  public Class<? extends StatementNode> getHandledNodeClass() {
-    return IfStatementNode.class;
-  }
-
-  private VariableContext mergeTemporaryContext(
-      TemporalContext temporalContext, VariableContext variableContext) {
-    for (var entry : temporalContext.getAllValues().entrySet()) {
+public class IfHelper {
+  public static VariableContext mergeTemporaryContext(
+      VariableContext temporalContext, VariableContext variableContext) {
+    for (var entry : temporalContext.getAll().entrySet()) {
       String key = entry.getKey();
       Object value = entry.getValue();
 

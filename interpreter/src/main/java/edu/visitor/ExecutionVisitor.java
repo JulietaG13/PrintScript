@@ -17,8 +17,9 @@ import edu.ast.statements.AssignmentNode;
 import edu.ast.statements.ExpressionStatementNode;
 import edu.ast.statements.IfStatementNode;
 import edu.ast.statements.VariableDeclarationNode;
-import edu.context.TemporalContext;
+import edu.context.VariableContext;
 import edu.handlers.HandlerRegistry;
+import edu.helpers.IfHelper;
 import edu.inventory.Inventory;
 import edu.reader.InterpreterReader;
 import edu.reader.ReaderResult;
@@ -79,19 +80,22 @@ public class ExecutionVisitor implements AstVisitor {
     interpreterReader = result.getReader();
     boolean condition = evaluateCondition(result.getValue());
 
-    TemporalContext temporalContext = new TemporalContext();
-    inventory = inventory.setTemporaryContext(temporalContext);
-
+    ExecutionVisitor newVisitor =
+        new ExecutionVisitor(interpreterReader, inventory, handlerRegistry);
     if (condition) {
-      node.thenDo().accept(this);
+      node.thenDo().accept(newVisitor);
     } else if (node.elseDo() != null) {
-      node.elseDo().accept(this);
+      node.elseDo().accept(newVisitor);
     }
 
-    HandlerResult result1 =
-        handlerRegistry.getStatementHandler("if").handle(node, interpreterReader, inventory);
-    interpreterReader = result1.getInterpreterReader();
-    inventory = result1.getInventory();
+    interpreterReader = newVisitor.getReader();
+    VariableContext newVarContext = getNewVarContext(newVisitor);
+    inventory = inventory.setVariableContext(newVarContext);
+  }
+
+  private VariableContext getNewVarContext(ExecutionVisitor newVisitor) {
+    return IfHelper.mergeTemporaryContext(
+        newVisitor.getInventory().getVariableContext(), inventory.getVariableContext());
   }
 
   private boolean evaluateCondition(Object value) {

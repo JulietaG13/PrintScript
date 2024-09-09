@@ -50,11 +50,6 @@ public class Inventory {
     return null;
   }
 
-  public Inventory createTemporaryContext() {
-    TemporalContext temporalContext = new TemporalContext();
-    return updateContext(temporalContext);
-  }
-
   public Inventory setTemporaryContext(TemporalContext temporaryContext) {
     return updateContext(temporaryContext);
   }

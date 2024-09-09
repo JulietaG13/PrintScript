@@ -18,7 +18,6 @@ public class PrintExpressionHandlerTest {
 
   @Test
   public void testPrintlnFunction() {
-    // Setup
     LexicalRange range = new LexicalRange(0, 0, 0);
     IdentifierNode callee = new IdentifierNode(range, range, "println");
     LiteralStringNode argument = new LiteralStringNode(range, range, "Hello, World!");
@@ -31,20 +30,17 @@ public class PrintExpressionHandlerTest {
         new InterpreterReader(new java.util.Stack<>(), new java.util.Stack<>());
     PrintExpressionHandler handler = new PrintExpressionHandler();
 
-    // Capture the output
     ByteArrayOutputStream outContent = new ByteArrayOutputStream();
     PrintStream originalOut = System.out;
     System.setOut(new PrintStream(outContent));
 
     reader = reader.addLiteral("Hello, World!");
     reader = reader.addIdentifier("println");
-    // Act
+
     handler.handle(printCall, reader, inventory);
 
-    // Reset the output stream
     System.setOut(originalOut);
 
-    // Assert
     String expectedOutput = "Hello, World!";
     String actualOutput = outContent.toString().trim();
     Assertions.assertEquals(expectedOutput, actualOutput);
@@ -52,7 +48,7 @@ public class PrintExpressionHandlerTest {
 
   @Test
   public void testUnsupportedFunction() {
-    // Setup
+
     LexicalRange range = new LexicalRange(0, 0, 0);
     IdentifierNode callee = new IdentifierNode(range, range, "unsupportedFunction");
     LiteralStringNode argument = new LiteralStringNode(range, range, "This should fail");
@@ -66,7 +62,6 @@ public class PrintExpressionHandlerTest {
         new InterpreterReader(new java.util.Stack<>(), new java.util.Stack<>());
     PrintExpressionHandler handler = new PrintExpressionHandler();
 
-    // Act & Assert
     Assertions.assertThrows(
         RuntimeException.class,
         () -> handler.handle(unsupportedCall, reader, inventory),

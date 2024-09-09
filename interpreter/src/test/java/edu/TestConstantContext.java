@@ -22,7 +22,6 @@ public class TestConstantContext {
   @Test
   public void testHasConstant() {
     setUp();
-    // Test checking if a constant exists
     assertTrue(context.hasConstant("PI"));
     assertFalse(context.hasConstant("GOLDEN_RATIO"));
   }
@@ -30,7 +29,6 @@ public class TestConstantContext {
   @Test
   public void testAddConstant() {
     setUp();
-    // Test adding a new constant
     context = context.addConstant("GOLDEN_RATIO");
 
     assertTrue(context.hasConstant("GOLDEN_RATIO"));
@@ -41,7 +39,6 @@ public class TestConstantContext {
   @Test
   public void testGetConstants() {
     setUp();
-    // Test retrieving all constants
     Set<String> expectedConstants = new HashSet<>();
     expectedConstants.add("PI");
     expectedConstants.add("E");
@@ -49,7 +46,6 @@ public class TestConstantContext {
     Set<String> actualConstants = context.getConstants();
     assertEquals(expectedConstants, actualConstants);
 
-    // Ensure immutability
     boolean exceptionThrown = false;
     try {
       actualConstants.add("NEW_CONSTANT");
@@ -62,7 +58,6 @@ public class TestConstantContext {
   @Test
   public void testImmutableContext() {
     setUp();
-    // Test that adding a constant returns a new context and does not mutate the original
     ConstantContext newContext = context.addConstant("SPEED_OF_LIGHT");
 
     assertFalse(context.hasConstant("SPEED_OF_LIGHT"));

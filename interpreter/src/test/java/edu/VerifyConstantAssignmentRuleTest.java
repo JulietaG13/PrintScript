@@ -20,7 +20,6 @@ public class VerifyConstantAssignmentRuleTest {
 
   @Test
   public void testAssignmentToConstantThrowsException() {
-    // Setup
     LexicalRange range = new LexicalRange(0, 0, 0);
     IdentifierNode id = new IdentifierNode(range, range, "myConst");
     LiteralNumberNode value = new LiteralNumberNode(range, range, new BigDecimal(42.0));
@@ -37,7 +36,6 @@ public class VerifyConstantAssignmentRuleTest {
 
     VerifyConstantAssignmentRule rule = new VerifyConstantAssignmentRule();
 
-    // Act & Assert
     Assertions.assertThrows(
         RuntimeException.class,
         () -> rule.apply(assignmentNode, reader, inventory),
@@ -46,7 +44,6 @@ public class VerifyConstantAssignmentRuleTest {
 
   @Test
   public void testAssignmentToNonConstantSucceeds() {
-    // Setup
     LexicalRange range = new LexicalRange(0, 0, 0);
     IdentifierNode id = new IdentifierNode(range, range, "myVar");
     LiteralNumberNode value = new LiteralNumberNode(range, range, new BigDecimal(42.0));
@@ -66,10 +63,8 @@ public class VerifyConstantAssignmentRuleTest {
 
     VerifyConstantAssignmentRule rule = new VerifyConstantAssignmentRule();
     reader = reader.addIdentifier("myVar");
-    // Act
     RuleResult result = rule.apply(assignmentNode, reader, inventory);
 
-    // Assert
     Assertions.assertTrue(result.result());
   }
 }

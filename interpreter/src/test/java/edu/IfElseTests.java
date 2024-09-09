@@ -308,4 +308,33 @@ public class IfElseTests {
 
     assertEquals("elseDo executed", output);
   }
+
+  @Test
+  public void testIfdentrodeif() {
+    String input =
+        "if (true) {"
+            + System.lineSeparator()
+            + "if (true) {"
+            + System.lineSeparator()
+            + "let a : number = 2 + 2;"
+            + System.lineSeparator()
+            + "println(2 + 2);"
+            + System.lineSeparator()
+            + "}"
+            + System.lineSeparator()
+            + "}";
+
+    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+    PrintStream originalOut = System.out;
+    System.setOut(new PrintStream(outputStream));
+
+    Interpreter interpreter = createInterpreter(input);
+    interpreter.interpret();
+
+    System.setOut(originalOut);
+
+    String output = outputStream.toString().trim();
+
+    assertEquals("4", output, "Expected no " + "output when the if condition is false.");
+  }
 }

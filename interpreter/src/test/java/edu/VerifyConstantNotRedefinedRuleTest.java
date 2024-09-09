@@ -24,14 +24,12 @@ public class VerifyConstantNotRedefinedRuleTest {
 
   @Test
   public void testRedefiningConstantThrowsException() {
-    // Setup
     LexicalRange range = new LexicalRange(0, 0, 0);
     IdentifierNode id = new IdentifierNode(range, range, "myConst");
     VariableDeclarationNode varDeclNode =
         new VariableDeclarationNode(
             range, range, id, Type.STRING, Kind.CONST, new LiteralStringNode(range, range, "test"));
 
-    // Constant "myConst" is already defined
     ConstantContext constantContext = new ConstantContext(new HashSet<>(List.of("myConst")));
     Inventory inventory =
         new Inventory(
@@ -43,7 +41,6 @@ public class VerifyConstantNotRedefinedRuleTest {
 
     VerifyConstantNotRedefinedRule rule = new VerifyConstantNotRedefinedRule();
 
-    // Act & Assert
     assertThrows(
         RuntimeException.class,
         () -> rule.apply(varDeclNode, reader, inventory),
@@ -52,13 +49,11 @@ public class VerifyConstantNotRedefinedRuleTest {
 
   @Test
   public void testNonRedefiningConstantSucceeds() {
-    // Setup
     LexicalRange range = new LexicalRange(0, 0, 0);
     IdentifierNode id = new IdentifierNode(range, range, "newConst");
     VariableDeclarationNode varDeclNode =
         new VariableDeclarationNode(range, range, id, Type.STRING, Kind.CONST, null);
 
-    // No constants are defined yet
     ConstantContext constantContext = new ConstantContext(new HashSet<>());
     Inventory inventory =
         new Inventory(
@@ -71,10 +66,8 @@ public class VerifyConstantNotRedefinedRuleTest {
     VerifyConstantNotRedefinedRule rule = new VerifyConstantNotRedefinedRule();
     reader = reader.addIdentifier("newConst");
 
-    // Act
     RuleResult result = rule.apply(varDeclNode, reader, inventory);
 
-    // Assert
     assertTrue(result.result());
     assertEquals(reader, result.reader());
     assertEquals(inventory, result.inventory());

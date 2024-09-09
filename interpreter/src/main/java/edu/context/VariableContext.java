@@ -87,4 +87,12 @@ public class VariableContext implements Context {
       throw new RuntimeException("Unsupported variable type: " + value.getClass());
     }
   }
+
+  public Map<String, Object> getAll() {
+    Map<String, Object> all = new HashMap<>();
+    all.putAll(numberVariables);
+    all.putAll(stringVariables);
+    all.putAll(booleanVariables);
+    return all;
+  }
 }

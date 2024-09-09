@@ -40,14 +40,11 @@ public class TestIne {
 
   @Test
   public void testConstantDeclarationInVersion1_0() {
-    // Código fuente que debería fallar en la versión 1.0
     String code =
         "const a: string = \"constant declaration" + " should not be allowed in version 1.0\";";
 
-    // Crear el intérprete para la versión 1.0
     Interpreter interpreter = createInterpreter(code);
 
-    // Asegurarse de que se lanza una excepción durante la interpretación
     Exception exception = assertThrows(RuntimeException.class, interpreter::interpret);
 
     String expectedMessage = "constant declaration is not allowed in version 1.0";

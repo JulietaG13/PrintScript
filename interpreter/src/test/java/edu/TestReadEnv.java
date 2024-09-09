@@ -38,13 +38,10 @@ public class TestReadEnv {
     PrintStream originalOut = System.out;
     System.setOut(new PrintStream(outputStream));
 
-    // Run the interpreter
     interpreter.interpret();
 
-    // Restore original System.out
     System.setOut(originalOut);
 
-    // Get the captured output
     String output = outputStream.toString().trim();
 
     assertEquals("What is the best football club?" + lineSeparator + "San Lorenzo", output);

@@ -40,27 +40,20 @@ public class TestVariableDeclaration {
   public void testBinaryStringIdentifierPrint() {
     String code = "let age: number = 20; println(\"I am \" + age + \" years old\");";
 
-    // Create interpreter for version 1
     Interpreter interpreter = createInterpreter(code);
 
-    // Capture output
     ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
     PrintStream originalOut = System.out;
     System.setOut(new PrintStream(outputStream));
 
-    // Run the interpreter
     interpreter.interpret();
 
-    // Restore original System.out
     System.setOut(originalOut);
 
-    // Get the captured output
     String output = outputStream.toString().trim();
 
-    // Expected output
     String expectedOutput = "I am 20 years old";
 
-    // Assertions
     assertEquals(expectedOutput, output);
 
     VariableContext variableContext = interpreter.getVisitor().getInventory().getVariableContext();

@@ -27,27 +27,20 @@ public class InterpreterTest {
   public void testInterpretWithPrintln() {
     String code = "println(\"Hello, world!\");";
 
-    // Create interpreter for version 1
     Interpreter interpreter = createInterpreter(code);
 
-    // Capture output
     ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
     PrintStream originalOut = System.out;
     System.setOut(new PrintStream(outputStream));
 
-    // Run the interpreter
     interpreter.interpret();
 
-    // Restore original System.out
     System.setOut(originalOut);
 
-    // Get the captured output
     String output = outputStream.toString().trim();
 
-    // Expected output
     String expectedOutput = "Hello, world!";
 
-    // Assertions
     assertEquals(expectedOutput, output);
   }
 }
