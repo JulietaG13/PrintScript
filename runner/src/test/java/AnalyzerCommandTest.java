@@ -36,10 +36,11 @@ public class AnalyzerCommandTest {
 
     edu.Report report = commandContext.getLinterReport();
     Assertions.assertNotNull(report, "The report should not be null");
-    Assertions.assertEquals(1, report.getMessages().size(), "There should be one error message");
+    Assertions.assertEquals(
+        1, report.getReport().get().size(), "There should be one error message");
     Assertions.assertEquals(
         expectedOutput,
-        report.getMessages().get(0),
+        report.getReport().get().get(0),
         "The error message does not match the expected output");
   }
 }
