@@ -1,5 +1,7 @@
 package edu.parsers.statements;
 
+import static edu.utils.ParserUtil.isSemicolon;
+
 import edu.LexicalRange;
 import edu.Parser;
 import edu.ast.interfaces.StatementNode;
@@ -48,5 +50,10 @@ public class ParseStatementExpression implements StatementParser {
       }
     }
     return false;
+  }
+
+  @Override
+  public boolean isFinished(List<Token> tokens, Token next) {
+    return isSemicolon(tokens.getLast());
   }
 }

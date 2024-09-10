@@ -90,7 +90,7 @@ public class Parser implements Iterator<StatementNode> {
           throw new UnexpectedTokenException(current);
         }
       }
-    } while (lexer.hasNext() && !(bracketBalance == 0 && isFinished(current, nextToken)));
+    } while (lexer.hasNext() && !(bracketBalance == 0 && isFinished(tokens, nextToken)));
 
     if (!lexer.hasNext()) {
       if (!isEndOfStatement(nextToken)) {
@@ -106,8 +106,13 @@ public class Parser implements Iterator<StatementNode> {
     return statement;
   }
 
-  private static boolean isFinished(Token current, Token next) {
-    return isEndOfStatement(current) && !next.getContent().equals("else"); // TODO
+  private boolean isFinished(List<Token> currentTokens, Token next) {
+    for (StatementParser parser : statementParsers) {
+      if (parser.isFinished(currentTokens, next)) {
+        return true;
+      }
+    }
+    return false;
   }
 
   public ExpressionNode parseExpression(List<Token> tokens) {

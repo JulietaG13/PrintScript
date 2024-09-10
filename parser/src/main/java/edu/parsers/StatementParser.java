@@ -13,4 +13,6 @@ public interface StatementParser {
   StatementNode parse(List<Token> tokens, Parser parser);
 
   boolean isXstatement(List<Token> tokens);
+
+  boolean isFinished(List<Token> tokens, Token next);
 }

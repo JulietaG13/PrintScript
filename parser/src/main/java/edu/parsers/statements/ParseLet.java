@@ -2,6 +2,7 @@ package edu.parsers.statements;
 
 import static edu.utils.ParserUtil.isColon;
 import static edu.utils.ParserUtil.isKeyword;
+import static edu.utils.ParserUtil.isSemicolon;
 
 import edu.LexicalRange;
 import edu.Parser;
@@ -62,6 +63,11 @@ public class ParseLet implements StatementParser {
       return false;
     }
     return isKeyword(tokens, 0) && kind == Kind.LET;
+  }
+
+  @Override
+  public boolean isFinished(List<Token> tokens, Token next) {
+    return isSemicolon(tokens.getLast());
   }
 
   private boolean isNotInitialized(List<Token> tokens) {

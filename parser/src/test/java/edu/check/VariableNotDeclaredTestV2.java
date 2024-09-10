@@ -4,7 +4,10 @@ import static edu.ParserTestUtil.createInputStreamFromString;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import edu.*;
+import edu.Lexer;
+import edu.LexerFactory;
+import edu.Parser;
+import edu.ParserFactory;
 import org.junit.jupiter.api.Test;
 
 class VariableNotDeclaredTestV2 {

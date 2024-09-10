@@ -2,6 +2,7 @@ package edu.parsers.statements;
 
 import static edu.utils.ParserUtil.isAssign;
 import static edu.utils.ParserUtil.isIdentifier;
+import static edu.utils.ParserUtil.isSemicolon;
 
 import edu.LexicalRange;
 import edu.Parser;
@@ -47,5 +48,10 @@ public class ParseAssignation implements StatementParser {
       }
     }
     return true;
+  }
+
+  @Override
+  public boolean isFinished(List<Token> tokens, Token next) {
+    return isSemicolon(tokens.getLast());
   }
 }
