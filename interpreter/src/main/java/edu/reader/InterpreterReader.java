@@ -1,8 +1,6 @@
 package edu.reader;
 
-import edu.context.ConstantContext;
-import edu.context.Context;
-import edu.context.VariableContext;
+import edu.helpers.ReaderHelper;
 import edu.inventory.Inventory;
 import java.util.Stack;
 
@@ -52,31 +50,15 @@ public class InterpreterReader {
   public ReaderResult read(Inventory inventory) {
     if (hasLiteral()) {
       return getLiteral();
-    } else {
-      ReaderResult result = getIdentifier();
-      String id = (String) result.getValue();
-      InterpreterReader newInterpreterReader = result.getReader();
-
-      for (Context context : inventory.getContexts()) {
-        if (context instanceof VariableContext) {
-          VariableContext variableContext = (VariableContext) context;
-          if (variableContext.hasStringVariable(id)) {
-            return new ReaderResult(newInterpreterReader, variableContext.getStringVariable(id));
-          } else if (variableContext.hasNumberVariable(id)) {
-            return new ReaderResult(newInterpreterReader, variableContext.getNumberVariable(id));
-          } else if (variableContext.hasBooleanVariable(id)) {
-            return new ReaderResult(newInterpreterReader, variableContext.getBooleanVariable(id));
-          }
-        } else if (context instanceof ConstantContext) {
-          ConstantContext constantContext = (ConstantContext) context;
-          if (constantContext.hasConstant(id)) {
-            return new ReaderResult(
-                newInterpreterReader, id); // El valor de una constante puede ser el propio nombre
-          }
-        }
-      }
-
-      throw new RuntimeException("Variable no definida: " + id);
     }
+
+    ReaderResult result = getIdentifier();
+    String id = (String) result.getValue();
+    InterpreterReader newInterpreterReader = result.getReader();
+
+    ReaderHelper readerHelper = new ReaderHelper();
+    return readerHelper
+        .findVariableInContexts(inventory, id, newInterpreterReader)
+        .orElseThrow(() -> new RuntimeException("Variable no definida: " + id));
   }
 }
