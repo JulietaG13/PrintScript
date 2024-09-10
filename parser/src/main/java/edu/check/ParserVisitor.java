@@ -28,6 +28,12 @@ public class ParserVisitor implements AstVisitor {
     root.accept(this);
   }
 
+  public ParserVisitor() {}
+
+  private ParserVisitor(Map<String, Type> vars) {
+    this.vars = vars;
+  }
+
   @Override
   public void visit(ProgramNode node) {
     for (StatementNode statement : node.getBody()) {
@@ -71,7 +77,8 @@ public class ParserVisitor implements AstVisitor {
     }
 
     node.init().accept(this);
-    if (node.type() != lastType) {
+    if (lastType != null && node.type() != lastType) {
+      // lastType == null -> lastType = call expression result
       throw new VariableTypeMismatchException(name, node.type(), lastType);
     }
 
@@ -118,11 +125,36 @@ public class ParserVisitor implements AstVisitor {
   }
 
   @Override
-  public void visit(IfStatementNode node) {}
+  public void visit(IfStatementNode node) {
+    switch (node.condition()) {
+      case IdentifierNode id -> {
+        if (!vars.containsKey(id.name())) {
+          throw new VariableNotDeclaredException(id.name());
+        }
+        if (vars.get(id.name()) != Type.BOOLEAN) {
+          throw new InvalidIfConditionException(node);
+        }
+      }
+      case LiteralBooleanNode b -> {
+        break;
+      }
+      default -> throw new InvalidIfConditionException(node);
+    }
+
+    node.thenDo().accept(new ParserVisitor(vars));
+    node.elseDo().accept(new ParserVisitor(vars));
+  }
 
   @Override
-  public void visit(BlockNode node) {}
+  public void visit(BlockNode node) {
+    for (StatementNode statement : node.statements()) {
+      statement.accept(this);
+      lastType = null;
+    }
+  }
 
   @Override
-  public void visit(LiteralBooleanNode node) {}
+  public void visit(LiteralBooleanNode node) {
+    lastType = Type.BOOLEAN;
+  }
 }

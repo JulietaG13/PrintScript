@@ -9,6 +9,8 @@ import edu.ast.ProgramNode;
 import edu.ast.interfaces.ExpressionNode;
 import edu.ast.interfaces.StatementNode;
 import edu.check.ParserVisitor;
+import edu.exceptions.InvalidExpressionException;
+import edu.exceptions.InvalidStatementException;
 import edu.exceptions.UnexpectedTokenException;
 import edu.parsers.ExpressionParser;
 import edu.parsers.StatementParser;
@@ -32,6 +34,7 @@ public class Parser implements Iterator<StatementNode> {
   private final List<ExpressionParser> expressionParsers;
 
   private Token nextToken;
+  private ParserVisitor visitor = new ParserVisitor();
 
   public Parser() {
     this.lexer = null;
@@ -96,7 +99,11 @@ public class Parser implements Iterator<StatementNode> {
       tokens.add(nextToken);
     }
 
-    return parseStatement(tokens);
+    StatementNode statement = parseStatement(tokens);
+
+    statement.accept(visitor);
+
+    return statement;
   }
 
   private static boolean isFinished(Token current, Token next) {
@@ -109,7 +116,7 @@ public class Parser implements Iterator<StatementNode> {
         return parser.parse(tokens, this);
       }
     }
-    throw new RuntimeException(); // TODO
+    throw new InvalidExpressionException(tokens.getFirst(), tokens.getLast());
   }
 
   public StatementNode parseStatement(List<Token> tokens) {
@@ -119,7 +126,7 @@ public class Parser implements Iterator<StatementNode> {
       }
     }
 
-    throw new RuntimeException(); // TODO
+    throw new InvalidStatementException(tokens.getFirst(), tokens.getLast());
   }
 
   /*---------------------------------------------------------------------------*/
