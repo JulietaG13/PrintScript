@@ -54,7 +54,7 @@ public class TestPrintRules {
 
   @Test
   public void testIdentifierPrint() {
-    String code = "println(hello);";
+    String code = "let hello : string = \"hi\"; println(hello);";
     Linter linter = createLinter(code, nonExpression);
     Report report = linter.analyze();
     assertTrue(report.getReport().isEmpty());

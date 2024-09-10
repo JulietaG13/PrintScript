@@ -16,6 +16,7 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 
 public class LexerTest {
+  private static final String lineSeparator = System.lineSeparator();
   private final String testDirectory = "src/test/resources/";
 
   private final List<String> files1 =
@@ -79,7 +80,7 @@ public class LexerTest {
     String output =
         lexer.getTokens().stream()
             .map(Token::tokenString)
-            .reduce("", (a, b) -> a + b + "\n")
+            .reduce("", (a, b) -> a + b + lineSeparator)
             .trim();
     return output;
   }

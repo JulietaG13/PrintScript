@@ -59,6 +59,11 @@ public class ParseIf implements StatementParser {
     return isIf(tokens, 0) && isOpenParen(tokens, 1) && isCloseBracket(tokens, tokens.size() - 1);
   }
 
+  @Override
+  public boolean isFinished(List<Token> tokens, Token next) {
+    return isIf(tokens, 0) && isCloseBracket(tokens.getLast()) && !isElse(next);
+  }
+
   private static int getFirstOpenBracket(List<Token> tokens) {
     int bracketBalance = 0;
     for (int i = 0; i < tokens.size(); i++) {
@@ -99,5 +104,9 @@ public class ParseIf implements StatementParser {
 
   private static boolean isElse(List<Token> tokens, int index) {
     return isKeyword(tokens, index) && tokens.get(index).getContent().equals("else");
+  }
+
+  private static boolean isElse(Token token) {
+    return isElse(List.of(token), 0);
   }
 }
