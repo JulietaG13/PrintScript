@@ -2,7 +2,6 @@ package edu.reader;
 
 import edu.context.ConstantContext;
 import edu.context.Context;
-import edu.context.TemporalContext;
 import edu.context.VariableContext;
 import edu.inventory.Inventory;
 import java.util.Stack;
@@ -73,11 +72,6 @@ public class InterpreterReader {
           if (constantContext.hasConstant(id)) {
             return new ReaderResult(
                 newInterpreterReader, id); // El valor de una constante puede ser el propio nombre
-          }
-        } else if (context instanceof TemporalContext) {
-          TemporalContext temporaryContext = (TemporalContext) context;
-          if (temporaryContext.hasValue(id)) {
-            return new ReaderResult(newInterpreterReader, temporaryContext.getValue(id));
           }
         }
       }

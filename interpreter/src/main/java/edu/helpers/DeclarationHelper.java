@@ -2,7 +2,6 @@ package edu.helpers;
 
 import edu.ast.statements.Type;
 import edu.ast.statements.VariableDeclarationNode;
-import edu.context.TemporalContext;
 import edu.context.VariableContext;
 import edu.inventory.Inventory;
 import edu.reader.InterpreterReader;
@@ -45,15 +44,8 @@ public class DeclarationHelper {
       value = resultValue.getValue();
     }
 
-    // Guardar en el contexto adecuado (Temporal o Variable)
-    if (inventory.getTemporaryContext() != null) {
-      TemporalContext temporalContext = inventory.getTemporaryContext().storeValue(varName, value);
-      inventory = inventory.setTemporaryContext(temporalContext);
-    } else {
-      VariableContext variableContext = inventory.getVariableContext().write(varName, value);
-      inventory = inventory.setVariableContext(variableContext);
-    }
-
+    VariableContext variableContext = inventory.getVariableContext().write(varName, value);
+    inventory = inventory.setVariableContext(variableContext);
     return new DeclarationHelperResult(interpreterReader, inventory, varName, value);
   }
 

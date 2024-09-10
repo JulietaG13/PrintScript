@@ -2,7 +2,6 @@ package edu.handlers.statements;
 
 import edu.ast.interfaces.StatementNode;
 import edu.ast.statements.AssignmentNode;
-import edu.context.TemporalContext;
 import edu.context.VariableContext;
 import edu.handlers.StatementHandler;
 import edu.inventory.Inventory;
@@ -39,13 +38,7 @@ public class AssignmentHandler implements StatementHandler {
     Object value = interpreterReader.getLiteral().getValue();
 
     VariableContext context = inventory.getVariableContext().write(varName, value);
-
-    if (inventory.getTemporaryContext() != null) {
-      TemporalContext temporalContext = inventory.getTemporaryContext().storeValue(varName, value);
-      inventory = inventory.setTemporaryContext(temporalContext);
-    } else {
-      inventory = inventory.setVariableContext(context);
-    }
+    inventory = inventory.setVariableContext(context);
 
     return new HandlerResult(interpreterReader, inventory);
   }

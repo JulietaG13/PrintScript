@@ -117,6 +117,5 @@ public class VisitorTest {
 
     VariableContext variableContext = visitor.getInventory().getVariableContext();
     assertTrue(!variableContext.hasNumberVariable("x"));
-    assertEquals(null, visitor.getInventory().getTemporaryContext());
   }
 }

@@ -2,7 +2,6 @@ package edu.inventory;
 
 import edu.context.ConstantContext;
 import edu.context.Context;
-import edu.context.TemporalContext;
 import edu.context.VariableContext;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -39,25 +38,6 @@ public class Inventory {
 
   public Inventory setConstantContext(ConstantContext constantContext) {
     return updateContext(constantContext);
-  }
-
-  public TemporalContext getTemporaryContext() {
-    for (Context context : inventory) {
-      if (context instanceof TemporalContext) {
-        return (TemporalContext) context;
-      }
-    }
-    return null;
-  }
-
-  public Inventory setTemporaryContext(TemporalContext temporaryContext) {
-    return updateContext(temporaryContext);
-  }
-
-  public Inventory removeTemporaryContext() {
-    List<Context> newInventory = new ArrayList<>(inventory);
-    newInventory.removeIf(context -> context instanceof TemporalContext);
-    return new Inventory(newInventory);
   }
 
   private Inventory updateContext(Context newContext) {
