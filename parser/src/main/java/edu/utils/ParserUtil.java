@@ -6,19 +6,6 @@ import java.util.List;
 
 public class ParserUtil {
 
-  public static boolean isTokenOrderValid(List<Token> tokens, List<TokenType> expected) {
-    if (expected.size() < tokens.size()) {
-      return false;
-    }
-    for (int i = 0; i < expected.size(); i++) {
-      TokenType type = tokens.get(i).getType();
-      if (!expected.get(i).equals(type)) {
-        return false;
-      }
-    }
-    return true;
-  }
-
   public static boolean isKeyword(List<Token> tokens, int i) {
     return tokens.get(i).getType() == TokenType.KEYWORD;
   }
@@ -117,11 +104,6 @@ public class ParserUtil {
 
   public static boolean isAssign(Token token) {
     String content = token.getContent();
-    return isOperator(token)
-        && (content.equals("=")
-            || content.equals("+=")
-            || content.equals("-=")
-            || content.equals("*=")
-            || content.equals("/="));
+    return isOperator(token) && content.equals("=");
   }
 }

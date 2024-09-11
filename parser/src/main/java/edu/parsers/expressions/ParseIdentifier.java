@@ -5,6 +5,7 @@ import static edu.utils.ParserUtil.isIdentifier;
 import edu.Parser;
 import edu.ast.expressions.IdentifierNode;
 import edu.ast.interfaces.ExpressionNode;
+import edu.exceptions.InvalidExpressionException;
 import edu.parsers.ExpressionParser;
 import edu.tokens.Token;
 import java.util.List;
@@ -13,7 +14,8 @@ public class ParseIdentifier implements ExpressionParser {
   @Override
   public ExpressionNode parse(List<Token> tokens, Parser parser) {
     if (!isXexpression(tokens)) {
-      throw new RuntimeException(); // Should never happen
+      throw new InvalidExpressionException(
+          tokens.getFirst(), tokens.getLast()); // Should never happen
     }
 
     Token token = tokens.getFirst();

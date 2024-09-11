@@ -94,7 +94,7 @@ public class Parser implements Iterator<StatementNode> {
 
     if (!lexer.hasNext()) {
       if (!isEndOfStatement(nextToken)) {
-        throw new RuntimeException("statement not finished");
+        throw new InvalidStatementException(tokens.getFirst(), tokens.getLast());
       }
       tokens.add(nextToken);
     }

@@ -14,6 +14,7 @@ import edu.ast.interfaces.StatementNode;
 import edu.ast.statements.AssignmentNode;
 import edu.ast.statements.ExpressionStatementNode;
 import edu.ast.statements.IfStatementNode;
+import edu.ast.statements.Kind;
 import edu.ast.statements.Type;
 import edu.ast.statements.VariableDeclarationNode;
 import java.util.HashMap;
@@ -22,6 +23,7 @@ import java.util.Map;
 public class ParserVisitor implements AstVisitor {
 
   private Map<String, Type> vars = new HashMap<>();
+  private Map<String, Kind> kinds = new HashMap<>();
   private Type lastType = null;
 
   public ParserVisitor(ProgramNode root) {
@@ -30,8 +32,9 @@ public class ParserVisitor implements AstVisitor {
 
   public ParserVisitor() {}
 
-  private ParserVisitor(Map<String, Type> vars) {
-    this.vars = vars;
+  private ParserVisitor(Map<String, Type> vars, Map<String, Kind> kinds) {
+    this.vars.putAll(vars);
+    this.kinds.putAll(kinds);
   }
 
   @Override
@@ -48,6 +51,9 @@ public class ParserVisitor implements AstVisitor {
     String name = node.id().name();
     if (!vars.containsKey(name)) {
       throw new VariableNotDeclaredException(name);
+    }
+    if (kinds.get(name) == Kind.CONST) {
+      throw new ConstReassignmentException(node.id());
     }
 
     node.value().accept(this);
@@ -70,7 +76,13 @@ public class ParserVisitor implements AstVisitor {
   public void visit(VariableDeclarationNode node) {
     // dont visit id
     String name = node.id().name();
+
+    if (vars.containsKey(name)) {
+      throw new VariableAlreadyDeclaredException(node.id());
+    }
+
     vars.put(name, node.type());
+    kinds.put(name, node.kind());
 
     if (node.init() == null) {
       return;
@@ -141,8 +153,8 @@ public class ParserVisitor implements AstVisitor {
       default -> throw new InvalidIfConditionException(node);
     }
 
-    node.thenDo().accept(new ParserVisitor(vars));
-    node.elseDo().accept(new ParserVisitor(vars));
+    node.thenDo().accept(new ParserVisitor(vars, kinds));
+    node.elseDo().accept(new ParserVisitor(vars, kinds));
   }
 
   @Override

@@ -10,6 +10,7 @@ import edu.Parser;
 import edu.ast.expressions.CallExpressionNode;
 import edu.ast.expressions.IdentifierNode;
 import edu.ast.interfaces.ExpressionNode;
+import edu.exceptions.UnexpectedTokenException;
 import edu.parsers.ExpressionParser;
 import edu.tokens.Token;
 import java.util.ArrayList;
@@ -98,7 +99,7 @@ public class ParseCallExpression implements ExpressionParser {
 
       if (parenBalance == 0 && isArgSeparator(token)) {
         if (current.isEmpty()) {
-          throw new RuntimeException(); // TODO(double commas / empty arg)
+          throw new UnexpectedTokenException(token);
         }
         args.add(new ArrayList<>(current));
         current.clear();
