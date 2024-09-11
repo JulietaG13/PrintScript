@@ -30,4 +30,20 @@ public class ValidatorCommandTest {
         programNode.getBody() != null && !programNode.getBody().isEmpty(),
         "The ProgramNode should have at least one statement.");
   }
+
+  @Test
+  public void testValidatorV2() throws IOException {
+    String testFilePath = "src/test/java/resources/version2.txt";
+    ValidatorCommand cmd = new ValidatorCommand(openFile(testFilePath), "1.1");
+    cmd.run();
+    CommandContext commandContext = cmd.getCommandContext();
+    ProgramNode programNode = commandContext.getProgramNode();
+
+    Assertions.assertNotNull(
+      programNode, "The ProgramNode should not be " + "null after executing ValidatorCommand.");
+
+    Assertions.assertTrue(
+      programNode.getBody() != null && !programNode.getBody().isEmpty(),
+      "The ProgramNode should have at least one statement.");
+  }
 }
