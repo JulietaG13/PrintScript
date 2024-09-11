@@ -51,10 +51,10 @@ public class FormattingCommandTest {
     FormatterResult formatterResult = commandContext.getFormatterResult();
     Assertions.assertNotNull(
       formatterResult,
-      "El FormatterResult no debería ser nulo después de ejecutar FormattingCommand.");
+        "El FormatterResult no debería ser nulo después de ejecutar FormattingCommand.");
     Assertions.assertEquals(
-      expectedOutput,
-      formatterResult.getResult(),
-      "La salida del formatter debería coincidir con el resultado esperado.");
+        expectedOutput,
+        formatterResult.getResult(),
+        "La salida del formatter debería coincidir con el resultado esperado.");
   }
 }

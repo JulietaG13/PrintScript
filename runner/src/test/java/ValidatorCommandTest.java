@@ -40,10 +40,10 @@ public class ValidatorCommandTest {
     ProgramNode programNode = commandContext.getProgramNode();
 
     Assertions.assertNotNull(
-      programNode, "The ProgramNode should not be " + "null after executing ValidatorCommand.");
+        programNode, "The ProgramNode should not be " + "null after executing ValidatorCommand.");
 
     Assertions.assertTrue(
-      programNode.getBody() != null && !programNode.getBody().isEmpty(),
-      "The ProgramNode should have at least one statement.");
+        programNode.getBody() != null && !programNode.getBody().isEmpty(),
+        "The ProgramNode should have at least one statement.");
   }
 }
