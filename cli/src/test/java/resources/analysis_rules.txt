@@ -1,4 +1,4 @@
 {
-  "lower_camel_case": true,
-  "println_non_expressions": true
+  "identifier_format": "snake case",
+  "mandatory-variable-or-literal-in-println": true
 }

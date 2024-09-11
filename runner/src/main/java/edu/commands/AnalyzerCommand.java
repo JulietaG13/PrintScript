@@ -12,13 +12,11 @@ import java.io.InputStream;
 public class AnalyzerCommand implements Command {
   private final CommandContext commandContext = new CommandContext();
   private final InputStream inputStream;
-  private final String version;
   private final JsonObject config;
   private final VersionFactory versionFactory;
 
   public AnalyzerCommand(InputStream inputStream, String version, JsonObject config) {
     this.inputStream = inputStream;
-    this.version = version;
     this.config = config;
     this.versionFactory = new VersionFactory(version);
   }

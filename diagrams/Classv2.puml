@@ -43,6 +43,10 @@ class ProgramNode implements Node {
 + body: List<StatementNode>
 }
 
+class BlockNode implements Node {
++ body: List<StatementNode>
+}
+
 interface StatementNode implements Node {
 }
 
@@ -50,6 +54,12 @@ class AssignmentNode implements StatementNode {
 + operator: String
 + id: IdentifierNode
 + value: ExpressionNode
+}
+
+class IfStatementNode implements StatementNode {
++ condition: ExpressionNode
++ thenDo: BlockNode
++ elseDo: BlockNode
 }
 
 class VariableDeclaration implements StatementNode {

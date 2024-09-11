@@ -6,6 +6,7 @@ import edu.context.VariableContext;
 import edu.handlers.StatementHandler;
 import edu.inventory.Inventory;
 import edu.reader.InterpreterReader;
+import edu.reader.ReaderResult;
 import edu.rules.Rule;
 import edu.utils.HandlerResult;
 import java.util.List;
@@ -31,9 +32,11 @@ public class AssignmentHandler implements StatementHandler {
       }
     }
 
-    String varName = interpreterReader.getIdentifier().getValue().toString();
-    Object value = interpreterReader.getLiteral().getValue();
-
+    ReaderResult result = interpreterReader.getIdentifier();
+    String varName = result.getValue().toString();
+    result = result.getReader().getLiteral();
+    Object value = result.getValue();
+    interpreterReader = result.getReader();
     VariableContext context = inventory.getVariableContext().write(varName, value);
     inventory = inventory.setVariableContext(context);
 
