@@ -4,7 +4,6 @@ import edu.rules.assignments.VerifyConstantAssignmentRule;
 import edu.rules.assignments.VerifyTypeCompatibilityRule;
 import edu.rules.declarations.VerifyConstantNotRedefinedRule;
 import edu.rules.declarations.VerifyCorrectTypeAssignmentRule;
-import edu.rules.declarations.VerifyNoDuplicateDeclarationInBlockRule;
 import edu.rules.declarations.VerifyVariableNotRedefinedRule;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +35,6 @@ public class RuleFactory {
     rules.add(new VerifyCorrectTypeAssignmentRule());
     rules.add(new VerifyConstantNotRedefinedRule());
     rules.add(new VerifyVariableNotRedefinedRule());
-    rules.add(new VerifyNoDuplicateDeclarationInBlockRule());
     return rules;
   }
 }

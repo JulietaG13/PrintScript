@@ -5,11 +5,10 @@ import edu.context.ConstantContext;
 import edu.inventory.Inventory;
 import edu.reader.InterpreterReader;
 import edu.rules.Rule;
-import edu.rules.RuleResult;
 
 public class VerifyConstantAssignmentRule implements Rule {
   @Override
-  public RuleResult apply(
+  public boolean apply(
       StatementNode node, InterpreterReader interpreterReader, Inventory inventory) {
 
     String varName = interpreterReader.getIdentifier().getValue().toString();
@@ -20,6 +19,6 @@ public class VerifyConstantAssignmentRule implements Rule {
       throw new RuntimeException("Cannot assign to a constant variable: " + varName);
     }
 
-    return new RuleResult(result, interpreterReader, inventory);
+    return result;
   }
 }

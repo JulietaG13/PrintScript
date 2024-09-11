@@ -7,7 +7,6 @@ import edu.handlers.StatementHandler;
 import edu.inventory.Inventory;
 import edu.reader.InterpreterReader;
 import edu.rules.Rule;
-import edu.rules.RuleResult;
 import edu.utils.HandlerResult;
 import java.util.List;
 
@@ -25,13 +24,11 @@ public class AssignmentHandler implements StatementHandler {
     AssignmentNode assignmentNode = (AssignmentNode) node;
 
     for (Rule rule : rules) {
-      RuleResult ruleResult = rule.apply(node, interpreterReader, inventory);
-      if (!ruleResult.result()) {
+      boolean ruleResult = rule.apply(node, interpreterReader, inventory);
+      if (!ruleResult) {
         throw new RuntimeException(
             "Rule check failed for assignment: " + assignmentNode.id().name());
       }
-      interpreterReader = ruleResult.reader();
-      inventory = ruleResult.inventory();
     }
 
     String varName = interpreterReader.getIdentifier().getValue().toString();

@@ -7,7 +7,6 @@ import edu.inventory.Inventory;
 import edu.reader.InterpreterReader;
 import edu.reader.ReaderResult;
 import edu.rules.Rule;
-import edu.rules.RuleResult;
 import edu.utils.DeclarationHelperResult;
 import java.math.BigDecimal;
 import java.util.List;
@@ -24,9 +23,10 @@ public class DeclarationHelper {
 
     // Aplicar reglas
     for (Rule rule : rules) {
-      RuleResult result = rule.apply(varNode, interpreterReader, inventory);
-      interpreterReader = result.reader();
-      inventory = result.inventory();
+      boolean result = rule.apply(varNode, interpreterReader, inventory);
+      if (!result) {
+        throw new RuntimeException("Rule check failed for declaration: " + varNode.id().name());
+      }
     }
 
     // Obtener el identificador

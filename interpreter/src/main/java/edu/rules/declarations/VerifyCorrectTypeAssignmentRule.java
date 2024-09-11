@@ -5,13 +5,12 @@ import edu.ast.statements.VariableDeclarationNode;
 import edu.inventory.Inventory;
 import edu.reader.InterpreterReader;
 import edu.rules.Rule;
-import edu.rules.RuleResult;
 import java.math.BigDecimal;
 
 public class VerifyCorrectTypeAssignmentRule implements Rule {
 
   @Override
-  public RuleResult apply(
+  public boolean apply(
       StatementNode node, InterpreterReader interpreterReader, Inventory inventory) {
     if (!(node instanceof VariableDeclarationNode)) {
       throw new IllegalArgumentException("Node is not of type VariableDeclarationNode");
@@ -20,7 +19,7 @@ public class VerifyCorrectTypeAssignmentRule implements Rule {
     VariableDeclarationNode varNode = (VariableDeclarationNode) node;
     String varName = interpreterReader.getIdentifier().getValue().toString();
     if (varNode.init() == null) {
-      return new RuleResult(true, interpreterReader, inventory);
+      return true;
     }
     Object value = interpreterReader.getLiteral().getValue();
 
@@ -44,6 +43,6 @@ public class VerifyCorrectTypeAssignmentRule implements Rule {
           "Type mismatch: Expected type '" + varNode.type() + "' for variable '" + varName + "'");
     }
 
-    return new RuleResult(result, interpreterReader, inventory);
+    return result;
   }
 }

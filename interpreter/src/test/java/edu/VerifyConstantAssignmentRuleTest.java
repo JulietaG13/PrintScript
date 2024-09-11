@@ -7,7 +7,6 @@ import edu.context.ConstantContext;
 import edu.context.VariableContext;
 import edu.inventory.Inventory;
 import edu.reader.InterpreterReader;
-import edu.rules.RuleResult;
 import edu.rules.assignments.VerifyConstantAssignmentRule;
 import java.math.BigDecimal;
 import java.util.HashMap;
@@ -63,8 +62,8 @@ public class VerifyConstantAssignmentRuleTest {
 
     VerifyConstantAssignmentRule rule = new VerifyConstantAssignmentRule();
     reader = reader.addIdentifier("myVar");
-    RuleResult result = rule.apply(assignmentNode, reader, inventory);
+    boolean result = rule.apply(assignmentNode, reader, inventory);
 
-    Assertions.assertTrue(result.result());
+    Assertions.assertTrue(result);
   }
 }

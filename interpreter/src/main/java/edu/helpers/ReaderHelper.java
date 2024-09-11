@@ -1,6 +1,5 @@
 package edu.helpers;
 
-import edu.context.ConstantContext;
 import edu.context.Context;
 import edu.context.VariableContext;
 import edu.inventory.Inventory;
@@ -24,8 +23,6 @@ public class ReaderHelper {
       Context context, String id, InterpreterReader reader) {
     if (context instanceof VariableContext) {
       return findInVariableContext((VariableContext) context, id, reader);
-    } else if (context instanceof ConstantContext) {
-      return findInConstantContext((ConstantContext) context, id, reader);
     }
     return Optional.empty();
   }
@@ -38,14 +35,6 @@ public class ReaderHelper {
       return Optional.of(new ReaderResult(reader, variableContext.getNumberVariable(id)));
     } else if (variableContext.hasBooleanVariable(id)) {
       return Optional.of(new ReaderResult(reader, variableContext.getBooleanVariable(id)));
-    }
-    return Optional.empty();
-  }
-
-  private Optional<ReaderResult> findInConstantContext(
-      ConstantContext constantContext, String id, InterpreterReader reader) {
-    if (constantContext.hasConstant(id)) {
-      return Optional.of(new ReaderResult(reader, id));
     }
     return Optional.empty();
   }

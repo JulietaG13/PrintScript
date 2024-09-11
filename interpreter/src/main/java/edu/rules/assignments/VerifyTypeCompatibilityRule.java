@@ -5,12 +5,11 @@ import edu.context.VariableContext;
 import edu.inventory.Inventory;
 import edu.reader.InterpreterReader;
 import edu.rules.Rule;
-import edu.rules.RuleResult;
 
 public class VerifyTypeCompatibilityRule implements Rule {
 
   @Override
-  public RuleResult apply(
+  public boolean apply(
       StatementNode node, InterpreterReader interpreterReader, Inventory inventory) {
     String varName = interpreterReader.getIdentifier().getValue().toString();
     Object value = interpreterReader.getLiteral().getValue();
@@ -23,7 +22,7 @@ public class VerifyTypeCompatibilityRule implements Rule {
           "Invalid assignment: Type mismatch or undefined variable: " + varName);
     }
 
-    return new RuleResult(result, interpreterReader, inventory);
+    return result;
   }
 
   private boolean isCompatible(String varName, Object value, VariableContext variableContext) {

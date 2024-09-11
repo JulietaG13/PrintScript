@@ -1,6 +1,5 @@
 package edu;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -13,7 +12,6 @@ import edu.context.ConstantContext;
 import edu.context.VariableContext;
 import edu.inventory.Inventory;
 import edu.reader.InterpreterReader;
-import edu.rules.RuleResult;
 import edu.rules.declarations.VerifyConstantNotRedefinedRule;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -66,10 +64,8 @@ public class VerifyConstantNotRedefinedRuleTest {
     VerifyConstantNotRedefinedRule rule = new VerifyConstantNotRedefinedRule();
     reader = reader.addIdentifier("newConst");
 
-    RuleResult result = rule.apply(varDeclNode, reader, inventory);
+    boolean result = rule.apply(varDeclNode, reader, inventory);
 
-    assertTrue(result.result());
-    assertEquals(reader, result.reader());
-    assertEquals(inventory, result.inventory());
+    assertTrue(result);
   }
 }

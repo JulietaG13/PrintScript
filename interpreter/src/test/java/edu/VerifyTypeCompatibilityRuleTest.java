@@ -10,7 +10,6 @@ import edu.ast.statements.AssignmentNode;
 import edu.context.VariableContext;
 import edu.inventory.Inventory;
 import edu.reader.InterpreterReader;
-import edu.rules.RuleResult;
 import edu.rules.assignments.VerifyTypeCompatibilityRule;
 import java.math.BigDecimal;
 import java.util.HashMap;
@@ -37,9 +36,9 @@ public class VerifyTypeCompatibilityRuleTest {
     reader = reader.addLiteral(42.0);
     VerifyTypeCompatibilityRule rule = new VerifyTypeCompatibilityRule();
 
-    RuleResult result = rule.apply(assignmentNode, reader, inventory);
+    boolean result = rule.apply(assignmentNode, reader, inventory);
 
-    assertTrue(result.result());
+    assertTrue(result);
   }
 
   @Test

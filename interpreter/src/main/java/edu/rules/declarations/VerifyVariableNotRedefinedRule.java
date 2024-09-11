@@ -6,12 +6,11 @@ import edu.context.VariableContext;
 import edu.inventory.Inventory;
 import edu.reader.InterpreterReader;
 import edu.rules.Rule;
-import edu.rules.RuleResult;
 
 public class VerifyVariableNotRedefinedRule implements Rule {
 
   @Override
-  public RuleResult apply(
+  public boolean apply(
       StatementNode node, InterpreterReader interpreterReader, Inventory inventory) {
     if (!(node instanceof VariableDeclarationNode)) {
       throw new IllegalArgumentException("Node is not of type VariableDeclarationNode");
@@ -30,6 +29,6 @@ public class VerifyVariableNotRedefinedRule implements Rule {
           "Variable '" + varName + "' is already defined in the current context.");
     }
 
-    return new RuleResult(result, interpreterReader, inventory);
+    return result;
   }
 }
