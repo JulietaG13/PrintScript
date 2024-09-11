@@ -9,6 +9,7 @@ import edu.ast.expressions.LiteralNumberNode;
 import edu.ast.expressions.LiteralStringNode;
 import edu.ast.interfaces.ExpressionNode;
 import edu.ast.statements.Type;
+import edu.exceptions.InvalidExpressionException;
 import edu.parsers.ExpressionParser;
 import edu.tokens.Token;
 import edu.utils.TypeProvider;
@@ -21,7 +22,8 @@ public class ParseLiteral implements ExpressionParser {
   public ExpressionNode parse(List<Token> tokens, Parser parser) {
 
     if (!isXexpression(tokens)) {
-      throw new RuntimeException(); // Should never happen
+      throw new InvalidExpressionException(
+          tokens.getFirst(), tokens.getLast()); // Should never happen
     }
 
     Token token = tokens.getFirst();

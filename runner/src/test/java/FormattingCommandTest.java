@@ -36,4 +36,25 @@ public class FormattingCommandTest {
         formatterResult.getResult(),
         "La salida del formatter debería coincidir con el resultado esperado.");
   }
+
+  @Test
+  public void testFormattingV2() throws IOException {
+    String filePath = "src/test/java/resources/version2.txt";
+    String rulesPath = "src/test/java/resources/rules.txt";
+    String expectedOutput = "let X : boolean = true;";
+
+    FormattingCommand cmd = new FormattingCommand(openFile(filePath), "1.1", getRules(rulesPath));
+    cmd.run();
+
+    CommandContext commandContext = cmd.getCommandContext();
+
+    FormatterResult formatterResult = commandContext.getFormatterResult();
+    Assertions.assertNotNull(
+        formatterResult,
+        "El FormatterResult no debería ser nulo después de ejecutar FormattingCommand.");
+    Assertions.assertEquals(
+        expectedOutput,
+        formatterResult.getResult(),
+        "La salida del formatter debería coincidir con el resultado esperado.");
+  }
 }

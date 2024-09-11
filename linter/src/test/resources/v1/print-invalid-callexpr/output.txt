@@ -1,0 +1,5 @@
+Error in println function: The println function only accepts identifiers or literals as arguments.
+Argument 1 is invalid:
+ - Type: CallExpressionNode
+ - Position: LexicalRange(offset=8, line=0, column=8)
+ - Content: hello()

@@ -1,6 +1,7 @@
 package edu.utils;
 
 import edu.ast.statements.Type;
+import edu.exceptions.InvalidTypeException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,14 +19,14 @@ public class TypeProvider {
     if (types.containsKey(typeName)) {
       return types.get(typeName);
     }
-    throw new RuntimeException(); // TODO
+    throw new InvalidTypeException(typeName);
   }
 
   public static String getName(Type type) {
     if (names.containsKey(type)) {
       return names.get(type);
     }
-    throw new RuntimeException(); // TODO
+    throw new InvalidTypeException(type);
   }
 
   public static Type getTypeFromContent(String content) {

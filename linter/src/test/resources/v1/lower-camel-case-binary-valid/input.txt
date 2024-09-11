@@ -1,0 +1,1 @@
+let oldAge : number = 5; let age: number = oldAge + 10;

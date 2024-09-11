@@ -13,6 +13,7 @@ import edu.OperatorProvider;
 import edu.Parser;
 import edu.ast.expressions.BinaryExpressionNode;
 import edu.ast.interfaces.ExpressionNode;
+import edu.exceptions.InvalidExpressionException;
 import edu.parsers.ExpressionParser;
 import edu.tokens.Token;
 import java.util.ArrayList;
@@ -30,7 +31,7 @@ public class ParseBinaryExpression implements ExpressionParser {
     }
 
     if (!isXexpression(tokens)) {
-      throw new RuntimeException(); // TODO
+      throw new InvalidExpressionException(tokens.getFirst(), tokens.getLast());
     }
 
     List<Integer> operators = getOperators(tokens);
@@ -166,7 +167,7 @@ public class ParseBinaryExpression implements ExpressionParser {
 
   private static int getFirstMinOperator(List<Token> tokens, List<Integer> operators) {
     if (operators.isEmpty()) {
-      throw new RuntimeException(); // TODO
+      throw new InvalidExpressionException(tokens.getFirst(), tokens.getLast());
     }
     int minIndex = operators.getFirst();
     Token firstOp = tokens.get(operators.getFirst());
