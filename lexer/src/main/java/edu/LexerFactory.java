@@ -1,5 +1,7 @@
 package edu;
 
+import edu.finders.PatternManager;
+import edu.finders.RegexPatternMatcher;
 import edu.patterns.BooleanPattern;
 import edu.patterns.IdentifierPattern;
 import edu.patterns.KeywordPattern;
@@ -27,7 +29,7 @@ public class LexerFactory {
             new OperatorPattern(operators),
             new SyntaxPattern(syntaxes),
             new IdentifierPattern());
-    return new Lexer(new Reader(file), patterns);
+    return new Lexer(new Reader(file), new PatternManager(patterns, new RegexPatternMatcher()));
   }
 
   public static Lexer createLexerV2(InputStream file) {
@@ -43,6 +45,6 @@ public class LexerFactory {
             new OperatorPattern(operators),
             new SyntaxPattern(syntaxes),
             new IdentifierPattern());
-    return new Lexer(new Reader(file), patterns);
+    return new Lexer(new Reader(file), new PatternManager(patterns, new RegexPatternMatcher()));
   }
 }
