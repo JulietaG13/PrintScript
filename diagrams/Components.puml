@@ -1,0 +1,16 @@
+@startuml
+'https://plantuml.com/component-diagram
+
+
+
+[Parser] --> [Lexer]
+[interpreter] --> [Parser]
+[Formatter] --> [Parser]
+[Linter] --> [Parser]
+[runner] --> [interpreter]
+[runner] --> [Formatter]
+[runner] --> [Linter]
+[cli] --> [runner]
+[adapter] --> [runner]
+
+@enduml
