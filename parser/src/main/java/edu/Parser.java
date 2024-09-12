@@ -106,7 +106,7 @@ public class Parser implements Iterator<StatementNode> {
     return statement;
   }
 
-  private boolean isFinished(List<Token> currentTokens, Token next) {
+  public boolean isFinished(List<Token> currentTokens, Token next) {
     for (StatementParser parser : statementParsers) {
       if (parser.isFinished(currentTokens, next)) {
         return true;

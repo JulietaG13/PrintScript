@@ -48,7 +48,7 @@ public class ParseBlock {
         bracketBalance--;
       }
 
-      if (bracketBalance == 0 && isEndOfStatement(current) && isFinished(current, next)) {
+      if (bracketBalance == 0 && isEndOfStatement(current) && parser.isFinished(statement, next)) {
         result.add(parser.parseStatement(statement));
         statement.clear();
       }
@@ -72,10 +72,6 @@ public class ParseBlock {
     }
 
     return new BlockNode(start, end, result);
-  }
-
-  private static boolean isFinished(Token current, Token next) {
-    return isEndOfStatement(current) && !next.getContent().equals("else"); // TODO
   }
 
   public static BlockNode getEmpty(LexicalRange start, LexicalRange end) {
