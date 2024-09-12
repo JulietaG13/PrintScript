@@ -1,6 +1,8 @@
 package edu.rules;
 
 import com.google.gson.JsonObject;
+import edu.exceptions.InvalidFunctionRule;
+import edu.exceptions.InvalidIdentifierFormat;
 import edu.functions.FunctionRule;
 import edu.identifiers.IdentifierType;
 import java.util.HashMap;
@@ -28,7 +30,7 @@ public class RuleParserLinter {
       if (rulesPossibleIdentifiers.containsKey(value)) {
         possibleIdentifiers.add(rulesPossibleIdentifiers.get(value));
       } else {
-        throw new RuntimeException("Invalid identifier format: " + value);
+        throw new InvalidIdentifierFormat(value);
       }
     } else {
       possibleIdentifiers.addAll(rulesPossibleIdentifiers.values());
@@ -39,7 +41,7 @@ public class RuleParserLinter {
         if (rulesFunctionCalls.containsKey(key) && rules.get(key).getAsBoolean()) {
           functionRules.add(rulesFunctionCalls.get(key));
         } else {
-          throw new RuntimeException("Invalid function rule: " + key);
+          throw new InvalidFunctionRule(key);
         }
       }
     }
