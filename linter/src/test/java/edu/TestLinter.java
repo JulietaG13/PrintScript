@@ -99,7 +99,7 @@ public class TestLinter {
       String output =
           readReport(
               createLinterV2(testCase.getValue(), createParserV2(createLexerV2(fileInputStream))));
-      assertEquals(expected.trim(), output.trim());
+      assertEquals(expected.trim().replace("\r", ""), output.trim().replace("\r", ""));
     }
     for (Map.Entry<String, JsonObject> testCase : files1.entrySet()) {
       File srcFile = new File(testDirectory + "v1/" + testCase.getKey() + "/" + "input.txt");
@@ -116,7 +116,7 @@ public class TestLinter {
       String output =
           readReport(
               createLinterV2(testCase.getValue(), createParserV2(createLexerV2(fileInputStream))));
-      assertEquals(expected.trim(), output.trim());
+      assertEquals(expected.trim().replace("\r", ""), output.trim().replace("\r", ""));
     }
   }
 
@@ -137,7 +137,7 @@ public class TestLinter {
       String output =
           readReport(
               createLinterV2(testCase.getValue(), createParserV2(createLexerV2(fileInputStream))));
-      assertEquals(expected.trim(), output.trim());
+      assertEquals(expected.trim().replace("\r", ""), output.trim().replace("\r", ""));
     }
   }
 
