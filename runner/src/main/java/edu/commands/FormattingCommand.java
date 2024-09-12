@@ -1,5 +1,7 @@
 package edu.commands;
 
+import static edu.progress.ProgressInputStreamWrapper.setProgress;
+
 import com.google.gson.JsonObject;
 import edu.Formatter;
 import edu.FormatterResult;
@@ -25,15 +27,12 @@ public class FormattingCommand implements Command {
   }
 
   public void run() {
-    System.out.println("Reading file");
-    Lexer lexer = versionFactory.createLexer(inputStream);
+    InputStream input = setProgress(inputStream);
+    Lexer lexer = versionFactory.createLexer(input);
     Parser parser = versionFactory.createParser(lexer);
-    System.out.println("Parsing completed");
     Formatter formatter =
         versionFactory.createFormatter(FormatterRuleParser.parseRules(config), parser);
-    System.out.println("Formatting program");
     FormatterResult result = formatter.format();
-    System.out.println("Formatting completed");
     commandContext.setFormatterResult(result);
     System.out.println("Formatted code" + result.getResult());
   }

@@ -2,10 +2,8 @@ package edu.utils;
 
 import edu.FormatterResult;
 import edu.Report;
-import edu.ast.ProgramNode;
 
 public class CommandContext {
-  private ProgramNode programNode;
 
   private Report linterReport;
 
@@ -13,16 +11,14 @@ public class CommandContext {
 
   private String name;
 
-  public ProgramNode getProgramNode() {
-    return programNode;
+  private boolean hasError;
+
+  public boolean hasError() {
+    return hasError;
   }
 
-  public void setProgramNode(ProgramNode programNode) {
-    this.programNode = programNode;
-  }
-
-  public boolean hasProgramNode() {
-    return programNode != null;
+  public void setHasError(boolean hasError) {
+    this.hasError = hasError;
   }
 
   public Report getLinterReport() {

@@ -1,12 +1,11 @@
 import static edu.FileReader.openFile;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import com.google.gson.JsonObject;
-import edu.ast.ProgramNode;
 import edu.commands.ValidatorCommand;
 import edu.utils.CommandContext;
 import edu.utils.JsonConfigLoader;
 import java.io.IOException;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 public class ValidatorCommandTest {
@@ -21,14 +20,8 @@ public class ValidatorCommandTest {
     ValidatorCommand cmd = new ValidatorCommand(openFile(testFilePath), "1.0");
     cmd.run();
     CommandContext commandContext = cmd.getCommandContext();
-    ProgramNode programNode = commandContext.getProgramNode();
 
-    Assertions.assertNotNull(
-        programNode, "The ProgramNode should not be " + "null after executing ValidatorCommand.");
-
-    Assertions.assertTrue(
-        programNode.getBody() != null && !programNode.getBody().isEmpty(),
-        "The ProgramNode should have at least one statement.");
+    assertFalse(commandContext.hasError());
   }
 
   @Test
@@ -37,13 +30,7 @@ public class ValidatorCommandTest {
     ValidatorCommand cmd = new ValidatorCommand(openFile(testFilePath), "1.1");
     cmd.run();
     CommandContext commandContext = cmd.getCommandContext();
-    ProgramNode programNode = commandContext.getProgramNode();
 
-    Assertions.assertNotNull(
-        programNode, "The ProgramNode should not be " + "null after executing ValidatorCommand.");
-
-    Assertions.assertTrue(
-        programNode.getBody() != null && !programNode.getBody().isEmpty(),
-        "The ProgramNode should have at least one statement.");
+    assertFalse(commandContext.hasError());
   }
 }

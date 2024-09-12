@@ -1,6 +1,6 @@
 import static edu.FileReader.openFile;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
-import edu.ast.ProgramNode;
 import edu.commands.ExecutionCommand;
 import edu.handlers.expressions.ConsoleInputProvider;
 import java.io.ByteArrayOutputStream;
@@ -26,10 +26,7 @@ public class ExecutionCommandTest {
 
       cmd.run();
 
-      ProgramNode programNode = cmd.getCommandContext().getProgramNode();
-
-      Assertions.assertNull(
-          programNode, "El ProgramNode no debería ser nulo después de ejecutar ExecutionCommand.");
+      assertFalse(cmd.getCommandContext().hasError());
 
     } catch (IOException e) {
       Assertions.fail("Execution failed with IOException: " + e.getMessage());

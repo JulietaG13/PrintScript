@@ -1,5 +1,7 @@
 package edu.commands;
 
+import static edu.progress.ProgressInputStreamWrapper.setProgress;
+
 import edu.Lexer;
 import edu.Parser;
 import edu.utils.CommandContext;
@@ -18,12 +20,16 @@ public class ValidatorCommand implements Command {
   }
 
   public void run() {
-    Lexer lexer = versionFactory.createLexer(inputStream);
-    lexer.tokenize();
-    var tokens = lexer.getTokens();
+    InputStream input = setProgress(inputStream);
+    Lexer lexer = versionFactory.createLexer(input);
     Parser parser = versionFactory.createParser(lexer);
-    var programNode = parser.parse(tokens);
-    commandContext.setProgramNode(programNode);
+    try {
+      while (parser.hasNext()) {
+        parser.next();
+      }
+    } catch (Exception e) {
+      commandContext.setHasError(true);
+    }
   }
 
   public CommandContext getCommandContext() {

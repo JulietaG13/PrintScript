@@ -1,5 +1,7 @@
 package edu.commands;
 
+import static edu.progress.ProgressInputStreamWrapper.setProgress;
+
 import edu.Interpreter;
 import edu.Parser;
 import edu.handlers.expressions.InputProvider;
@@ -23,9 +25,14 @@ public class ExecutionCommand implements Command {
   }
 
   public void run() {
-    Parser parser = ProgramNodeUtil.getParser(inputStream, version);
-    Interpreter interpreter = versionFactory.createInterpreter(parser, inputProvider);
-    interpreter.interpret();
+    try {
+      InputStream input = setProgress(inputStream);
+      Parser parser = ProgramNodeUtil.getParser(input, version);
+      Interpreter interpreter = versionFactory.createInterpreter(parser, inputProvider);
+      interpreter.interpret();
+    } catch (Exception e) {
+      commandContext.setHasError(true);
+    }
   }
 
   public CommandContext getCommandContext() {

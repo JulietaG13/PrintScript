@@ -1,5 +1,7 @@
 package edu.commands;
 
+import static edu.progress.ProgressInputStreamWrapper.setProgress;
+
 import com.google.gson.JsonObject;
 import edu.Lexer;
 import edu.Linter;
@@ -22,14 +24,11 @@ public class AnalyzerCommand implements Command {
   }
 
   public void run() {
-    System.out.println("Reading file");
-    Lexer lexer = versionFactory.createLexer(inputStream);
+    InputStream input = setProgress(inputStream);
+    Lexer lexer = versionFactory.createLexer(input);
     Parser parser = versionFactory.createParser(lexer);
-    System.out.println("Parsing completed");
     Linter linter = versionFactory.createLinter(config, parser);
-    System.out.println("Analyzing program");
     Report report = linter.analyze();
-    System.out.println("Analysis completed");
     commandContext.setLinterReport(report);
     System.out.println("Report: " + report.getReport());
   }
