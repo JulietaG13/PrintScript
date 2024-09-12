@@ -3,6 +3,7 @@ package edu.rules.declarations;
 import edu.ast.interfaces.StatementNode;
 import edu.ast.statements.VariableDeclarationNode;
 import edu.context.ConstantContext;
+import edu.exceptions.ConstantAssignmentException;
 import edu.inventory.Inventory;
 import edu.reader.InterpreterReader;
 import edu.rules.Rule;
@@ -21,8 +22,7 @@ public class VerifyConstantNotRedefinedRule implements Rule {
 
     boolean result = !constantContext.hasConstant(varName);
     if (!result) {
-      throw new RuntimeException(
-          "Constant '" + varName + "' is already defined in the current context.");
+      throw new ConstantAssignmentException(varName);
     }
 
     return result;

@@ -1,5 +1,6 @@
 package edu.reader;
 
+import edu.exceptions.VariableNotFoundException;
 import edu.helpers.ReaderHelper;
 import edu.inventory.Inventory;
 import java.util.Stack;
@@ -59,6 +60,6 @@ public class InterpreterReader {
     ReaderHelper readerHelper = new ReaderHelper();
     return readerHelper
         .findVariableInContexts(inventory, id, newInterpreterReader)
-        .orElseThrow(() -> new RuntimeException("Variable no definida: " + id));
+        .orElseThrow(() -> new VariableNotFoundException(id, "variable"));
   }
 }

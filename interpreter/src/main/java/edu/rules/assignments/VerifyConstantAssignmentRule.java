@@ -2,6 +2,7 @@ package edu.rules.assignments;
 
 import edu.ast.interfaces.StatementNode;
 import edu.context.ConstantContext;
+import edu.exceptions.ConstantAssignmentException;
 import edu.inventory.Inventory;
 import edu.reader.InterpreterReader;
 import edu.rules.Rule;
@@ -16,7 +17,7 @@ public class VerifyConstantAssignmentRule implements Rule {
 
     boolean result = !constantContext.hasConstant(varName);
     if (!result) {
-      throw new RuntimeException("Cannot assign to a constant variable: " + varName);
+      throw new ConstantAssignmentException(varName);
     }
 
     return result;

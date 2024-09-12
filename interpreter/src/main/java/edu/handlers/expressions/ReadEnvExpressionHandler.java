@@ -12,10 +12,6 @@ public class ReadEnvExpressionHandler implements ExpressionHandler {
   @Override
   public HandlerResult handle(ExpressionNode node, InterpreterReader reader, Inventory inventory) {
     CallExpressionNode callNode = (CallExpressionNode) node;
-    if (!isReadEnv(callNode)) {
-      throw new RuntimeException("Unsupported function call: " + callNode.callee().name());
-    }
-
     ReaderResult envVarNameResult = reader.read(inventory);
     reader = envVarNameResult.getReader();
     String envVarName = envVarNameResult.getValue().toString();
@@ -35,10 +31,6 @@ public class ReadEnvExpressionHandler implements ExpressionHandler {
   @Override
   public String getHandledCallee() {
     return "readEnv";
-  }
-
-  private boolean isReadEnv(CallExpressionNode node) {
-    return "readEnv".equals(node.callee().name()) && node.args().size() == 1;
   }
 
   private Object determineInputType(String input) {

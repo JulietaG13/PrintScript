@@ -3,6 +3,7 @@ package edu.helpers;
 import edu.ast.statements.Type;
 import edu.ast.statements.VariableDeclarationNode;
 import edu.context.VariableContext;
+import edu.exceptions.RuleFailedException;
 import edu.inventory.Inventory;
 import edu.reader.InterpreterReader;
 import edu.reader.ReaderResult;
@@ -19,13 +20,14 @@ public class DeclarationHelper {
   }
 
   public DeclarationHelperResult handleDeclaration(
-      VariableDeclarationNode varNode, InterpreterReader interpreterReader, Inventory inventory) {
+      VariableDeclarationNode varNode, InterpreterReader interpreterReader, Inventory inventory)
+      throws RuleFailedException {
 
     // Aplicar reglas
     for (Rule rule : rules) {
       boolean result = rule.apply(varNode, interpreterReader, inventory);
       if (!result) {
-        throw new RuntimeException("Rule check failed for declaration: " + varNode.id().name());
+        throw new RuleFailedException(rule.getClass().getSimpleName(), varNode.id().name());
       }
     }
 

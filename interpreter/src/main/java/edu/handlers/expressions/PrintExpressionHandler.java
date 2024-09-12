@@ -12,7 +12,6 @@ public class PrintExpressionHandler implements ExpressionHandler {
   @Override
   public HandlerResult handle(ExpressionNode node, InterpreterReader reader, Inventory inventory) {
     CallExpressionNode callNode = (CallExpressionNode) node;
-    verifyPrint(callNode);
     ReaderResult result = reader.read(inventory);
     Object value = result.getValue();
     reader = result.getReader();
@@ -25,11 +24,5 @@ public class PrintExpressionHandler implements ExpressionHandler {
   @Override
   public String getHandledCallee() {
     return "println";
-  }
-
-  private static void verifyPrint(CallExpressionNode callNode) {
-    if (!"println".equals(callNode.callee().name())) {
-      throw new RuntimeException("Unsupported function: " + callNode.callee().name());
-    }
   }
 }

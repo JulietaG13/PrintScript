@@ -56,7 +56,7 @@ public class VariableContextTest {
               context.getNumberVariable("nonExistent");
             });
 
-    assertEquals("Number type variable not found: nonExistent", exception.getMessage());
+    assertEquals("Variable of type 'Number' not found: nonExistent", exception.getMessage());
   }
 
   @Test
@@ -71,7 +71,7 @@ public class VariableContextTest {
               context.getStringVariable("nonExistent");
             });
 
-    assertEquals("Number type variable not found: nonExistent", exception.getMessage());
+    assertEquals("Variable of type 'String' not found: nonExistent", exception.getMessage());
   }
 
   @Test
@@ -86,7 +86,7 @@ public class VariableContextTest {
               context.getBooleanVariable("nonExistent");
             });
 
-    assertEquals("Boolean type variable not found: nonExistent", exception.getMessage());
+    assertEquals("Variable of type 'Boolean' not found: nonExistent", exception.getMessage());
   }
 
   @Test
@@ -134,6 +134,6 @@ public class VariableContextTest {
               context.write("unsupportedVar", new Object());
             });
 
-    assertEquals("Unsupported variable type: class java.lang.Object", exception.getMessage());
+    assertEquals("Unsupported variable type: Object", exception.getMessage());
   }
 }

@@ -1,5 +1,7 @@
 package edu.context;
 
+import edu.exceptions.UnsupportedVariableTypeException;
+import edu.exceptions.VariableNotFoundException;
 import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.HashMap;
@@ -45,21 +47,21 @@ public class VariableContext implements Context {
 
   public BigDecimal getNumberVariable(String name) {
     if (!hasNumberVariable(name)) {
-      throw new RuntimeException("Number type variable not found: " + name);
+      throw new VariableNotFoundException(name, "Number");
     }
     return numberVariables.get(name);
   }
 
   public String getStringVariable(String name) {
     if (!hasStringVariable(name)) {
-      throw new RuntimeException("Number type variable not found: " + name);
+      throw new VariableNotFoundException(name, "String");
     }
     return stringVariables.get(name);
   }
 
   public Boolean getBooleanVariable(String name) {
     if (!hasBooleanVariable(name)) {
-      throw new RuntimeException("Boolean type variable not found: " + name);
+      throw new VariableNotFoundException(name, "Boolean");
     }
     return booleanVariables.get(name);
   }
@@ -84,7 +86,7 @@ public class VariableContext implements Context {
     } else if (value instanceof Boolean) {
       return setBooleanVariable(name, (Boolean) value);
     } else {
-      throw new RuntimeException("Unsupported variable type: " + value.getClass());
+      throw new UnsupportedVariableTypeException(value.getClass());
     }
   }
 

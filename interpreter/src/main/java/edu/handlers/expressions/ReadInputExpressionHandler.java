@@ -18,9 +18,6 @@ public class ReadInputExpressionHandler implements ExpressionHandler {
   public HandlerResult handle(ExpressionNode node, InterpreterReader reader, Inventory inventory) {
     CallExpressionNode callNode = (CallExpressionNode) node;
 
-    if (!isReadInput(callNode)) {
-      throw new RuntimeException("Unsupported function call: " + callNode.callee().name());
-    }
     String message = reader.getLiteral().getValue().toString();
     String input = inputProvider.input(message);
     Object typedInput = determineInputType(input);

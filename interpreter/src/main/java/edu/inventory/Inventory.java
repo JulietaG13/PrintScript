@@ -3,6 +3,7 @@ package edu.inventory;
 import edu.context.ConstantContext;
 import edu.context.Context;
 import edu.context.VariableContext;
+import edu.exceptions.ContextNotFoundException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -20,7 +21,7 @@ public class Inventory {
         return (VariableContext) context;
       }
     }
-    throw new RuntimeException("Variable context not found");
+    throw new ContextNotFoundException("Variable");
   }
 
   public Inventory setVariableContext(VariableContext variableContext) {
@@ -33,7 +34,7 @@ public class Inventory {
         return (ConstantContext) context;
       }
     }
-    throw new RuntimeException("Constant context not found");
+    throw new ContextNotFoundException("Constant");
   }
 
   public Inventory setConstantContext(ConstantContext constantContext) {

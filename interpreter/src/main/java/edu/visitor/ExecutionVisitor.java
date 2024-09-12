@@ -18,6 +18,10 @@ import edu.ast.statements.ExpressionStatementNode;
 import edu.ast.statements.IfStatementNode;
 import edu.ast.statements.VariableDeclarationNode;
 import edu.context.VariableContext;
+import edu.exceptions.AssignmentException;
+import edu.exceptions.InvalidConditionException;
+import edu.exceptions.RuleFailedException;
+import edu.exceptions.VariableDeclarationException;
 import edu.handlers.HandlerRegistry;
 import edu.helpers.IfHelper;
 import edu.inventory.Inventory;
@@ -54,10 +58,14 @@ public class ExecutionVisitor implements AstVisitor {
     }
     String type = node.kind().name;
 
-    HandlerResult result =
-        handlerRegistry.getStatementHandler(type).handle(node, interpreterReader, inventory);
-    interpreterReader = result.getInterpreterReader();
-    inventory = result.getInventory();
+    try {
+      HandlerResult result =
+          handlerRegistry.getStatementHandler(type).handle(node, interpreterReader, inventory);
+      interpreterReader = result.getInterpreterReader();
+      inventory = result.getInventory();
+    } catch (RuleFailedException e) {
+      throw new VariableDeclarationException(node.id().name(), e.getMessage());
+    }
   }
 
   @Override
@@ -65,12 +73,16 @@ public class ExecutionVisitor implements AstVisitor {
     node.id().accept(this);
     node.value().accept(this);
 
-    HandlerResult result =
-        handlerRegistry
-            .getStatementHandler("assignation")
-            .handle(node, interpreterReader, inventory);
-    interpreterReader = result.getInterpreterReader();
-    inventory = result.getInventory();
+    try {
+      HandlerResult result =
+          handlerRegistry
+              .getStatementHandler("assignation")
+              .handle(node, interpreterReader, inventory);
+      interpreterReader = result.getInterpreterReader();
+      inventory = result.getInventory();
+    } catch (RuleFailedException e) {
+      throw new AssignmentException(node.id().name(), e.getMessage());
+    }
   }
 
   @Override
@@ -100,8 +112,7 @@ public class ExecutionVisitor implements AstVisitor {
 
   private boolean evaluateCondition(Object value) {
     if (!(value instanceof Boolean)) {
-      throw new RuntimeException(
-          "La condición del if debe ser un valor booleano o una variable booleana.");
+      throw new InvalidConditionException(value.getClass().getSimpleName());
     }
     return (Boolean) value;
   }

@@ -2,6 +2,8 @@ package edu.rules.declarations;
 
 import edu.ast.interfaces.StatementNode;
 import edu.ast.statements.VariableDeclarationNode;
+import edu.context.VariableContext;
+import edu.exceptions.TypeMismatchException;
 import edu.inventory.Inventory;
 import edu.reader.InterpreterReader;
 import edu.rules.Rule;
@@ -39,10 +41,23 @@ public class VerifyCorrectTypeAssignmentRule implements Rule {
     }
 
     if (!result) {
-      throw new RuntimeException(
-          "Type mismatch: Expected type '" + varNode.type() + "' for variable '" + varName + "'");
+      throw new TypeMismatchException(
+          varName,
+          getExpectedType(varName, inventory.getVariableContext()),
+          value.getClass().getSimpleName());
     }
 
     return result;
+  }
+
+  private String getExpectedType(String varName, VariableContext variableContext) {
+    if (variableContext.hasNumberVariable(varName)) {
+      return "Number";
+    } else if (variableContext.hasStringVariable(varName)) {
+      return "String";
+    } else if (variableContext.hasBooleanVariable(varName)) {
+      return "Boolean";
+    }
+    return "Unknown";
   }
 }

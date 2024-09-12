@@ -2,6 +2,7 @@ package edu.handlers.statements.declaration;
 
 import edu.ast.interfaces.StatementNode;
 import edu.ast.statements.VariableDeclarationNode;
+import edu.exceptions.RuleFailedException;
 import edu.handlers.StatementHandler;
 import edu.helpers.DeclarationHelper;
 import edu.inventory.Inventory;
@@ -20,7 +21,8 @@ public class VariableDeclarationHandler implements StatementHandler {
 
   @Override
   public HandlerResult handle(
-      StatementNode node, InterpreterReader interpreterReader, Inventory inventory) {
+      StatementNode node, InterpreterReader interpreterReader, Inventory inventory)
+      throws RuleFailedException {
     VariableDeclarationNode varNode = (VariableDeclarationNode) node;
     DeclarationHelperResult result =
         declarationHelper.handleDeclaration(varNode, interpreterReader, inventory);

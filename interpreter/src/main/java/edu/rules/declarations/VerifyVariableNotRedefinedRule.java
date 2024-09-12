@@ -3,6 +3,7 @@ package edu.rules.declarations;
 import edu.ast.interfaces.StatementNode;
 import edu.ast.statements.VariableDeclarationNode;
 import edu.context.VariableContext;
+import edu.exceptions.VariableAlreadyDefinedException;
 import edu.inventory.Inventory;
 import edu.reader.InterpreterReader;
 import edu.rules.Rule;
@@ -25,8 +26,7 @@ public class VerifyVariableNotRedefinedRule implements Rule {
             && !variableContext.hasBooleanVariable(varName);
 
     if (!result) {
-      throw new RuntimeException(
-          "Variable '" + varName + "' is already defined in the current context.");
+      throw new VariableAlreadyDefinedException(varName);
     }
 
     return result;

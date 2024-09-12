@@ -1,6 +1,7 @@
 package edu.helpers;
 
 import edu.context.VariableContext;
+import edu.exceptions.UnsupportedVariableTypeException;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
@@ -30,7 +31,7 @@ public class IfHelper {
         BiConsumer<VariableContext, Map.Entry<String, Object>> updater =
             variableUpdaters.get(value.getClass());
         if (updater == null) {
-          throw new RuntimeException("Unsupported type: " + value.getClass().getSimpleName());
+          throw new UnsupportedVariableTypeException(value.getClass());
         }
 
         updater.accept(variableContext, entry);
