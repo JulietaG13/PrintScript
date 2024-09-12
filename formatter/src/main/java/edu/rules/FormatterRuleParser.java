@@ -38,7 +38,8 @@ public class FormatterRuleParser {
         }
 
       } else if (rulesNewLinesBefore.containsKey(key)) {
-        newLinesBefore.put(rulesNewLinesBefore.get(key), rules.get(key).getAsInt());
+        int newLines = rules.get(key).getAsInt();
+        newLinesBefore.put(rulesNewLinesBefore.get(key), Math.min(newLines, 2));
       }
     }
 

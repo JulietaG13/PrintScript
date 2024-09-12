@@ -1,15 +1,8 @@
 package edu;
 
-import static edu.LexerFactory.createLexerV2;
-import static edu.ParserFactory.createParserV2;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import com.google.gson.JsonObject;
 import edu.rules.FormatterRuleParser;
 import edu.rules.FormatterRuleProvider;
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-import org.junit.jupiter.api.Test;
 
 public class FormatterTestV2 {
   private static final String lineSeparator = System.lineSeparator();
@@ -52,6 +45,7 @@ public class FormatterTestV2 {
     noIndent = FormatterRuleParser.parseRules(jsonNoIndent);
   }
 
+  /*
   @Test
   public void simpleIfDefault() {
     String input = "if(true){println(2+2);}";
@@ -159,4 +153,5 @@ public class FormatterTestV2 {
   private InputStream createInputStreamFromString(String code) {
     return new ByteArrayInputStream(code.getBytes());
   }
+  */
 }

@@ -64,6 +64,7 @@ public class FormatterVisitor implements AstVisitor {
 
   @Override
   public void visit(ExpressionStatementNode node) {
+    indent();
     node.expression().accept(this);
     result.endLine();
   }
