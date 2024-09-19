@@ -29,6 +29,7 @@ public class ValidatorCommand implements Command {
       }
     } catch (Exception e) {
       commandContext.setHasError(true);
+      throw new RuntimeException("Error during execution: " + e.getMessage(), e);
     }
   }
 

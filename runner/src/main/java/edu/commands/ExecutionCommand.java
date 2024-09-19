@@ -32,6 +32,7 @@ public class ExecutionCommand implements Command {
       interpreter.interpret();
     } catch (Exception e) {
       commandContext.setHasError(true);
+      throw new RuntimeException("Error during execution: " + e.getMessage(), e);
     }
   }
 
