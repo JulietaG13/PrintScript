@@ -39,7 +39,7 @@ public class VisitorTest {
         reader,
         inventory,
         InterpreterFactory.createHandlerRegistryV2(
-            new RuleProviderV2(), new ConsoleInputProvider()));
+            new RuleProviderV2(), new ConsoleInputProvider(), new ConsolePrinter()));
   }
 
   @Test

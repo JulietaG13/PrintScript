@@ -22,7 +22,7 @@ public class TestIne {
     InputStream codeIterator = createInputStreamFromString(code);
     Lexer lexer = createLexerV1(codeIterator);
     Parser parser = createParserV1(lexer);
-    return createInterpreterV1(parser);
+    return createInterpreterV1(parser, new ConsolePrinter());
   }
 
   @Test
@@ -31,7 +31,7 @@ public class TestIne {
     InputStream codeIterator = createInputStreamFromString(string);
     Lexer lexer = createLexerV1(codeIterator);
     Parser parser = createParserV1(lexer);
-    Interpreter interpreter = createInterpreterV1(parser);
+    Interpreter interpreter = createInterpreterV1(parser, new ConsolePrinter());
     interpreter.interpret();
     VariableContext variableContext = interpreter.getVisitor().getInventory().getVariableContext();
     assertTrue(variableContext.hasNumberVariable("numberResult"));

@@ -23,7 +23,7 @@ public class TestReadEnv {
     InputStream codeIterator = createInputStreamFromString(code);
     Lexer lexer = createLexerV2(codeIterator);
     Parser parser = createParserV2(lexer);
-    return createInterpreterV2(parser, new ConsoleInputProvider());
+    return createInterpreterV2(parser, new ConsoleInputProvider(), new ConsolePrinter());
   }
 
   @Test

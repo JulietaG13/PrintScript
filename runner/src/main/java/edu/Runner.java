@@ -23,8 +23,10 @@ public class Runner {
     validatorCommand.run();
   }
 
-  public void execute(InputStream inputStream, InputProvider inputProvider) {
-    Command executionCommand = new ExecutionCommand(inputStream, version, inputProvider);
+  public void execute(
+      InputStream inputStream, InputProvider inputProvider, PrintEmitter printEmitter) {
+    Command executionCommand =
+        new ExecutionCommand(inputStream, version, inputProvider, printEmitter);
     executionCommand.run();
   }
 

@@ -43,7 +43,7 @@ public class IfElseTests {
     InputStream codeIterator = createInputStreamFromString(code);
     Lexer lexer = createLexerV2(codeIterator);
     Parser parser = createParserV2(lexer);
-    return createInterpreterV2(parser, new ConsoleInputProvider());
+    return createInterpreterV2(parser, new ConsoleInputProvider(), new ConsolePrinter());
   }
 
   public String getPrintedInfo(ProgramNode node) {
@@ -72,7 +72,8 @@ public class IfElseTests {
         new ExecutionVisitor(
             reader,
             inventory,
-            createHandlerRegistryV2(new RuleProviderV2(), new ConsoleInputProvider()));
+            createHandlerRegistryV2(
+                new RuleProviderV2(), new ConsoleInputProvider(), new ConsolePrinter()));
     visitor.visit(node);
     return visitor.getInventory().getVariableContext();
   }

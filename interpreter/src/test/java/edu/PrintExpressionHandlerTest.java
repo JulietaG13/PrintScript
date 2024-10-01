@@ -28,7 +28,7 @@ public class PrintExpressionHandlerTest {
     Inventory inventory = new Inventory(List.of(variableContext));
     InterpreterReader reader =
         new InterpreterReader(new java.util.Stack<>(), new java.util.Stack<>());
-    PrintExpressionHandler handler = new PrintExpressionHandler();
+    PrintExpressionHandler handler = new PrintExpressionHandler(new ConsolePrinter());
 
     ByteArrayOutputStream outContent = new ByteArrayOutputStream();
     PrintStream originalOut = System.out;
@@ -60,7 +60,7 @@ public class PrintExpressionHandlerTest {
     Inventory inventory = new Inventory(List.of(variableContext));
     InterpreterReader reader =
         new InterpreterReader(new java.util.Stack<>(), new java.util.Stack<>());
-    PrintExpressionHandler handler = new PrintExpressionHandler();
+    PrintExpressionHandler handler = new PrintExpressionHandler(new ConsolePrinter());
 
     Assertions.assertThrows(
         RuntimeException.class,

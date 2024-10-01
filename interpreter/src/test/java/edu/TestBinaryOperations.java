@@ -36,7 +36,9 @@ public class TestBinaryOperations {
     Inventory inventory = new Inventory(context);
     ExecutionVisitor visitor =
         new ExecutionVisitor(
-            reader, inventory, InterpreterFactory.createHandlerRegistryV1(new RuleProviderV1()));
+            reader,
+            inventory,
+            InterpreterFactory.createHandlerRegistryV1(new RuleProviderV1(), new ConsolePrinter()));
     visitor.visit(node);
     return visitor.getInventory().getVariableContext();
   }

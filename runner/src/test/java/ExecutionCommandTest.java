@@ -1,6 +1,7 @@
 import static edu.FileReader.openFile;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
+import edu.ConsolePrinter;
 import edu.commands.ExecutionCommand;
 import edu.handlers.expressions.ConsoleInputProvider;
 import java.io.ByteArrayOutputStream;
@@ -22,7 +23,8 @@ public class ExecutionCommandTest {
       String version = "1.1";
 
       ExecutionCommand cmd =
-          new ExecutionCommand(openFile(testFilePath), version, new ConsoleInputProvider());
+          new ExecutionCommand(
+              openFile(testFilePath), version, new ConsoleInputProvider(), new ConsolePrinter());
 
       cmd.run();
 
