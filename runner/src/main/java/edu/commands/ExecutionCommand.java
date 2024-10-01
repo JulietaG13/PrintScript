@@ -2,9 +2,9 @@ package edu.commands;
 
 import static edu.progress.ProgressInputStreamWrapper.setProgress;
 
+import edu.InputProvider;
 import edu.Interpreter;
 import edu.Parser;
-import edu.handlers.expressions.InputProvider;
 import edu.utils.CommandContext;
 import edu.utils.ProgramNodeUtil;
 import edu.utils.VersionFactory;

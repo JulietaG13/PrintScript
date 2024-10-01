@@ -1,5 +1,6 @@
 package edu.handlers.expressions;
 
+import edu.InputProvider;
 import java.util.Scanner;
 
 public class ConsoleInputProvider implements InputProvider {

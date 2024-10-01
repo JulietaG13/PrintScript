@@ -11,11 +11,11 @@ import static edu.ParserFactory.createParserV2;
 
 import com.google.gson.JsonObject;
 import edu.Formatter;
+import edu.InputProvider;
 import edu.Interpreter;
 import edu.Lexer;
 import edu.Linter;
 import edu.Parser;
-import edu.handlers.expressions.InputProvider;
 import edu.rules.FormatterRuleProvider;
 import java.io.InputStream;
 
