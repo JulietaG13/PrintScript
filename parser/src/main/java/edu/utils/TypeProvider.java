@@ -1,6 +1,8 @@
 package edu.utils;
 
+import edu.LexicalRange;
 import edu.ast.statements.Type;
+import edu.exceptions.IncompatibleTypesException;
 import edu.exceptions.InvalidTypeException;
 import java.util.HashMap;
 import java.util.Map;
@@ -15,21 +17,21 @@ public class TypeProvider {
     add("boolean", Type.BOOLEAN);
   }
 
-  public static Type getType(String typeName) {
+  public static Type getType(String typeName, LexicalRange range) {
     if (types.containsKey(typeName)) {
       return types.get(typeName);
     }
-    throw new InvalidTypeException(typeName);
+    throw new InvalidTypeException(typeName, range);
   }
 
-  public static String getName(Type type) {
+  public static String getName(Type type, LexicalRange range) {
     if (names.containsKey(type)) {
       return names.get(type);
     }
-    throw new InvalidTypeException(type);
+    throw new InvalidTypeException(type, range);
   }
 
-  public static Type getTypeFromContent(String content) {
+  public static Type getTypeFromContent(String content, LexicalRange range) {
     if (isNumber(content)) {
       return Type.NUMBER;
     }
@@ -39,7 +41,7 @@ public class TypeProvider {
     if (isBoolean(content)) {
       return Type.BOOLEAN;
     }
-    throw new RuntimeException(); // TODO
+    throw new IncompatibleTypesException(content, range);
   }
 
   private static boolean isNumber(String str) {

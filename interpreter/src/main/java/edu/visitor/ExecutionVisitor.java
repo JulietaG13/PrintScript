@@ -64,7 +64,8 @@ public class ExecutionVisitor implements AstVisitor {
       interpreterReader = result.getInterpreterReader();
       inventory = result.getInventory();
     } catch (RuleFailedException e) {
-      throw new VariableDeclarationException(node.id().name(), e.getMessage());
+      throw new VariableDeclarationException(
+          node.id().name(), e.getMessage(), node.start(), node.end());
     }
   }
 
@@ -81,7 +82,7 @@ public class ExecutionVisitor implements AstVisitor {
       interpreterReader = result.getInterpreterReader();
       inventory = result.getInventory();
     } catch (RuleFailedException e) {
-      throw new AssignmentException(node.id().name(), e.getMessage());
+      throw new AssignmentException(node.id().name(), e.getMessage(), node.start(), node.end());
     }
   }
 
