@@ -50,7 +50,7 @@ public class ParserVisitor implements AstVisitor {
     // dont visit id
     String name = node.id().name();
     if (!vars.containsKey(name)) {
-      throw new VariableNotDeclaredException(name);
+      throw new VariableNotDeclaredException(name, node.start());
     }
     if (kinds.get(name) == Kind.CONST) {
       throw new ConstReassignmentException(node.id());
@@ -60,7 +60,7 @@ public class ParserVisitor implements AstVisitor {
 
     Type expected = vars.get(name);
     if (expected != lastType) {
-      throw new VariableTypeMismatchException(name, expected, lastType);
+      throw new VariableTypeMismatchException(name, expected, lastType, node.start());
     }
 
     lastType = null;
@@ -91,7 +91,7 @@ public class ParserVisitor implements AstVisitor {
     node.init().accept(this);
     if (lastType != null && node.type() != lastType) {
       // lastType == null -> lastType = call expression result
-      throw new VariableTypeMismatchException(name, node.type(), lastType);
+      throw new VariableTypeMismatchException(name, node.type(), lastType, node.start());
     }
 
     lastType = null;
@@ -121,7 +121,7 @@ public class ParserVisitor implements AstVisitor {
   public void visit(IdentifierNode node) {
     // only supposed to be called inside expressions
     if (!vars.containsKey(node.name())) {
-      throw new VariableNotDeclaredException(node.name());
+      throw new VariableNotDeclaredException(node.name(), node.start());
     }
     lastType = vars.get(node.name());
   }
@@ -141,7 +141,7 @@ public class ParserVisitor implements AstVisitor {
     switch (node.condition()) {
       case IdentifierNode id -> {
         if (!vars.containsKey(id.name())) {
-          throw new VariableNotDeclaredException(id.name());
+          throw new VariableNotDeclaredException(id.name(), node.start());
         }
         if (vars.get(id.name()) != Type.BOOLEAN) {
           throw new InvalidIfConditionException(node);
