@@ -80,7 +80,7 @@ public class FormatterVisitor implements AstVisitor {
 
     writeSymbol(colon);
 
-    String type = TypeProvider.getName(node.type());
+    String type = TypeProvider.getName(node.type(), node.start());
     result.write(type);
 
     if (node.init() == null) {

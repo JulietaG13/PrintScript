@@ -1,7 +1,17 @@
 package edu.exceptions;
 
+import edu.LexicalRange;
+
 public class AssignmentException extends RuntimeException {
-  public AssignmentException(String varName, String message) {
-    super("Error en la asignación de la variable '" + varName + "': " + message);
+  public AssignmentException(String varName, String message, LexicalRange start, LexicalRange end) {
+    super(
+        "Variable assignation error at '"
+            + varName
+            + "': "
+            + message
+            + " between "
+            + start.toString()
+            + " and "
+            + end.toString());
   }
 }

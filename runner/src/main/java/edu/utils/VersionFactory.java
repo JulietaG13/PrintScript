@@ -11,11 +11,12 @@ import static edu.ParserFactory.createParserV2;
 
 import com.google.gson.JsonObject;
 import edu.Formatter;
+import edu.InputProvider;
 import edu.Interpreter;
 import edu.Lexer;
 import edu.Linter;
 import edu.Parser;
-import edu.handlers.expressions.InputProvider;
+import edu.PrintEmitter;
 import edu.rules.FormatterRuleProvider;
 import java.io.InputStream;
 
@@ -48,12 +49,13 @@ public class VersionFactory {
     }
   }
 
-  public Interpreter createInterpreter(Parser parser, InputProvider inputProvider) {
+  public Interpreter createInterpreter(
+      Parser parser, InputProvider inputProvider, PrintEmitter printEmitter) {
     switch (version) {
       case "1.0":
-        return createInterpreterV1(parser);
+        return createInterpreterV1(parser, printEmitter);
       case "1.1":
-        return createInterpreterV2(parser, inputProvider);
+        return createInterpreterV2(parser, inputProvider, printEmitter);
       default:
         return null;
     }

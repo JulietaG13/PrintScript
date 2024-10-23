@@ -32,7 +32,7 @@ public class ParseLiteral implements ExpressionParser {
     LexicalRange end = token.getEnd();
 
     String content = token.getContent();
-    Type type = TypeProvider.getTypeFromContent(content);
+    Type type = TypeProvider.getTypeFromContent(content, start);
 
     return switch (type) {
       case NUMBER -> new LiteralNumberNode(start, end, new BigDecimal(content));

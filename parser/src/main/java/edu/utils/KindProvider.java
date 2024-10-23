@@ -1,5 +1,6 @@
 package edu.utils;
 
+import edu.LexicalRange;
 import edu.ast.statements.Kind;
 import java.util.HashMap;
 import java.util.Map;
@@ -12,10 +13,11 @@ public class KindProvider {
     kinds.put("const", Kind.CONST);
   }
 
-  public static Kind getKind(String kindName) {
+  public static Kind getKind(String kindName, LexicalRange lexicalRange) {
     if (kinds.containsKey(kindName)) {
       return kinds.get(kindName);
     }
-    throw new IllegalArgumentException("Unknown kind: " + kindName);
+    throw new IllegalArgumentException(
+        "Unknown kind: " + kindName + " at " + lexicalRange.toString());
   }
 }

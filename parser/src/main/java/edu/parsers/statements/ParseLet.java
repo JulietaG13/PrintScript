@@ -42,7 +42,7 @@ public class ParseLet implements StatementParser {
     }
 
     String typeString = tokens.get(3).getContent();
-    Type type = TypeProvider.getType(typeString);
+    Type type = TypeProvider.getType(typeString, tokens.get(3).getStart());
 
     if (isNotInitialized(tokens)) {
       return new VariableDeclarationNode(start, end, identifier, type, Kind.LET, null);
@@ -58,7 +58,7 @@ public class ParseLet implements StatementParser {
     String keyword = tokens.getFirst().getContent();
     Kind kind;
     try {
-      kind = KindProvider.getKind(keyword);
+      kind = KindProvider.getKind(keyword, tokens.getFirst().getStart());
     } catch (Exception e) {
       return false;
     }
