@@ -1,8 +1,6 @@
 package edu.utils;
 
 import com.google.gson.JsonObject;
-import edu.rules.FormatterRuleParser;
-import edu.rules.FormatterRuleProvider;
 
 public class DefaultRulesFactory {
   String version;
@@ -11,7 +9,7 @@ public class DefaultRulesFactory {
     this.version = version;
   }
 
-  public FormatterRuleProvider getDefaultFormattingRules() {
+  public JsonObject getDefaultFormattingRules() {
     switch (version) {
       case "1.0":
         return getDefaultFormattingRulesV1();
@@ -33,17 +31,17 @@ public class DefaultRulesFactory {
     }
   }
 
-  private FormatterRuleProvider getDefaultFormattingRulesV1() {
+  private JsonObject getDefaultFormattingRulesV1() {
     JsonObject jsonDefaultRules = new JsonObject();
     jsonDefaultRules.addProperty("declaration_space_before_colon", true);
     jsonDefaultRules.addProperty("declaration_space_after_colon", true);
     jsonDefaultRules.addProperty("assignment_space_before_equals", true);
     jsonDefaultRules.addProperty("assignment_space_after_equals", true);
     jsonDefaultRules.addProperty("println_new_lines_before_call", 1);
-    return FormatterRuleParser.parseRules(jsonDefaultRules);
+    return jsonDefaultRules;
   }
 
-  private FormatterRuleProvider getDefaultFormattingRulesV2() {
+  private JsonObject getDefaultFormattingRulesV2() {
     JsonObject jsonDefaultRules = new JsonObject();
     jsonDefaultRules.addProperty("declaration_space_before_colon", true);
     jsonDefaultRules.addProperty("declaration_space_after_colon", true);
@@ -51,7 +49,7 @@ public class DefaultRulesFactory {
     jsonDefaultRules.addProperty("assignment_space_after_equals", true);
     jsonDefaultRules.addProperty("println_new_lines_before_call", 1);
     jsonDefaultRules.addProperty("indent", 4);
-    return FormatterRuleParser.parseRules(jsonDefaultRules);
+    return jsonDefaultRules;
   }
 
   private JsonObject getDefaultLintingRulesV1() {
