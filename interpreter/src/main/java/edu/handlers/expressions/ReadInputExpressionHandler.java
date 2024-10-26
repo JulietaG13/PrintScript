@@ -7,6 +7,7 @@ import edu.handlers.ExpressionHandler;
 import edu.inventory.Inventory;
 import edu.reader.InterpreterReader;
 import edu.utils.HandlerResult;
+import java.math.BigDecimal;
 
 public class ReadInputExpressionHandler implements ExpressionHandler {
   private final InputProvider inputProvider;
@@ -39,7 +40,7 @@ public class ReadInputExpressionHandler implements ExpressionHandler {
 
   private Object determineInputType(String input) {
     try {
-      return Double.parseDouble(input);
+      return new BigDecimal(input);
     } catch (NumberFormatException e1) {
       if ("true".equalsIgnoreCase(input) || "false".equalsIgnoreCase(input)) {
         return Boolean.parseBoolean(input);
