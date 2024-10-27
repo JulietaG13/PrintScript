@@ -1,5 +1,6 @@
 package edu.utils;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 public class DefaultRulesFactory {
@@ -33,20 +34,20 @@ public class DefaultRulesFactory {
 
   private JsonObject getDefaultFormattingRulesV1() {
     JsonObject jsonDefaultRules = new JsonObject();
-    jsonDefaultRules.addProperty("declaration_space_before_colon", true);
-    jsonDefaultRules.addProperty("declaration_space_after_colon", true);
-    jsonDefaultRules.addProperty("assignment_space_before_equals", true);
-    jsonDefaultRules.addProperty("assignment_space_after_equals", true);
+    jsonDefaultRules.addProperty("declaration_space_before_colon", false);
+    jsonDefaultRules.addProperty("declaration_space_after_colon", false);
+    jsonDefaultRules.addProperty("assignment_space_before_equals", false);
+    jsonDefaultRules.addProperty("assignment_space_after_equals", false);
     jsonDefaultRules.addProperty("println_new_lines_before_call", 1);
     return jsonDefaultRules;
   }
 
   private JsonObject getDefaultFormattingRulesV2() {
     JsonObject jsonDefaultRules = new JsonObject();
-    jsonDefaultRules.addProperty("declaration_space_before_colon", true);
-    jsonDefaultRules.addProperty("declaration_space_after_colon", true);
-    jsonDefaultRules.addProperty("assignment_space_before_equals", true);
-    jsonDefaultRules.addProperty("assignment_space_after_equals", true);
+    jsonDefaultRules.addProperty("declaration_space_before_colon", false);
+    jsonDefaultRules.addProperty("declaration_space_after_colon", false);
+    jsonDefaultRules.addProperty("assignment_space_before_equals", false);
+    jsonDefaultRules.addProperty("assignment_space_after_equals", false);
     jsonDefaultRules.addProperty("println_new_lines_before_call", 1);
     jsonDefaultRules.addProperty("indent", 4);
     return jsonDefaultRules;
@@ -54,15 +55,22 @@ public class DefaultRulesFactory {
 
   private JsonObject getDefaultLintingRulesV1() {
     JsonObject lintingRules = new JsonObject();
-    lintingRules.addProperty("identifier_format", "camel case");
-    lintingRules.addProperty("mandatory-variable-or-literal-in-readInput", true);
+    JsonArray identifierFormats = new JsonArray();
+    identifierFormats.add("camel case");
+    identifierFormats.add("snake case");
+    lintingRules.add("identifier_format", identifierFormats);
+    lintingRules.addProperty("mandatory-variable-or-literal-in-println", false);
+    lintingRules.addProperty("mandatory-variable-or-literal-in-readInput", false);
     return lintingRules;
   }
 
   private JsonObject getDefaultLintingRulesV2() {
     JsonObject lintingRules = new JsonObject();
-    lintingRules.addProperty("identifier_format", "snake case");
-    lintingRules.addProperty("mandatory-variable-or-literal-in-println", true);
+    JsonArray identifierFormats = new JsonArray();
+    identifierFormats.add("camel case");
+    identifierFormats.add("snake case");
+    lintingRules.add("identifier_format", identifierFormats);
+    lintingRules.addProperty("mandatory-variable-or-literal-in-println", false);
     return lintingRules;
   }
 }
