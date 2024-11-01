@@ -57,7 +57,6 @@ public class DefaultRulesFactory {
     JsonObject lintingRules = new JsonObject();
     JsonArray identifierFormats = new JsonArray();
     identifierFormats.add("camel case");
-    identifierFormats.add("snake case");
     lintingRules.add("identifier_format", identifierFormats);
     lintingRules.addProperty("mandatory-variable-or-literal-in-println", false);
     lintingRules.addProperty("mandatory-variable-or-literal-in-readInput", false);
@@ -68,7 +67,6 @@ public class DefaultRulesFactory {
     JsonObject lintingRules = new JsonObject();
     JsonArray identifierFormats = new JsonArray();
     identifierFormats.add("camel case");
-    identifierFormats.add("snake case");
     lintingRules.add("identifier_format", identifierFormats);
     lintingRules.addProperty("mandatory-variable-or-literal-in-println", false);
     return lintingRules;

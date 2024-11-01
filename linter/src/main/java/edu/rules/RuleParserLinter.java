@@ -1,7 +1,6 @@
 package edu.rules;
 
 import com.google.gson.JsonObject;
-import edu.exceptions.InvalidFunctionRule;
 import edu.exceptions.InvalidIdentifierFormat;
 import edu.functions.FunctionRule;
 import edu.identifiers.IdentifierType;
@@ -40,8 +39,6 @@ public class RuleParserLinter {
       if (!key.equals("identifier_format")) {
         if (rulesFunctionCalls.containsKey(key) && rules.get(key).getAsBoolean()) {
           functionRules.add(rulesFunctionCalls.get(key));
-        } else {
-          throw new InvalidFunctionRule(key);
         }
       }
     }

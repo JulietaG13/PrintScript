@@ -47,9 +47,8 @@ class DefaultRulesFactoryTest {
 
     JsonArray identifierFormats = lintingRules.getAsJsonArray("identifier_format");
     assertNotNull(identifierFormats);
-    assertEquals(2, identifierFormats.size());
+    assertEquals(1, identifierFormats.size());
     assertEquals("camel case", identifierFormats.get(0).getAsString());
-    assertEquals("snake case", identifierFormats.get(1).getAsString());
 
     assertEquals(
         false, lintingRules.get("mandatory-variable-or-literal-in-readInput").getAsBoolean());
@@ -64,9 +63,8 @@ class DefaultRulesFactoryTest {
 
     JsonArray identifierFormats = lintingRules.getAsJsonArray("identifier_format");
     assertNotNull(identifierFormats);
-    assertEquals(2, identifierFormats.size());
+    assertEquals(1, identifierFormats.size());
     assertEquals("camel case", identifierFormats.get(0).getAsString());
-    assertEquals("snake case", identifierFormats.get(1).getAsString());
 
     assertEquals(
         false, lintingRules.get("mandatory-variable-or-literal-in-println").getAsBoolean());
